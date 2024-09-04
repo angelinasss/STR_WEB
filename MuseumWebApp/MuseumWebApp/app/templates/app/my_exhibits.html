@@ -1,0 +1,27 @@
+{% extends "app/newlayout.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
+    <h1 style="text-align: center; font-size: 2em; margin-bottom: 20px;">My Exhibits</h1>
+    {% if exhibits %}
+    <ul style="list-style: none; padding: 0;">
+        {% for exhibit in exhibits|dictsort:"hall.name" %}
+        {% ifchanged exhibit.hall %}
+        <li style="margin-top: 30px; font-size: 1.5em; font-weight: bold; color: #333;">
+            Hall: {{ exhibit.hall.name }}
+        </li>
+        {% endifchanged %}
+        <li style="background-color: #eef; margin-bottom: 10px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            <div style="font-size: 1.2em; font-weight: bold; margin-bottom: 5px;">
+                {{ exhibit.name }}
+            </div>
+            <div style="font-size: 1em; color: #555;">Date Acquired: {{ exhibit.date_acquired|date:"Y-m-d" }}</div>
+            <div style="font-size: 1em; color: #555;">Art Type: {{ exhibit.art_type }}</div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p style="margin-top: 20px; font-size: 1.2em; color: #d9534f;">No exhibits found for the selected season.</p>
+    {% endif %}
+</div>
+{% endblock %}

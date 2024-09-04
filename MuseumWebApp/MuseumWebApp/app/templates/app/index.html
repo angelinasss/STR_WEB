@@ -1,0 +1,32 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Latest Article</h1>
+
+    {% if article %}
+    <div class="article-preview">
+        <h2>{{ article.title }}</h2>
+        {% if article.image %}
+        <img src="{{ article.image.url }}" alt="{{ article.title }}" class="img-responsive">
+        {% endif %}
+        <p class="short-description">{{ article.short_description }}</p>
+        <p class="publication-date">Published on: {{ article.published_at|date:"d/m/Y" }}</p>
+        <a href="news/article_detail/{{article.id}}" class="btn btn-info">Read More</a>
+    </div>
+    {% else %}
+    <p>No articles available.</p>
+    {% endif %}
+
+    <div class="weather-container">
+        <h1 class="weather-title">Weather in {{ city }}</h1>
+        <div class="weather-details">
+            <p class="weather-temp">Temperature: <span class="temp-value">{{ temperature }}</span> °C</p>
+            <p class="weather-condition">Condition: <span class="condition-description">{{ description }}</span></p>
+        </div>
+    </div>
+    <pre>
+        {{ calendar }}
+    </pre>
+</div>
+{% endblock %}

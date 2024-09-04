@@ -1,0 +1,25 @@
+{% extends "app/newlayout.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
+    <h1 style="text-align: center; font-size: 2em; margin-bottom: 20px;">Excursions by {{ guide.first_name }} {{ guide.last_name }}</h1>
+
+    {% if excursions %}
+    <ul style="list-style: none; padding: 0;">
+        {% for excursion in excursions %}
+        <li style="background-color: #eef; margin-bottom: 10px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            <div style="font-size: 1.2em; font-weight: bold; margin-bottom: 5px;">
+                {{ excursion.name }} ({{ excursion.code }})
+            </div>
+            <div style="font-size: 1em; color: #555;">Date: {{ excursion.date|date:"Y-m-d" }}</div>
+            <div style="font-size: 1em; color: #555;">Season: {{ excursion.get_season_display }}</div>
+            <div style="font-size: 1em; color: #555;">Group Size: {{ excursion.group_size }}</div>
+            <div style="font-size: 1em; color: #555;">Price: {{ excursion.price }}</div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p style="margin-top: 20px; font-size: 1.2em; color: #d9534f;">No excursions found for this guide or you are not a guide.</p>
+    {% endif %}
+</div>
+{% endblock %}

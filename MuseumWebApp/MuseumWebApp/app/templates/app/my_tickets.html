@@ -1,0 +1,104 @@
+{% extends "app/newlayout.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
+    <h1 style="text-align: center; font-size: 2.5em; margin-bottom: 30px;">My Tickets</h1>
+
+    {% if tickets_excursions or tickets_exhibitions %}
+    <div class="tickets-list">
+        {% for ticket in tickets_excursions %}
+        <div class="ticket-card">
+            <h2>Excursion: {{ ticket.excursion.name }}</h2>
+            <p><strong>Date of Purchase:</strong> {{ ticket.purchase_date|date:"Y-m-d" }}</p>
+            {% if ticket.discount_code %}
+            <p><strong>Discount Code:</strong> {{ ticket.discount_code }}</p>
+            {% endif %}
+            <p><strong>Excursion Code:</strong> {{ ticket.excursion.code }}</p>
+            <p><strong>Excursion Date:</strong> {{ ticket.excursion.date }}</p>
+            <p><strong>Excursion Season:</strong> {{ ticket.excursion.season }}</p>
+            <p><strong>Excursion Group Size:</strong> {{ ticket.excursion.group_size }}</p>
+            <p><strong>Excursion Guide:</strong> {{ ticket.excursion.guide }}</p>
+            <p><strong>Excursion Price:</strong> {{ ticket.excursion.price }}</p>
+        </div>
+        {% endfor %}
+
+        {% for ticket in tickets_exhibitions %}
+        <div class="ticket-card">
+            <h2>Exhibition: {{ ticket.exhibition.name }}</h2>
+            <p><strong>Date of Purchase:</strong> {{ ticket.purchase_date|date:"Y-m-d" }}</p>
+            {% if ticket.discount_code %}
+            <p><strong>Discount Code:</strong> {{ ticket.discount_code }}</p>
+            {% endif %}
+            <p><strong>Exhibition Start Date:</strong> {{ ticket.exhibition.start_date }}</p>
+            <p><strong>Exhibition End Date:</strong> {{ ticket.exhibition.end_date }}</p>
+            <div style="margin-top: 10px;">
+                <h3 style="font-size: 1.2em; margin-bottom: 10px;">Exhibits:</h3>
+                <ul style="list-style: none; padding: 0;">
+                    {% for exhibit in ticket.exhibition.exhibits.all %}
+                    <li style="margin-bottom: 5px;">
+                        {{ exhibit.name }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <p><strong>Exhibition Price:</strong> {{ ticket.exhibition.price }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p style="text-align: center; font-size: 1.2em; color: #d9534f;">You have no tickets yet.</p>
+    {% endif %}
+</div>
+
+<style>
+    .tickets-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .ticket-card {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 350px;
+        width: 100%;
+        transition: transform 0.3s ease;
+        text-align: center;
+    }
+
+        .ticket-card h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #007bff;
+        }
+
+        .ticket-card p {
+            font-size: 1em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+    .details-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+        .details-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+    .ticket-card:hover {
+        transform: scale(1.02);
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Nationality Prediction for {{ name }}</h1>
+    {% if nationalities %}
+    <ul>
+        {% for nationality in nationalities %}
+        <li>Country: {{ nationality.country_name }} - Probability: {{ nationality.probability }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No nationalities found.</p>
+    {% endif %}
+</div>
+{% endblock %}

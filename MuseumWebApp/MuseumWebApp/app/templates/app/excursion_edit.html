@@ -1,0 +1,73 @@
+{% extends "app/newlayout.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
+    <h1 style="text-align: center;">Edit Excursion Information</h1>
+
+    <form method="POST" style="background-color: #f9f9f9; padding: 20px; border-radius: 8px;">
+        {% csrf_token %}
+
+        <div id="excursion_fields">
+            <div class="form-group">
+                <label for="code">Code:</label>
+                <input type="text" id="code" name="code" class="form-control" style="width: 100%; padding: 8px;" value="{{ excursion.code }}">
+            </div>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="excursion_name" name="excursion_name" class="form-control" style="width: 100%; padding: 8px;" value="{{ excursion.name }}">
+            </div>
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" class="form-control" style="width: 100%; padding: 8px;" value="{{ excursion.date|date:'Y-m-d' }}">
+            </div>
+            <div class="form-group">
+                <label for="season">Season:</label>
+                <select id="season" name="season" class="form-control" style="width: 100%; padding: 8px;">
+                    <option value="summer" {% if excursion.season= ='summer' %}selected{% endif %}>Summer</option>
+                    <option value="autumn" {% if excursion.season= ='autumn' %}selected{% endif %}>Autumn</option>
+                    <option value="winter" {% if excursion.season= ='winter' %}selected{% endif %}>Winter</option>
+                    <option value="spring" {% if excursion.season= ='spring' %}selected{% endif %}>Spring</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="group_size">Group Size:</label>
+                <input type="number" id="group_size" name="group_size" class="form-control" style="width: 100%; padding: 8px;" value="{{ excursion.group_size }}">
+            </div>
+            <div class="form-group">
+                <label for="guide">Guide</label>
+                <select id="guide" name="guide" class="form-control">
+                    {% for guide in guides %}
+                    <option value="{{ guide.id }}"
+                            {% if guide.id == excursion.guide.id %}selected{% endif %}>
+                        {{ guide.first_name }} {{ guide.last_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="excursion_price">Price:</label>
+                <input type="number" step="0.01" id="excursion_price" min="0" max="10000" name="excursion_price" class="form-control" value="{{ excursion.price }}" required>
+            </div>
+        </div>
+
+        <button type="submit" style="background-color: #007bff; color: #fff; padding: 10px 20px; font-size: 1em; border: none; border-radius: 4px; cursor: pointer;">
+            Save
+        </button>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert
+        {% if message.tags == 'error' %}
+          alert-danger
+        {% else %}
+          alert-success
+        {% endif %}
+        text-center" style="margin-top:10px">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </form>
+</div>
+
+{% endblock %}

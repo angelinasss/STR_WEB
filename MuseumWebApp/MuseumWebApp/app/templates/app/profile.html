@@ -1,0 +1,170 @@
+{% extends "app/newlayout.html" %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    p {
+        margin: 10px 0;
+    }
+
+    .timezone {
+        font-weight: bold;
+    }
+</style>
+
+<h2>{{ title }}</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if is_employee %}
+    <div class="form-group">
+        <label for="photo">Profile Photo</label>
+        <input type="file" id="photo" name="photo" class="form-control">
+        {% if employee.photo %}
+        <img src="{{ employee.photo.url }}" alt="Profile Photo" style="width: 100px; height: auto;">
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name"
+               class="form-control"
+               value="{{ employee.first_name }}">
+    </div>
+
+    <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name"
+               class="form-control"
+               value="{{ employee.last_name }}">
+    </div>
+
+    <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" name="phone"
+               class="form-control"
+               value="{{ employee.phone }}">
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email"
+               class="form-control"
+               value="{{ employee.email }}">
+    </div>
+
+    <div class="form-group">
+        <label for="position">Position</label>
+        <select id="position" name="position" class="form-control">
+            {% for position in positions %}
+            <option value="{{ position.id }}"
+                    {% if position.id == employee.position.id %}selected{% endif %}>
+                {{ position.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="hall">Hall</label>
+        <select id="hall" name="hall" class="form-control">
+            {% for hall in halls %}
+            <option value="{{ hall.id }}"
+                    {% if hall.id == employee.hall.id %}selected{% endif %}>
+                {{ hall.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    {% endif %}
+
+    {% if not is_employee %}
+    <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name"
+               class="form-control"
+               value="{{ user.first_name }}">
+    </div>
+
+    <a href="{% url 'nationality_by_name' %}" style="margin-bottom:10px" class="btn btn-warning">Find Out Nationality by Name</a>
+
+    <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name"
+               class="form-control"
+               value="{{ user.last_name }}">
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email"
+               class="form-control"
+               value="{{ user.email }}">
+    </div>
+    {% endif %}
+
+    <p><strong>Time Zone:</strong> <span id="userTimezone" class="timezone"></span></p>
+    <p><strong>Current Date and Time (Your Time Zone):</strong> <span id="currentDateTimeUserTz"></span></p>
+    <p><strong>Current Date and Time (UTC):</strong> <span id="currentDateTimeUtc"></span></p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get user time zone
+            const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            document.getElementById('userTimezone').textContent = userTimezone;
+
+            // Function to get timezone offset in GMT format
+            function getTimezoneOffset() {
+                const offset = new Date().getTimezoneOffset();
+                const hours = Math.floor(Math.abs(offset) / 60);
+                const minutes = Math.abs(offset) % 60;
+                const sign = offset > 0 ? '-' : '+';
+                return `GMT${sign}${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+            }
+
+            // Display timezone offset
+            document.getElementById('userTimezone').textContent += ` (${getTimezoneOffset()})`;
+
+            // Get current date and time in user's time zone
+            const userDateTime = new Date();
+            const userDateTimeOptions = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false // 24-hour format
+            };
+            const userDateTimeString = userDateTime.toLocaleString('en-GB', userDateTimeOptions); // 'en-GB' for DD/MM/YYYY format
+            document.getElementById('currentDateTimeUserTz').textContent = userDateTimeString;
+
+            // Get current date and time in UTC
+            const utcDateTime = new Date().toLocaleString('en-GB', {
+                timeZone: 'UTC',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false // 24-hour format
+            });
+            document.getElementById('currentDateTimeUtc').textContent = utcDateTime;
+        });
+    </script>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+
+    {% if messages %}
+    <div class="alert alert-success text-center" style="margin-top:10px">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+</form>
+
+{% endblock %}

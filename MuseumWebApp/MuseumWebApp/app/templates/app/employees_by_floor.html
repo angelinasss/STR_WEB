@@ -1,0 +1,40 @@
+{% extends "app/newlayout.html" %}
+
+{% block content %}
+<h1>Employees on Floor {{ selected_floor }}</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="floor">Select Floor Number:</label>
+        <select id="floor" name="floor" class="form-control">
+            {% for floor in floors %}
+            <option value="{{ floor }}" {% if floor|stringformat:"s" == selected_floor|stringformat:"s" %}selected{% endif %}>
+                {{ floor }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+ {% if employees %}
+<h2 class="mt-4">Results:</h2>
+<div class="employee-list">
+    {% for employee in employees %}
+    <div class="employee-card">
+        <div class="employee-name"><strong>{{ employee.first_name }} {{ employee.last_name }}</strong></div>
+        <div class="employee-details">
+            <p><strong>Position:</strong> {{ employee.position }}</p>
+            <p><strong>Phone:</strong> {{ employee.phone }}</p>
+            <p><strong>Hall:</strong> {{ employee.exhibit_set.first.hall.name }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p style="margin-top:10px">No employees found for the specified floor.</p>
+{% endif %}
+
+{% endblock %}

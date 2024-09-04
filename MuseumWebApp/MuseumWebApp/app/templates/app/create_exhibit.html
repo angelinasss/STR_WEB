@@ -1,0 +1,53 @@
+{% extends "app/newlayout.html" %}
+
+{% block content %}
+
+<h1>Create An Exhibit In {{hall.name}} Hall</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="art_type">Art Type</label>
+        <select id="art_type" name="art_type" class="form-control">
+            {% for art_type in art_types %}
+            <option value="{{ art_type.id }}">
+                {{ art_type.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="date_acquired">Date Acquired</label>
+        <input type="date" id="date_acquired" name="date_acquired" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="caretaker">Caretaker</label>
+        <select id="caretaker" name="caretaker" class="form-control">
+            {% for caretaker in caretakers %}
+            <option value="{{ caretaker.id }}">
+                {{ caretaker.first_name }} {{ caretaker.last_name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert
+         {% if message.tags == 'error' %}
+             alert-danger
+         {% else %}
+             alert-success
+         {% endif %}
+         text-center" style="margin-top:10px">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+</form>
+
+{% endblock %}

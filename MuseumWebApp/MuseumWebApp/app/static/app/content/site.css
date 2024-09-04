@@ -1,0 +1,110 @@
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.navbar-brand {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.navbar-header {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.navbar-right {
+    white-space: nowrap;
+}
+
+.is-invalid {
+    border-color: red; 
+}
+
+.invalid-feedback {
+    color: red; 
+    margin-top: 10px; 
+}
+
+.sidebar-menu {
+    padding-left: 20px;
+    padding-top: 30px; 
+    max-width: 300px; 
+    margin-left: 20px; 
+}
+
+.custom-menu {
+    width: 75%; 
+}
+
+.custom-menu-item {
+    width: 100%;
+    text-align: center; 
+    margin-bottom: 10px;
+}
+
+.container-fluid.body-content {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.employee-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    padding: 15px;
+    transition: box-shadow 0.3s ease;
+}
+
+    .employee-card:hover {
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .employee-card strong {
+        color: #555;
+    }
+
+.employee-details {
+    margin: 10px 0;
+}
+
+.employee-name {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}

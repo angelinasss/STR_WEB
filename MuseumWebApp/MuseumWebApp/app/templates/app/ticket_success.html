@@ -1,0 +1,61 @@
+{% extends "app/newlayout.html" %}
+
+{% block content %}
+<div class="success-container">
+    <div class="success-content">
+        <h1>Purchase Successful</h1>
+        <p>Your ticket has been successfully purchased!</p>
+        <a href="{% url 'all_exhibitions' %}" class="back-link">View More Exhibitions</a>
+    </div>
+</div>
+
+<style>
+    .success-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        font-family: 'Arial', sans-serif;
+    }
+
+    .success-content {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 500px;
+        width: 100%;
+    }
+
+        .success-content h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #4CAF50;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .success-content p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #333333;
+        }
+
+    .back-link {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #4CAF50;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+        .back-link:hover {
+            background-color: #45a049;
+        }
+</style>
+{% endblock %}

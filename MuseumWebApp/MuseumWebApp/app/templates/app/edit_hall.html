@@ -1,0 +1,42 @@
+{% extends "app/newlayout.html" %}
+
+{% block content %}
+
+<h1>Hall Information Editing</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="number">Number</label>
+        <input type="number" id="number" name="number" value="{{hall.number}}" class="form-control {% if messages %}{% for message in messages %}{% if message.tags == 'error' %}is-invalid{% endif %}{% endfor %}{% endif %}" required>
+    </div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" value="{{hall.name}}" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="floor">Floor</label>
+        <input type="number" id="floor" name="floor" value="{{hall.floor}}" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="area">Area</label>
+        <input type="text" id="area" name="area" value="{{hall.area}}" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Save changes</button>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert
+            {% if message.tags == 'error' %}
+                alert-danger
+            {% else %}
+                alert-success
+            {% endif %}
+            text-center" style="margin-top:10px">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+</form>
+
+{% endblock %}

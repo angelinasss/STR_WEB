@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+    <h1>Frequently Asked Questions</h1>
+
+    <form action="create_FAQ/">
+        {% csrf_token %}
+        {% if user.is_superuser %}
+        <button id="showFormButton" class="btn btn-primary" style="margin-bottom: 20px;">Add FAQ</button>
+        {% endif %}
+    </form>
+
+    <ul>
+        {% for faq in faqs %}
+        <li style="margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
+            <strong>{{ faq.question }}</strong>
+            <p>{{ faq.answer }}</p>
+            <small>Added on: {{ faq.added_date }}</small><br>
+            {% if user.is_superuser %}
+            <a href="edit_FAQ/{{faq.id}}" class="btn btn-warning">Edit</a>
+            <a href="delete_FAQ/{{faq.id}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this faq?');">Delete</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

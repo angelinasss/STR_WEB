@@ -1,0 +1,94 @@
+{% extends "app/newlayout.html" %}
+
+{% block content %}
+{% load static %}
+
+<style>
+    .hall-item {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .hall-item h3 {
+            margin: 0 0 10px;
+            font-size: 24px;
+        }
+
+        .hall-item p {
+            margin: 5px 0;
+        }
+
+        .hall-item a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+            .hall-item a:hover {
+                text-decoration: underline;
+            }
+
+    .hall-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+        .hall-actions a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #007bff;
+        }
+
+            .hall-actions a:hover {
+                background-color: #0056b3;
+            }
+
+    .add-hall-btn {
+        margin-bottom: 20px;
+        padding: 10px 15px;
+        border: 1px solid #28a745;
+        border-radius: 5px;
+        background-color: #28a745;
+        color: #fff;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .add-hall-btn:hover {
+            background-color: #218838;
+        }
+</style>
+
+<div class="container">
+    <h2 class="text-center mt-4">Exhibits received by the museum over the past six months</h2>
+
+    <a href="{% url 'create_new_exhibit' %}" class="add-hall-btn">Create New Exhibit</a>
+
+    <div class="hall-list">
+        {% for exhibit in exhibits %}
+        <div class="hall-item">
+            <div>
+                <h3>{{ exhibit.name }}</h3>
+                <p><strong>Art Type:</strong> {{ exhibit.art_type }}</p>
+                <p><strong>Hall:</strong> {{ exhibit.hall }}</p>
+                <p><strong>Date acquired:</strong> {{ exhibit.date_acquired }}</p>
+                <p><strong>Caretaker:</strong> {{ exhibit.caretaker }} </p>
+            </div>
+            <div class="hall-actions">
+                <a href="{% url 'edit_exhibit' exhibit.id %}">Edit</a>
+                <a href="{% url 'delete_exhibit' exhibit.id %}" onclick="return confirm('Are you sure you want to delete this exhibit?');">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

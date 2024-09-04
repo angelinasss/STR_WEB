@@ -1,0 +1,34 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h1>About Company</h1>
+
+{% if info %}
+<p>{{ info.description }}</p>
+    {% if info.logo %}
+<img src="{{ info.logo.url }}" alt="Company Logo">
+    {% endif %}
+    {% if info.video %}
+<h3>Company Video</h3>
+<iframe width="560" height="315" src="{{ info.video }}" frameborder="0" allowfullscreen></iframe>
+    {% endif %}
+    {% if info.history %}
+<h3>Company History</h3>
+<p>{{ info.history }}</p>
+    {% endif %}
+    {% if info.details %}
+<h3>Company Details</h3>
+<p>{{ info.details }}</p>
+    {% endif %}
+{% if user.is_superuser %}
+<a href="edit_company_info/" class="btn btn-primary">Edit Information</a>
+{% endif %}
+{% else %}
+<p>No company information available.</p>
+{% if user.is_superuser %}
+<a href="edit_company_info/" class="btn btn-primary">Add Information</a>
+{% endif %}
+{% endif %}
+
+{% endblock %}

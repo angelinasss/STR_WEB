@@ -1,0 +1,57 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+<h1>News Editing</h1>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" value="{{article.title}}" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="image">Image</label>
+        {% if article.image %}
+        <div>
+            <img id="image-preview" src="{{ article.image.url }}" alt="{{ article.title }}" style="max-width: 200px; height: auto;">
+        </div>
+        {% else %}
+        <div>
+            <img id="image-preview" src="" alt="No image" style="max-width: 200px; height: auto;">
+        </div>
+        {% endif %}
+        <input type="file" id="image" name="image" class="form-control" onchange="previewImage()">
+    </div>
+    <div class="form-group">
+        <label for="short_description">Short Description</label>
+        <input type="text" id="short_description" name="short_description" value="{{article.short_description}}" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="content">Content</label>
+        <textarea id="content" name="content" class="form-control" rows="5" required>{{ article.content }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<p>Created at (Your Time Zone): {{ published_at_user_tz }} ({{ user_timezone }})</p>
+<p>Created at (UTC): {{ published_at_utc }} (UTC)</p>
+
+
+<script>
+    function previewImage() {
+        var file = document.getElementById('image').files[0];
+        var preview = document.getElementById('image-preview');
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = ""; // Default image or no image
+        }
+    }
+</script>
+
+{% endblock %}

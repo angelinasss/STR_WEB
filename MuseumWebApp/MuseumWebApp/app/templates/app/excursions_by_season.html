@@ -1,0 +1,53 @@
+{% extends "app/newlayout.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
+    <h1 style="text-align: center; font-size: 2em; margin-bottom: 20px;">Excursions in {{ selected_season|capfirst }} Season</h1>
+
+    <form method="POST" style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        {% csrf_token %}
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label for="season" style="font-size: 1.2em;">Select Season:</label>
+            <select id="season" name="season" class="form-control" style="width: 100%; padding: 8px; font-size: 1em; border: 1px solid #ccc; border-radius: 4px;">
+                <option value="winter" {% if selected_season == 'winter' %}selected{% endif %}>Winter</option>
+                <option value="spring" {% if selected_season == 'spring' %}selected{% endif %}>Spring</option>
+                <option value="summer" {% if selected_season == 'summer' %}selected{% endif %}>Summer</option>
+                <option value="autumn" {% if selected_season == 'autumn' %}selected{% endif %}>Autumn</option>
+            </select>
+        </div>
+
+        <button type="submit" style="background-color: #007bff; color: #fff; padding: 10px 20px; font-size: 1em; border: none; border-radius: 4px; cursor: pointer;">
+            Search
+        </button>
+    </form>
+
+    {% if total_excursions > 0 %}
+    <h2 style="margin-top: 40px; font-size: 1.5em; color: #333;">Results:</h2>
+    <p>Total Excursions: <strong>{{ total_excursions }}</strong></p>
+    <ul style="list-style: none; padding: 0;">
+        {% for excursion in excursions %}
+        <li style="background-color: #eef; margin-bottom: 10px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            <div style="font-size: 1.2em; font-weight: bold; margin-bottom: 5px;">
+                {{ excursion.name }} (Code: {{ excursion.code }})
+            </div>
+            <div style="font-size: 1em; color: #555;">Date: {{ excursion.date|date:"Y-m-d" }}</div>
+            <div style="font-size: 1em; color: #555;">Group Size: {{ excursion.group_size }}</div>
+            <div style="font-size: 1em; color: #555;">Guide: {{ excursion.guide }}</div>
+            <div style="font-size: 1em; color: #555;">Price: {{ excursion.price }}</div>
+            <div style="margin-top: 10px;">
+                <a href="{% url 'excursion_edit' excursion.id %}" style="margin-right: 10px; color: #007bff; text-decoration: none; font-weight: bold;">Edit</a>
+                <form method="POST" action="{% url 'excursion_delete' excursion.id %}?seasonn={{ selected_season }}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background: none; border: none; color: #d9534f; text-decoration: underline;" onclick="return confirm('Are you sure you want to delete this excursion?');">
+                        Delete
+                    </button>
+                </form>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p style="margin-top: 20px; font-size: 1.2em; color: #d9534f;">No excursions found for the selected season.</p>
+    {% endif %}
+</div>
+{% endblock %}

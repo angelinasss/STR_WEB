@@ -1,0 +1,56 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+<h1>Edit Company Information</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" class="form-control" rows="5" required>{{ info.description|default_if_none:'' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="logo">Company Logo</label>
+        {% if info.logo %}
+        <img id="image-preview" src="{{ info.logo.url }}" alt="Company Logo" style="max-width: 200px; height: auto;">
+        {% else %}
+        <div>
+            <img id="image-preview" src="" alt="No image" style="max-width: 200px; height: auto;">
+        </div>
+        {% endif %}
+        <input type="file" id="image" name="image" class="form-control" onchange="previewImage()">
+    </div>
+    <div class="form-group">
+        <label for="video">Video URL</label>
+        <input type="url" id="video" name="video" value="{{ info.video|default_if_none:'' }}" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="history">History</label>
+        <textarea id="history" name="history" class="form-control" rows="5">{{ info.history|default_if_none:'' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="details">Company Details</label>
+        <textarea id="details" name="details" class="form-control" rows="5">{{ info.details|default_if_none:'' }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+
+<script>
+    function previewImage() {
+        var file = document.getElementById('image').files[0];
+        var preview = document.getElementById('image-preview');
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = ""; // Default image or no image
+        }
+    }
+</script>
+
+{% endblock %}

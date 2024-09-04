@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Museum Web App</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/" class="navbar-brand navbar-left">Museum</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'about' %}">About</a></li>
+                    <li><a href="{% url 'news' %}">News</a></li>
+                    <li><a href="{% url 'faq' %}">FAQ</a></li>
+                    <li><a href="{% url 'contact' %}">Contacts</a></li>
+                    <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'vacancies' %}">Vacancies</a></li>
+                    <li><a href="{% url 'reviews' %}">Reviews</a></li>
+                    <li><a href="{% url 'promo_codes' %}">Promo Codes</a></li>
+                </ul>
+                {% include 'app/loginpartial.html' %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid body-content">
+        <div class="row">
+            <div class="col-md-3 sidebar-menu">
+                <!-- Sidebar Menu -->
+                {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                <!-- Admin Menu -->
+                <div class="list-group custom-menu">
+                    <a href="{% url 'hall_info' %}" class="list-group-item custom-menu-item">Hall and Exhibit Information</a>
+                    <a href="{% url 'newest_exhibits' %}" class="list-group-item custom-menu-item">Newest Exhibits</a>
+                    <a href="{% url 'employees_by_floor' %}" class="list-group-item custom-menu-item">Employees by Floor</a>
+                    <a href="{% url 'excursions_by_season' %}" class="list-group-item custom-menu-item">Excursions by Season</a>
+                    <a href="{% url 'exhibits_by_arrival_date' %}" class="list-group-item custom-menu-item">Exhibits by Arrival Date</a>
+                    <a href="{% url 'create_excursion' %}" class="list-group-item custom-menu-item">Add Excursion/Exhibition</a>
+                </div>
+                {% elif is_employee %}
+                <!-- Employee Menu -->
+                <div class="list-group custom-menu">
+                    <a href="{% url 'my_exhibits' %}" class="list-group-item custom-menu-item">My Exhibits</a>
+                    <a href="{% url 'my_excursions' %}" class="list-group-item custom-menu-item">My Excursions</a>
+                    <a href="{% url 'hall_info' %}" class="list-group-item custom-menu-item">Halls</a>
+                    <a href="{% url 'all_exhibits' %}" class="list-group-item custom-menu-item">Exhibits</a>
+                </div>
+                {% else %}
+                <!-- Regular User Menu -->
+                <div class="list-group custom-menu">
+                    <a href="{% url 'all_excursions' %}" class="list-group-item custom-menu-item">Excursions</a>
+                    <a href="{% url 'all_exhibitions' %}" class="list-group-item custom-menu-item">Exhibitions</a>
+                    <a href="{% url 'my_tickets' %}" class="list-group-item custom-menu-item">My Tickets</a>
+                    <a href="{% url 'hall_info' %}" class="list-group-item custom-menu-item">Halls</a>
+                    <a href="{% url 'all_exhibits' %}" class="list-group-item custom-menu-item">Exhibits</a>
+                </div>
+                {% endif %}
+                {% else %}
+                <div class="list-group custom-menu">
+                    <a href="{% url 'all_excursions' %}" class="list-group-item custom-menu-item">Excursions</a>
+                    <a href="{% url 'all_exhibitions' %}" class="list-group-item custom-menu-item">Exhibitions</a>
+                    <a href="{% url 'hall_info' %}" class="list-group-item custom-menu-item">Halls</a>
+                    <a href="{% url 'all_exhibits' %}" class="list-group-item custom-menu-item">Exhibits</a>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-9">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
+    <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
+    <script src="{% static 'app/scripts/respond.js' %}"></script>
+    {% block scripts %}{% endblock %}
+
+</body>
+</html>

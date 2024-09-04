@@ -1,0 +1,55 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h1>Create Employee</h1>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="photo">Photo:</label>
+        <input type="file" name="photo" id="photo" required>
+    </div>
+
+    <div class="form-group">
+        <label for="first_name">First Name:</label>
+        <input type="text" name="first_name" id="first_name" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="first_name">Last Name:</label>
+        <input type="text" name="last_name" id="last_name" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input type="text" name="phone" id="phone" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="position">Position:</label>
+        <select name="position" id="position" required>
+            {% for pos in positions %}
+            <option value="{{ pos.id }}">{{ pos.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="hall">Hall:</label>
+        <select name="hall" id="hall" required>
+            {% for hall in halls %}
+            <option value="{{ hall.id }}">{{ hall.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+    {% endblock %}
