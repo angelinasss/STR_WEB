@@ -1,12 +1,30 @@
-{% extends "app/newlayout.html" %}
+{% extends "app/layout.html" %}
 
 {% block content %}
 <div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
     <h1 style="text-align: center; font-size: 2em; margin-bottom: 20px;">Excursions</h1>
 
+    <!-- Sorting Options -->
+    <div style="margin-bottom: 20px;">
+        <form method="GET" action="{% url 'all_excursions' %}">
+            <label for="sort_by">Sort by:</label>
+            <select id="sort_by" name="sort_by" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                <option value="date_asc" {% if sort_by == 'date_asc' %}selected{% endif %}>Date (Ascending)</option>
+                <option value="date_desc" {% if sort_by == 'date_desc' %}selected{% endif %}>Date (Descending)</option>
+                <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
+                <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
+                <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>Price (Low to High)</option>
+                <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>Price (High to Low)</option>
+            </select>
+            <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; margin-left: 10px;">Sort</button>
+        </form>
+    </div>
+
     {% if excursions %}
     <ul style="list-style: none; padding: 0;">
         {% for excursion in excursions %}
+        <form action="{% url 'purchase_ticket_excursion' excursion.id %}" method="POST">
+            {% csrf_token %}
         <li style="background-color: #eef; margin-bottom: 10px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
             <div style="font-size: 1.2em; font-weight: bold; margin-bottom: 5px;">
                 {{ excursion.name }} (Code: {{ excursion.code }})
@@ -17,11 +35,18 @@
             <div style="font-size: 1em; color: #555;">Guide: {{ excursion.guide }}</div>
             <div style="font-size: 1em; color: #555;">Price: {{ excursion.price }}</div>
             {% if user.is_authenticated %}
-            <a href="purchase_ticket_excursion/{{excursion.id}}" class="purchase-btn">Purchase Ticket</a>
+            {% if not is_employee %}
+            <div style="margin-bottom: 10px;">
+                <label for="promo_code" style="font-size: 1em; color: #555;">Enter Promo Code:</label>
+                <input type="text" id="promo_code" name="promo_code" placeholder="Enter promo code" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+            </div>
+            <button type="submit" class="purchase-btn" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px;">Purchase Ticket</button>
+            {% endif %}
             {% else %}
             <p style="color: #d9534f; font-size: 1em;">Please log in to purchase a ticket.</p>
             {% endif %}
         </li>
+        </form>
         {% endfor %}
     </ul>
     {% else %}

@@ -1,11 +1,15 @@
-{% extends "app/newlayout.html" %}
+{% extends "app/layout.html" %}
 
 {% block content %}
 
 <h1>Create An Exhibit</h1>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
+    <div class="form-group">
+        <label for="image">Image</label>
+        <input type="file" id="image" name="image">
+    </div>
     <div class="form-group">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" class="form-control" required>

@@ -21,6 +21,7 @@ urlpatterns = [
     re_path(r'^faq/edit_FAQ/(?P<id>\d+)/$', views.edit_FAQ, name='edit_faq'),
     re_path(r'^faq/delete_FAQ/(?P<id>\d+)/$', views.delete_FAQ, name='delete_faq'),
     re_path(r'^contact/$', views.contact, name='contact'),
+     re_path(r'^employee_list/$', views.employee_list, name='employee_list'),
     re_path(r'^contact/contact_create/$', views.contact_create, name='contact_create'),
     re_path(r'^contact/contact_delete/(?P<id>\d+)/$', views.contact_delete, name='contact_delete'),
     re_path(r'^vacancies/$', views.vacancies, name='vacancies'),
@@ -68,6 +69,7 @@ urlpatterns = [
     re_path(r'^hall_detail/(?P<id>\d+)/create_exhibit/$', views.create_exhibit, name='create_exhibit'),
     re_path(r'^hall_detail/(?P<id>\d+)/edit_exhibit/$', views.edit_exhibit, name='edit_exhibit'),
     re_path(r'^hall_detail/(?P<id>\d+)/delete_exhibit/$', views.delete_exhibit, name='delete_exhibit'),
+    re_path(r'^statistics/$', views.statistics, name='statistics'),
     re_path(
         r'^login/$',
         LoginView.as_view(

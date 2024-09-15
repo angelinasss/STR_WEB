@@ -94,13 +94,13 @@
     <Content Include="app\templates\app\my_tickets.html" />
     <Content Include="app\templates\app\nationality.html" />
     <Content Include="app\templates\app\newest_exhibits.html" />
-    <Content Include="app\templates\app\newlayout.html" />
     <Content Include="app\templates\app\news.html" />
     <Content Include="app\templates\app\privacy_policy.html" />
     <Content Include="app\templates\app\profile.html" />
     <Content Include="app\templates\app\promo_codes.html" />
     <Content Include="app\templates\app\register.html" />
     <Content Include="app\templates\app\reviews.html" />
+    <Content Include="app\templates\app\statistics.html" />
     <Content Include="app\templates\app\ticket_success.html" />
     <Content Include="app\templates\app\ticket_success_excursion.html" />
     <Content Include="app\templates\app\vacancies.html" />

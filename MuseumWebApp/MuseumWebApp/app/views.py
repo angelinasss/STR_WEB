@@ -11,34 +11,67 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.contrib import messages
 import calendar
-from datetime import datetime
+from datetime import date
 from django.db.models import Q, Count
 from django.urls import reverse
 from django.http import JsonResponse
+from decimal import Decimal
+from django.db.models import Count, Sum, Avg, Max, DecimalField
+from django.db.models.functions import Coalesce
+from statistics import mode, median
+import calendar
+from django.db.models.functions import Cast
 
 def home(request):
     latest_article = Article.objects.order_by('-published_at').first()
-    
-    api_key = 'a1fcf314c6d72c6c6abfcd3396aab59b'
-    city = request.GET.get('city', 'Minsk')  
-    url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
-
-    response = requests.get(url)
-    weather_data = response.json()
     
     year = datetime.now().year
     month = datetime.now().month
     cal = calendar.TextCalendar(calendar.SUNDAY)
     month_calendar = cal.formatmonth(year, month)
+
+    weather_data = None
+    city = None
+    temperature = None
+    description = None
+    
+    # ѕровер€ем, авторизован ли пользователь
+    if request.user.is_authenticated:
+        try:
+            employee = Employee.objects.get(user=request.user)
+            is_employee = True
+        except Employee.DoesNotExist:
+            employee = None
+            is_employee = False
+        
+        # ¬ыполн€ем запрос к API только дл€ авторизованных пользователей
+        api_key = 'a1fcf314c6d72c6c6abfcd3396aab59b'
+        city = request.GET.get('city', 'Minsk')  
+        url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
+
+        response = requests.get(url)
+        if response.status_code == 200:
+            weather_data = response.json()
+            temperature = weather_data['main']['temp']
+            description = weather_data['weather'][0]['description']
+        else:
+            # ќбработка ошибок API
+            temperature = 'N/A'
+            description = 'Error retrieving weather data'
+    else:
+        is_employee = False
+        temperature = 'Login required to see weather data'
+        description = ''
     
     context = {
         'title': 'Home',
         'article': latest_article,
         'city': city,
-        'temperature': weather_data['main']['temp'],
-        'description': weather_data['weather'][0]['description'],
+        'temperature': temperature,
+        'description': description,
         'calendar': month_calendar,
-        'year': datetime.now().year,
+        'is_employee': is_employee,
+        'year': year,
     }
 
     assert isinstance(request, HttpRequest)
@@ -47,6 +80,17 @@ def home(request):
 
 def contact(request):
     employees = Employee.objects.all()
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -54,6 +98,36 @@ def contact(request):
         {
             'title':'Contact',
             'employees': employees,
+            'is_employee' : is_employee,
+            'year':datetime.now().year,
+        }
+    )
+
+def employee_list(request):
+    sort_order = request.GET.get('sort', None)
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+
+    if sort_order == 'asc':
+        employees = Employee.objects.all().order_by('last_name')
+    else:
+        employees = Employee.objects.all()
+
+    return render(
+        request,
+        'app/contact.html',
+        {
+            'title':'Contact',
+            'employees': employees,
+            'is_employee' : is_employee,
             'year':datetime.now().year,
         }
     )
@@ -102,6 +176,17 @@ def contact_delete(request, id):
 
 def about(request):
     company_info = CompanyInfo.objects.first()
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -109,6 +194,7 @@ def about(request):
         {
             'title':'About',
             'info': company_info,
+            'is_employee' : is_employee,
             'year':datetime.now().year,
         }
     )
@@ -133,6 +219,17 @@ def edit_company_info(request):
 
 def news(request):
     articles = Article.objects.all()
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -140,6 +237,7 @@ def news(request):
         {
             'title':'News',
             'articles': articles,
+            'is_employee' : is_employee,
             'year':datetime.now().year,
         }
     )
@@ -211,18 +309,41 @@ def editArticle(request, id):
     
 def article_detail(request, id):
     article = Article.objects.get(id=id)
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+
     return render(
         request,
         'app/article_detail.html',
         {
             'title': article.title,
             'article': article,
+            'is_employee' : is_employee,
             'year': datetime.now().year,
         }
     )
 
 def faq(request):
     faqs = FAQ.objects.all()
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -230,6 +351,7 @@ def faq(request):
         {
             'title':'FAQ',
             'faqs': faqs,
+            'is_employee' : is_employee,
             'year':datetime.now().year,
         }
     )
@@ -285,6 +407,17 @@ def edit_FAQ(request, id):
 
 def vacancies(request):
     jobs = Job.objects.all()
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -292,6 +425,7 @@ def vacancies(request):
         {
             'title':'Vacancies',
             'jobs': jobs,
+            'is_employee' : is_employee,
             'year':datetime.now().year,
         }
     )
@@ -349,6 +483,17 @@ def edit_job(request, id):
 
 def reviews(request):
     reviews = Review.objects.all()
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -356,6 +501,7 @@ def reviews(request):
         {
             'title':'Reviews',
             'reviews': reviews,
+            'is_employee' : is_employee,
             'year':datetime.now().year,
         }
     )
@@ -399,6 +545,17 @@ def edit_review(request, id):
 
 def privacy_policy(request):
     policy = PrivacyPolicy.objects.first()
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -406,6 +563,7 @@ def privacy_policy(request):
         {
             'title':'Privacy Policy',
             'policy': policy,
+            'is_employee' : is_employee,
             'year':datetime.now().year,
         }
     )
@@ -414,6 +572,16 @@ def promo_codes(request):
     all_promo_codes = PromoCode.objects.all()
 
     today = timezone.now().date()
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
 
     for promo_code in all_promo_codes:
         if promo_code.expiration_date < today:
@@ -431,6 +599,7 @@ def promo_codes(request):
             'title':'Promo Codes',
             'active_promo_codes': active_promo_codes,
             'expired_promo_codes': expired_promo_codes,
+            'is_employee' : is_employee,
             'year':datetime.now().year,
         }
     )
@@ -572,12 +741,15 @@ def register(request):
     
 @login_required
 def profile(request, id):
-    try:
-       employee = Employee.objects.get(user=request.user)
-       is_employee = True
-    except Employee.DoesNotExist:
-       employee = None
-       is_employee = False
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
     
     user = User.objects.get(id=request.user.id)
 
@@ -659,13 +831,47 @@ def profile(request, id):
        })
 
 def hall_info(request):
-
+    # ѕолучаем все залы
     halls = Hall.objects.all()
-        
+
+    # ѕолучаем параметр сортировки из запроса GET
+    sort_by = request.GET.get('sort_by', 'name_asc')
+
+    # ѕримен€ем сортировку
+    if sort_by == 'name_asc':
+        halls = halls.order_by('name')
+    elif sort_by == 'name_desc':
+        halls = halls.order_by('-name')
+    elif sort_by == 'number_asc':
+        halls = halls.order_by('number')
+    elif sort_by == 'number_desc':
+        halls = halls.order_by('-number')
+    elif sort_by == 'area_asc':
+        halls = halls.order_by('area')
+    elif sort_by == 'area_desc':
+        halls = halls.order_by('-area')
+    elif sort_by == 'floor_asc':
+        halls = halls.order_by('floor')
+    elif sort_by == 'floor_desc':
+        halls = halls.order_by('-floor')
+
+    # ѕровер€ем, авторизован ли пользователь
+    if request.user.is_authenticated:
+        try:
+            employee = Employee.objects.get(user=request.user)
+            is_employee = True
+        except Employee.DoesNotExist:
+            is_employee = False
+    else:
+        is_employee = False
+
+    # ¬озвращаем ответ с отсортированными залами
     return render(request, 'app/hall_info.html', {
         'title': 'Hall Information',
         'halls': halls,
-        'year':datetime.now().year,
+        'is_employee': is_employee,
+        'sort_by': sort_by,  # ѕередаем выбранную сортировку в шаблон
+        'year': datetime.now().year,
     })
 
 def edit_hall(request, id):
@@ -777,11 +983,22 @@ def hall_detail(request, id):
     hall = Hall.objects.get(id=id)
         
     exhibits = Exhibit.objects.filter(hall=hall)
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
         
     return render(request, 'app/hall_detail.html', {
         'title': 'Hall Information',
         'exhibits': exhibits,
         'hall' : hall,
+        'is_employee' : is_employee,
         'year':datetime.now().year,
     })
 
@@ -798,6 +1015,8 @@ def edit_exhibit(request, id):
         exhibit.art_type = ArtType.objects.get(id=request.POST.get("art_type"))
         exhibit.date_acquired = request.POST['date_acquired']
         exhibit.hall = Hall.objects.get(id=request.POST.get("hall"))
+        if request.FILES.get('image'):
+               exhibit.image = request.FILES['image']
         exhibit.caretaker = Employee.objects.get(id=request.POST.get("caretaker"))
         exhibit.save()
 
@@ -845,6 +1064,8 @@ def create_exhibit(request, id):
         exhibit.art_type = ArtType.objects.get(id=request.POST.get("art_type"))
         exhibit.date_acquired = request.POST.get("date_acquired")
         exhibit.caretaker = Employee.objects.get(id=request.POST.get("caretaker"))
+        if request.FILES.get('image'):
+           exhibit.image = request.FILES['image']
         exhibit.save()
             
         messages.success(request, 'Exhibit has been created successfully.')
@@ -914,7 +1135,10 @@ def create_new_exhibit(request):
         exhibit.name = request.POST.get("name")
         exhibit.art_type = ArtType.objects.get(id=request.POST.get("art_type"))
         exhibit.date_acquired = request.POST.get("date_acquired")
+        if request.FILES.get('image'):
+           exhibit.image = request.FILES['image']
         exhibit.caretaker = Employee.objects.get(id=request.POST.get("caretaker"))
+        
         exhibit.save()
             
         messages.success(request, 'Exhibit has been created successfully.')
@@ -1243,12 +1467,15 @@ def excursion_edit(request, id):
         )
     
 def my_exhibits(request):
-    try:
-       employee = Employee.objects.get(user=request.user)
-       is_employee = True
-    except Employee.DoesNotExist:
-       employee = None
-       is_employee = False
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
        
     user = request.user
     employee = Employee.objects.get(user=user)
@@ -1266,12 +1493,15 @@ def my_exhibits(request):
     )
 
 def my_excursions(request):
-    try:
-       employee = Employee.objects.get(user=request.user)
-       is_employee = True
-    except Employee.DoesNotExist:
-       employee = None
-       is_employee = False
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
 
     user = request.user
     employee = Employee.objects.get(user=user)
@@ -1291,30 +1521,87 @@ def my_excursions(request):
 
 def all_excursions(request):
     current_date = timezone.now().date()
-
     excursions = Excursion.objects.filter(date__gte=current_date)
+
+    sort_by = request.GET.get('sort_by', None)
+    
+    if sort_by == 'date_asc':
+        excursions = excursions.order_by('date')
+    elif sort_by == 'date_desc':
+        excursions = excursions.order_by('-date')
+    elif sort_by == 'name_asc':
+        excursions = excursions.order_by('name')
+    elif sort_by == 'name_desc':
+        excursions = excursions.order_by('-name')
+    elif sort_by == 'price_asc':
+        excursions = excursions.order_by('price')
+    elif sort_by == 'price_desc':
+        excursions = excursions.order_by('-price')
+
+    if request.user.is_authenticated:
+        try:
+            employee = Employee.objects.get(user=request.user)
+            is_employee = True
+        except Employee.DoesNotExist:
+            is_employee = False
+    else:
+        is_employee = False
             
     return render(
         request,
         'app/all_excursions.html',
         {
             'title': 'Excursions',
+            'is_employee': is_employee,
             'excursions': excursions,
+            'sort_by' : sort_by,
             'year': datetime.now().year,
         }
     )
 
+from django.shortcuts import render
+from django.utils import timezone
+from .models import Exhibition
+from datetime import datetime
+
 def all_exhibitions(request):
     current_date = timezone.now().date()
-
     exhibitions = Exhibition.objects.filter(end_date__gte=current_date)
+
+    # Get the sort option from the request
+    sort_by = request.GET.get('sort_by', None)
+    
+    # Apply sorting based on the query parameter
+    if sort_by == 'date_asc':
+        exhibitions = exhibitions.order_by('start_date')
+    elif sort_by == 'date_desc':
+        exhibitions = exhibitions.order_by('-start_date')
+    elif sort_by == 'name_asc':
+        exhibitions = exhibitions.order_by('name')
+    elif sort_by == 'name_desc':
+        exhibitions = exhibitions.order_by('-name')
+    elif sort_by == 'price_asc':
+        exhibitions = exhibitions.order_by('price')
+    elif sort_by == 'price_desc':
+        exhibitions = exhibitions.order_by('-price')
+
+    if request.user.is_authenticated:
+        try:
+            employee = Employee.objects.get(user=request.user)
+            is_employee = True
+        except Employee.DoesNotExist:
+            is_employee = False
+    else:
+        is_employee = False
             
     return render(
         request,
         'app/all_exhibitions.html',
         {
             'title': 'Exhibitions',
+            'is_employee': is_employee,
             'exhibitions': exhibitions,
+            'sort_by' : sort_by,
             'year': datetime.now().year,
         }
     )
@@ -1322,12 +1609,29 @@ def all_exhibitions(request):
 @login_required
 def purchase_ticket_exhibition(request, id):
     exhibition = Exhibition.objects.get(id=id)
+    
+    promo_code_input = request.POST.get('promo_code', '').strip()
 
+    promo_code = None
+    total_price = exhibition.price
+    
+    if promo_code_input:
+        try:
+            promo_code = PromoCode.objects.get(
+                code=promo_code_input,
+                is_active=True,
+                expiration_date__gte=date.today()
+            )
+            total_price = exhibition.price - exhibition.price * promo_code.discount * Decimal('0.01')
+        except PromoCode.DoesNotExist:
+            promo_code = None
+            
     ticket = Ticket_Exhibition.objects.create(
         visitor=request.user,
         exhibition=exhibition,
         purchase_date=timezone.now(),
-        discount_code = None
+        promo_code=promo_code,
+        total_price = total_price
     )
     return render(
     request,
@@ -1341,12 +1645,28 @@ def purchase_ticket_exhibition(request, id):
 @login_required
 def purchase_ticket_excursion(request, id):
     excursion = Excursion.objects.get(id=id)
+    promo_code_input = request.POST.get('promo_code', '').strip()
+
+    promo_code = None
+    total_price = excursion.price
+    
+    if promo_code_input:
+        try:
+            promo_code = PromoCode.objects.get(
+                code=promo_code_input,
+                is_active=True,
+                expiration_date__gte=date.today()
+            )
+            total_price = excursion.price - excursion.price * promo_code.discount * Decimal('0.01')
+        except PromoCode.DoesNotExist:
+            promo_code = None
 
     ticket = Ticket_Excursion.objects.create(
         visitor=request.user,
         excursion=excursion,
-        purchase_date=timezone.now(),
-        discount_code = None
+        promo_code=promo_code,
+        total_price = total_price,
+        purchase_date=timezone.now()
     )
     return render(
     request,
@@ -1373,17 +1693,49 @@ def my_tickets(request):
     }
     )
 
+from django.shortcuts import render
+from .models import Exhibit
+
 def all_exhibits(request):
     exhibits = Exhibit.objects.all()
-    
+
+    # ѕолучение параметра сортировки из GET-запроса
+    sort_by = request.GET.get('sort_by', 'name_asc')
+
+    # ѕрименение сортировки
+    if sort_by == 'name_asc':
+        exhibits = exhibits.order_by('name')
+    elif sort_by == 'name_desc':
+        exhibits = exhibits.order_by('-name')
+    elif sort_by == 'date_asc':
+        exhibits = exhibits.order_by('date_acquired')
+    elif sort_by == 'date_desc':
+        exhibits = exhibits.order_by('-date_acquired')
+    elif sort_by == 'hall_asc':
+        exhibits = exhibits.order_by('hall')
+    elif sort_by == 'hall_desc':
+        exhibits = exhibits.order_by('-hall')
+
+    # ѕроверка авторизации пользовател€
+    if request.user.is_authenticated:
+        try:
+            employee = Employee.objects.get(user=request.user)
+            is_employee = True
+        except Employee.DoesNotExist:
+            is_employee = False
+    else:
+        is_employee = False
+
     return render(
-    request,
-    'app/all_exhibits.html',
-    {
-        'title': 'Exhibits',
-        'exhibits' : exhibits,
-        'year': datetime.now().year,
-    }
+        request,
+        'app/all_exhibits.html',
+        {
+            'title': 'Exhibits',
+            'exhibits': exhibits,
+            'is_employee': is_employee,
+            'sort_by': sort_by,  # ѕередаем выбранное значение сортировки в шаблон
+            'year': datetime.now().year,
+        }
     )
 
 @login_required
@@ -1431,3 +1783,76 @@ def nationality_by_name(request):
     
     except requests.RequestException as e:
         return render(request, 'app/nationality.html', {'error': str(e)})
+    
+def statistics(request):
+    context = {}
+
+    # Check if the user has selected to view excursion or exhibition sales
+    sale_type = request.GET.get('sale_type', 'Excursion')  # Default to excursions
+    
+    total_tickets_sold = 0;
+    if sale_type == 'Excursion':
+        tickets = Ticket_Excursion.objects.all()
+        excursions = Excursion.objects.all()
+        total_tickets_sold = tickets.count;
+        labels = list(excursions.values_list('name', flat=True))
+        sales_data =  [
+            Ticket_Excursion.objects.filter(excursion=excursion).count() for excursion in excursions
+            ]
+        context['sales_type'] = 'Excursion'
+    else:
+        tickets = Ticket_Exhibition.objects.all()
+        exhibitions = Exhibition.objects.all()
+        total_tickets_sold = tickets.count;
+        labels = list(exhibitions.values_list('name', flat=True))
+        sales_data =  [
+            Ticket_Exhibition.objects.filter(exhibition=exhibition).count() for exhibition in exhibitions
+            ]
+        context['sales_type'] = 'Exhibition'
+    
+    excursions_count = Ticket_Excursion.objects.count();
+    exhibitions_count = Ticket_Exhibition.objects.count();
+    sales_data_all = [excursions_count, exhibitions_count]
+
+    # Calculate total sales sum
+    total_sales = tickets.aggregate(
+        total=Sum(Cast('total_price', output_field=DecimalField()))
+    )['total']
+    
+    # Get list of sales for statistics calculation
+    sales_list = list(tickets.values_list('total_price', flat=True))
+
+    if sales_list:
+        avg_sales = sum(sales_list) / len(sales_list)  # Average
+        med_sales = median(sales_list)  # Median
+
+        try:
+            mod_sales = mode(sales_list)  # Mode (most common value)
+        except:
+            mod_sales = None  # No unique mode
+
+        # Get the most popular excursion or exhibition by counting tickets
+        if sale_type == 'Excursion':
+            most_popular = tickets.values('excursion__name').annotate(ticket_count=Count('id')).order_by('-ticket_count').first()
+        else:
+            most_popular = tickets.values('exhibition__name').annotate(ticket_count=Count('id')).order_by('-ticket_count').first()
+
+    else:
+        avg_sales = med_sales = mod_sales = None
+        most_popular = None
+
+    context.update({
+        'total_sales': total_sales,
+        'total_tickets_sold' : total_tickets_sold,
+        'avg_sales': avg_sales,
+        'med_sales': med_sales,
+        'mod_sales': mod_sales,
+        'most_popular': most_popular,
+        'sales_type': sale_type,
+        'sales_labels': labels,
+        'sales_data': sales_data,
+        'sales_data_all' : sales_data_all,
+        'year': datetime.now().year,
+    })
+
+    return render(request, 'app/statistics.html', context)

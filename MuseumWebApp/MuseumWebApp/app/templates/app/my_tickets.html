@@ -1,4 +1,4 @@
-{% extends "app/newlayout.html" %}
+{% extends "app/layout.html" %}
 
 {% block content %}
 <div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
@@ -10,15 +10,15 @@
         <div class="ticket-card">
             <h2>Excursion: {{ ticket.excursion.name }}</h2>
             <p><strong>Date of Purchase:</strong> {{ ticket.purchase_date|date:"Y-m-d" }}</p>
-            {% if ticket.discount_code %}
-            <p><strong>Discount Code:</strong> {{ ticket.discount_code }}</p>
+            {% if ticket.promo_code %}
+            <p><strong>Promo Code:</strong> {{ ticket.promo_code }}</p>
             {% endif %}
             <p><strong>Excursion Code:</strong> {{ ticket.excursion.code }}</p>
             <p><strong>Excursion Date:</strong> {{ ticket.excursion.date }}</p>
             <p><strong>Excursion Season:</strong> {{ ticket.excursion.season }}</p>
             <p><strong>Excursion Group Size:</strong> {{ ticket.excursion.group_size }}</p>
             <p><strong>Excursion Guide:</strong> {{ ticket.excursion.guide }}</p>
-            <p><strong>Excursion Price:</strong> {{ ticket.excursion.price }}</p>
+            <p><strong>Excursion Price:</strong> {{ ticket.total_price }}</p>
         </div>
         {% endfor %}
 
@@ -26,8 +26,8 @@
         <div class="ticket-card">
             <h2>Exhibition: {{ ticket.exhibition.name }}</h2>
             <p><strong>Date of Purchase:</strong> {{ ticket.purchase_date|date:"Y-m-d" }}</p>
-            {% if ticket.discount_code %}
-            <p><strong>Discount Code:</strong> {{ ticket.discount_code }}</p>
+            {% if ticket.promo_code %}
+            <p><strong>Promo Code:</strong> {{ ticket.promo_code }}</p>
             {% endif %}
             <p><strong>Exhibition Start Date:</strong> {{ ticket.exhibition.start_date }}</p>
             <p><strong>Exhibition End Date:</strong> {{ ticket.exhibition.end_date }}</p>
@@ -41,7 +41,7 @@
                     {% endfor %}
                 </ul>
             </div>
-            <p><strong>Exhibition Price:</strong> {{ ticket.exhibition.price }}</p>
+            <p><strong>Exhibition Price:</strong> {{ ticket.total_price }}</p>
         </div>
         {% endfor %}
     </div>

@@ -21,10 +21,20 @@
             .employee-card h2 {
                 margin-top: 0;
             }
+
+        .sort-button {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>Employees</h1>
+
+    <!-- Alphabetical Sort Button -->
+    <form method="GET" action="{% url 'employee_list' %}" class="sort-button">
+        <button type="submit" name="sort" value="asc" class="btn btn-primary">Sort Alphabetically</button>
+    </form>
+
     <div style="margin-top:10px">
         {% for employee in employees %}
         <div class="employee-card">

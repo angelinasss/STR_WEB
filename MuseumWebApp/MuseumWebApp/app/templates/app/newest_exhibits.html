@@ -1,4 +1,4 @@
-{% extends "app/newlayout.html" %}
+{% extends "app/layout.html" %}
 
 {% block content %}
 {% load static %}
@@ -14,6 +14,13 @@
         justify-content: space-between;
         align-items: center;
     }
+
+        .hall-item img {
+            max-width: 150px;
+            border-radius: 5px;
+            margin-right: 20px;
+            object-fit: cover;
+        }
 
         .hall-item h3 {
             margin: 0 0 10px;
@@ -32,6 +39,10 @@
             .hall-item a:hover {
                 text-decoration: underline;
             }
+
+    .hall-info {
+        flex-grow: 1;
+    }
 
     .hall-actions {
         display: flex;
@@ -75,7 +86,12 @@
     <div class="hall-list">
         {% for exhibit in exhibits %}
         <div class="hall-item">
-            <div>
+            {% if exhibit.image %}
+            <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}">
+            {% else %}
+            <img src="{% static 'images/default_exhibit.jpg' %}" alt="{{ exhibit.name }}">
+            {% endif %}
+            <div class="hall-info">
                 <h3>{{ exhibit.name }}</h3>
                 <p><strong>Art Type:</strong> {{ exhibit.art_type }}</p>
                 <p><strong>Hall:</strong> {{ exhibit.hall }}</p>

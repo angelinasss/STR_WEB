@@ -1,0 +1,117 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 800px; margin: 0 auto; padding: 10px;">
+    <h1 style="text-align: center; font-size: 2em; margin-bottom: 20px;">Sales Statistics</h1>
+
+    <form method="GET" action="{% url 'statistics' %}" style="margin-bottom: 20px;">
+        <label for="sale_type">Select Sales Type:</label>
+        <select id="sale_type" name="sale_type" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+            <option value="Excursion" {% if sales_type == 'Excursion' %}selected{% endif %}>Excursions</option>
+            <option value="Exhibition" {% if sales_type == 'Exhibition' %}selected{% endif %}>Exhibitions</option>
+        </select>
+        <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px;">View Statistics</button>
+    </form>
+
+    <h2>Sales Type: {{ sales_type }}</h2>
+
+    <p><strong>Total Tickets Sold:</strong> {{ total_tickets_sold }}</p>
+    <p><strong>Total Sales:</strong> {{ total_sales }}</p>
+    <p><strong>Average Sale Price:</strong> {{ avg_sales }}</p>
+    <p><strong>Median Sale Price:</strong> {{ med_sales }}</p>
+    <p><strong>Mode Sale Price:</strong> {% if mod_sales %}{{ mod_sales }}{% else %}No mode{% endif %}</p>
+
+    <h3>Most Popular {{ sales_type }}:</h3>
+    {% if most_popular %}
+    {% if sales_type == 'Excursion' %}
+    <p><strong>Name:</strong> {{ most_popular.excursion__name }}</p>
+    {% elif sales_type == 'Exhibition' %}
+    <p><strong>Name:</strong> {{ most_popular.exhibition__name }}</p>
+    {% endif %}
+    <p><strong>Number of Tickets Sold:</strong> {{ most_popular.ticket_count }}</p>
+    {% else %}
+    <p>No sales data available.</p>
+    {% endif %}
+    <!-- Chart Container -->
+    <div style="width: 100%; max-width: 600px; margin: 0 auto;">
+        <canvas id="salesChart"></canvas>
+    </div>
+
+    <div style="width: 100%; max-width: 600px; margin-top: 20px;">
+        <canvas id="salesAll"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const labels = {{ sales_labels| safe }};
+        const data = {{ sales_data| safe }};
+        const ctx = document.getElementById('salesChart').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Sales Amount',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Number of Tickets Sold',  // Title of the chart
+                        font: {
+                            size: 18
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script>
+    const dataAll = {{ sales_data_all| safe }};
+    const ctx1 = document.getElementById('salesAll').getContext('2d');
+
+    new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: ['Excursions', 'Exhibitions'],
+            datasets: [{
+                label: 'Sales Amount',
+                data: dataAll,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Number of Tickets Sold',
+                    font: {
+                        size: 18
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    </script>
+</div>
+{% endblock %}

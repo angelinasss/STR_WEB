@@ -1,4 +1,4 @@
-{% extends "app/newlayout.html" %}
+{% extends "app/layout.html" %}
 
 {% block content %}
 {% load static %}
@@ -69,6 +69,23 @@
 
 <div class="container">
     <h2 class="text-center mt-4">Museum Halls</h2>
+
+    <div style="margin-bottom: 20px;">
+        <form method="GET" action="{% url 'hall_info' %}">
+            <label for="sort_by">Sort by:</label>
+            <select id="sort_by" name="sort_by" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
+                <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
+                <option value="number_asc" {% if sort_by == 'number_asc' %}selected{% endif %}>Number (Ascending)</option>
+                <option value="number_desc" {% if sort_by == 'number_desc' %}selected{% endif %}>Number (Descending)</option>
+                <option value="area_asc" {% if sort_by == 'area_asc' %}selected{% endif %}>Area (Low to High)</option>
+                <option value="area_desc" {% if sort_by == 'area_desc' %}selected{% endif %}>Area (High to Low)</option>
+                <option value="floor_asc" {% if sort_by == 'floor_asc' %}selected{% endif %}>Floor (Ascending)</option>
+                <option value="floor_desc" {% if sort_by == 'floor_desc' %}selected{% endif %}>Floor (Descending)</option>
+            </select>
+            <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; margin-left: 10px;">Sort</button>
+        </form>
+    </div>
 
     {% if user.is_superuser %}
     <a href="{% url 'create_hall' %}" class="add-hall-btn">Create A Hall</a>

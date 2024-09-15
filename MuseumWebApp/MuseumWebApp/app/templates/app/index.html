@@ -19,11 +19,15 @@
     {% endif %}
 
     <div class="weather-container">
+        {% if user.is_authenticated %}
         <h1 class="weather-title">Weather in {{ city }}</h1>
         <div class="weather-details">
             <p class="weather-temp">Temperature: <span class="temp-value">{{ temperature }}</span> °C</p>
             <p class="weather-condition">Condition: <span class="condition-description">{{ description }}</span></p>
         </div>
+        {% else %}
+        <p>Please <a href="{% url 'login' %}">login</a> to see the weather information.</p>
+        {% endif %}
     </div>
     <pre>
         {{ calendar }}

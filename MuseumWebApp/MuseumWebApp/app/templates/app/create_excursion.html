@@ -1,4 +1,4 @@
-{% extends "app/newlayout.html" %}
+{% extends "app/layout.html" %}
 
 {% block content %}
 <div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
@@ -110,15 +110,36 @@
         var excursionFields = document.getElementById("excursion_fields");
         var exhibitionFields = document.getElementById("exhibition_fields");
 
+        // Get all inputs for validation
+        var excursionInputs = excursionFields.querySelectorAll('input, select');
+        var exhibitionInputs = exhibitionFields.querySelectorAll('input, select');
+
         if (itemType === "excursion") {
             excursionFields.style.display = "block";
             exhibitionFields.style.display = "none";
+
+            // Set required for excursion and remove it for exhibition
+            excursionInputs.forEach(function (input) {
+                input.required = true;
+            });
+            exhibitionInputs.forEach(function (input) {
+                input.required = false;
+            });
         } else {
             excursionFields.style.display = "none";
             exhibitionFields.style.display = "block";
+
+            // Set required for exhibition and remove it for excursion
+            excursionInputs.forEach(function (input) {
+                input.required = false;
+            });
+            exhibitionInputs.forEach(function (input) {
+                input.required = true;
+            });
         }
     }
 
     window.onload = toggleFields;
+
 </script>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends "app/newlayout.html" %}
+{% extends "app/layout.html" %}
 
 {% block content %}
 {% load static %}
@@ -11,7 +11,7 @@
         border-radius: 5px;
         background-color: #f8f9fa;
         display: flex;
-        justify-content: space-between;
+        gap: 20px;
         align-items: center;
     }
 
@@ -65,6 +65,13 @@
         .add-hall-btn:hover {
             background-color: #218838;
         }
+
+    .hall-item img {
+        width: 120px;
+        height: auto;
+        border-radius: 5px;
+        object-fit: cover;
+    }
 </style>
 
 <div class="container">
@@ -77,12 +84,17 @@
     <div class="hall-list">
         {% for exhibit in exhibits %}
         <div class="hall-item">
+            {% if exhibit.image %}
+            <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}">
+            {% endif %}
+
             <div>
                 <h3>{{ exhibit.name }}</h3>
                 <p><strong>Art Type:</strong> {{ exhibit.art_type }}</p>
                 <p><strong>Date acquired:</strong> {{ exhibit.date_acquired }}</p>
-                <p><strong>Caretaker:</strong> {{ exhibit.caretaker }} </p>
+                <p><strong>Caretaker:</strong> {{ exhibit.caretaker }}</p>
             </div>
+
             {% if user.is_superuser %}
             <div class="hall-actions">
                 <a href="{% url 'edit_exhibit' exhibit.id %}">Edit</a>
