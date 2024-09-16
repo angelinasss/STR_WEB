@@ -310,6 +310,12 @@ def editArticle(request, id):
 def article_detail(request, id):
     article = Article.objects.get(id=id)
     
+    published_at_utc = article.published_at
+    published_at_local = timezone.localtime(article.published_at)
+    
+    published_at_utc_str = published_at_utc.strftime("%d %b %Y %H:%M")
+    published_at_local_str = published_at_local.strftime("%d %b %Y %H:%M")
+    
     if request.user.is_authenticated:
         try:
            employee = Employee.objects.get(user=request.user)
@@ -327,6 +333,40 @@ def article_detail(request, id):
             'title': article.title,
             'article': article,
             'is_employee' : is_employee,
+            'published_at_utc' : published_at_utc_str,
+            'published_at_local': published_at_local_str,
+            'year': datetime.now().year,
+        }
+    )
+
+def article_all(request, id):
+    article = Article.objects.get(id=id)
+    
+    published_at_utc = article.published_at
+    published_at_local = timezone.localtime(article.published_at)
+    
+    published_at_utc_str = published_at_utc.strftime("%d %b %Y %H:%M")
+    published_at_local_str = published_at_local.strftime("%d %b %Y %H:%M")
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+
+    return render(
+        request,
+        'app/article_all.html',
+        {
+            'title': article.title,
+            'article': article,
+            'is_employee' : is_employee,
+            'published_at_utc' : published_at_utc_str,
+            'published_at_local': published_at_local_str,
             'year': datetime.now().year,
         }
     )

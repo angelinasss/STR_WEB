@@ -70,6 +70,7 @@ urlpatterns = [
     re_path(r'^hall_detail/(?P<id>\d+)/edit_exhibit/$', views.edit_exhibit, name='edit_exhibit'),
     re_path(r'^hall_detail/(?P<id>\d+)/delete_exhibit/$', views.delete_exhibit, name='delete_exhibit'),
     re_path(r'^statistics/$', views.statistics, name='statistics'),
+    re_path(r'^article_all/(?P<id>\d+)/$', views.article_all, name='article_all'),
     re_path(
         r'^login/$',
         LoginView.as_view(

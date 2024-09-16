@@ -1,7 +1,6 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<div class="container" style="max-width: 800px; margin: 0 auto; padding: 10px;">
     <h1 style="text-align: center; font-size: 2em; margin-bottom: 20px;">Sales Statistics</h1>
 
     <form method="GET" action="{% url 'statistics' %}" style="margin-bottom: 20px;">
@@ -113,5 +112,4 @@
         }
     });
     </script>
-</div>
 {% endblock %}

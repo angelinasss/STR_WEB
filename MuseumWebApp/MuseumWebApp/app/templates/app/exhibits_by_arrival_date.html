@@ -1,7 +1,6 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
     <h1 style="text-align: center; font-size: 2em; margin-bottom: 20px;">Exhibits Added After {{ selected_date|date:'Y-m-d' }}</h1>
 
     <form method="POST" style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
@@ -30,5 +29,4 @@
     {% else %}
     <p style="margin-top: 20px; font-size: 1.2em; color: #d9534f;">No exhibits found for the specified date.</p>
     {% endif %}
-</div>
 {% endblock %}

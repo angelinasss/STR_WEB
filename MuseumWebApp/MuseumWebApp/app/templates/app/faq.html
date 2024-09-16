@@ -2,28 +2,147 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            box-sizing: border-box;
+        }
 
+        h1 {
+            font-size: 28px;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .faq-container {
+            max-width: 800px;
+        }
+
+        .faq-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            padding: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #007bff;
+            transition: background-color 0.3s ease;
+        }
+
+            .faq-question:hover {
+                background-color: #f1f1f1;
+            }
+
+        .faq-answer {
+            padding: 15px;
+            display: none;
+            background-color: #f9f9f9;
+            flex: 1;
+        }
+
+            .faq-answer p {
+                margin: 0;
+            }
+
+        .faq-footer {
+            padding: 10px 0px;
+            border-top: 1px solid #ddd;
+            margin-top: 10px;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #fff;
+            border-color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+            margin-top: 10px;
+        }
+
+            .btn-warning:hover {
+                background-color: #e0a800;
+            }
+
+        .btn-danger {
+            background-color: #dc3545;
+            margin-top: 10px;
+        }
+
+            .btn-danger:hover {
+                background-color: #c82333;
+            }
+    </style>
+</head>
+
+<body>
     <h1>Frequently Asked Questions</h1>
 
-    <form action="create_FAQ/">
-        {% csrf_token %}
-        {% if user.is_superuser %}
-        <button id="showFormButton" class="btn btn-primary" style="margin-bottom: 20px;">Add FAQ</button>
-        {% endif %}
-    </form>
-
-    <ul>
-        {% for faq in faqs %}
-        <li style="margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
-            <strong>{{ faq.question }}</strong>
-            <p>{{ faq.answer }}</p>
-            <small>Added on: {{ faq.added_date }}</small><br>
+    <div class="faq-container">
+        <form action="create_FAQ/">
+            {% csrf_token %}
             {% if user.is_superuser %}
-            <a href="edit_FAQ/{{faq.id}}" class="btn btn-warning">Edit</a>
-            <a href="delete_FAQ/{{faq.id}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this faq?');">Delete</a>
+            <button id="showFormButton" class="btn btn-primary" style="margin-bottom: 20px;">Add FAQ</button>
             {% endif %}
-        </li>
-        {% endfor %}
-    </ul>
+        </form>
 
+        <ul>
+            {% for faq in faqs %}
+            <li class="faq-item">
+                <div class="faq-question">{{ faq.question }}</div>
+                <div class="faq-answer">
+                    <p>{{ faq.answer }}</p>
+                    <small>Added on: {{ faq.added_date }}</small><br>
+                    <div class="faq-footer">
+                        {% if user.is_superuser %}
+                        <a href="edit_FAQ/{{faq.id}}" class="btn btn-warning">Edit</a>
+                        <a href="delete_FAQ/{{faq.id}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this FAQ?');">Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(function (question) {
+            question.addEventListener('click', function () {
+                var answer = this.nextElementSibling;
+                var isVisible = answer.style.display === 'block';
+                document.querySelectorAll('.faq-answer').forEach(function (a) {
+                    a.style.display = 'none';
+                });
+                answer.style.display = isVisible ? 'none' : 'block';
+            });
+        });
+    </script>
+</body>
+</html>
 {% endblock %}

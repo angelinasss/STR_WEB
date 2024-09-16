@@ -1,8 +1,96 @@
 ﻿{% extends "app/layout.html" %}
 
 {% block content %}
-<div class="container">
-    <h1>Latest Article</h1>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+    }
+
+    h1, h2 {
+        color: #1a73e8;
+    }
+
+    .article-preview {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        padding: 20px;
+    }
+
+        .article-preview img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+    .short-description {
+        font-size: 1.1em;
+        margin-bottom: 10px;
+    }
+
+    .publication-date {
+        color: #777;
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        background-color: #1a73e8;
+        color: white;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn:hover {
+            background-color: #155bb5;
+        }
+
+    .weather-container {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-top: 30px;
+    }
+
+    .weather-title {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    .weather-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .weather-temp, .weather-condition {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+
+    .temp-value, .condition-description {
+        font-weight: bold;
+        color: #1a73e8;
+    }
+
+    pre {
+        background-color: #e9ecef;
+        padding: 15px;
+        border-radius: 8px;
+        white-space: pre-wrap;
+    }
+</style>
+
+
+<body>
+    <h1 style="margin-bottom:10px;">Latest Article</h1>
 
     {% if article %}
     <div class="article-preview">
@@ -12,7 +100,7 @@
         {% endif %}
         <p class="short-description">{{ article.short_description }}</p>
         <p class="publication-date">Published on: {{ article.published_at|date:"d/m/Y" }}</p>
-        <a href="news/article_detail/{{article.id}}" class="btn btn-info">Read More</a>
+        <a href="article_all/{{article.id}}" class="btn btn-info">Read More</a>
     </div>
     {% else %}
     <p>No articles available.</p>
@@ -32,5 +120,5 @@
     <pre>
         {{ calendar }}
     </pre>
-</div>
-{% endblock %}
+</body>
+   {% endblock %}
