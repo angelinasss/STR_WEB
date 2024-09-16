@@ -1,115 +1,232 @@
+<!DOCTYPE html>
 {% extends "app/layout.html" %}
 
 {% block content %}
-<style>
-    body {
-        font-family: Arial, sans-serif;
-    }
+<head>
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
-    p {
-        margin: 10px 0;
-    }
+        .profile-container {
+            max-width: 800px;
+            margin: 0px auto 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center; 
+        }
 
-    .timezone {
-        font-weight: bold;
-    }
-</style>
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
 
-<h2>{{ title }}</h2>
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+            .form-group label {
+                font-weight: bold;
+                margin-bottom: 8px;
+                color: #2c3e50;
+            }
 
-    {% if is_employee %}
-    <div class="form-group">
-        <label for="photo">Profile Photo</label>
-        <input type="file" id="photo" name="photo" class="form-control">
-        {% if employee.photo %}
-        <img src="{{ employee.photo.url }}" alt="Profile Photo" style="width: 100px; height: auto;">
-        {% endif %}
+        .form-control {
+            width: 100%;
+            max-width: 400px; 
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+            .form-control:focus {
+                border-color: #3498db;
+                outline: none;
+            }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            margin: 10px; 
+        }
+
+        .btn-primary {
+            background-color: #3498db;
+        }
+
+            .btn-primary:hover {
+                background-color: #2980b9;
+            }
+
+        .btn-warning {
+            background-color: #f39c12;
+        }
+
+            .btn-warning:hover {
+                background-color: #e67e22;
+            }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+        }
+
+            .btn-secondary:hover {
+                background-color: #7f8c8d;
+            }
+
+        .btn-danger {
+            background-color: #e74c3c;
+        }
+
+            .btn-danger:hover {
+                background-color: #c0392b;
+            }
+
+        .profile-photo {
+            display: block;
+            max-width: 150px;
+            height: auto;
+            border-radius: 5px;
+            margin: 10px auto;
+        }
+
+        .timezone {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+            .alert-success p {
+                margin: 0;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="profile-container">
+        <h2>{{ title }}</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if is_employee %}
+            <div class="form-group">
+                <label for="photo">Profile Photo</label>
+                {% if employee.photo %}
+                <img src="{{ employee.photo.url }}" alt="Profile Photo" class="profile-photo">
+                {% endif %}
+                <input type="file" id="photo" name="photo" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" name="first_name" class="form-control" value="{{ employee.first_name }}">
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name" class="form-control" value="{{ employee.last_name }}">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" class="form-control" value="{{ employee.phone }}">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" value="{{ employee.email }}">
+            </div>
+
+            <div class="form-group">
+                <label for="position">Position</label>
+                <select id="position" name="position" class="form-control">
+                    {% for position in positions %}
+                    <option value="{{ position.id }}" {% if position.id == employee.position.id %}selected{% endif %}>
+                        {{ position.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="hall">Hall</label>
+                <select id="hall" name="hall" class="form-control">
+                    {% for hall in halls %}
+                    <option value="{{ hall.id }}" {% if hall.id == employee.hall.id %}selected{% endif %}>
+                        {{ hall.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endif %}
+
+            {% if not is_employee %}
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" name="first_name" class="form-control" value="{{ user.first_name }}">
+            </div>
+
+            <a href="{% url 'nationality_by_name' %}" class="btn btn-warning">Find Out Nationality by Name</a>
+
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name" class="form-control" value="{{ user.last_name }}">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}">
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+                <p><strong>Time Zone:</strong> <span id="userTimezone" class="timezone"></span></p>
+                <p><strong>Current Date and Time (Your Time Zone):</strong> <span id="currentDateTimeUserTz"></span></p>
+                <p><strong>Current Date and Time (UTC):</strong> <span id="currentDateTimeUtc"></span></p>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+
+            {% if messages %}
+            <div class="alert alert-success text-center">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </form>
     </div>
-
-    <div class="form-group">
-        <label for="first_name">First Name</label>
-        <input type="text" id="first_name" name="first_name"
-               class="form-control"
-               value="{{ employee.first_name }}">
-    </div>
-
-    <div class="form-group">
-        <label for="last_name">Last Name</label>
-        <input type="text" id="last_name" name="last_name"
-               class="form-control"
-               value="{{ employee.last_name }}">
-    </div>
-
-    <div class="form-group">
-        <label for="phone">Phone</label>
-        <input type="text" id="phone" name="phone"
-               class="form-control"
-               value="{{ employee.phone }}">
-    </div>
-
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email"
-               class="form-control"
-               value="{{ employee.email }}">
-    </div>
-
-    <div class="form-group">
-        <label for="position">Position</label>
-        <select id="position" name="position" class="form-control">
-            {% for position in positions %}
-            <option value="{{ position.id }}"
-                    {% if position.id == employee.position.id %}selected{% endif %}>
-                {{ position.name }}
-            </option>
-            {% endfor %}
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="hall">Hall</label>
-        <select id="hall" name="hall" class="form-control">
-            {% for hall in halls %}
-            <option value="{{ hall.id }}"
-                    {% if hall.id == employee.hall.id %}selected{% endif %}>
-                {{ hall.name }}
-            </option>
-            {% endfor %}
-        </select>
-    </div>
-    {% endif %}
-
-    {% if not is_employee %}
-    <div class="form-group">
-        <label for="first_name">First Name</label>
-        <input type="text" id="first_name" name="first_name"
-               class="form-control"
-               value="{{ user.first_name }}">
-    </div>
-
-    <a href="{% url 'nationality_by_name' %}" style="margin-bottom:10px" class="btn btn-warning">Find Out Nationality by Name</a>
-
-    <div class="form-group">
-        <label for="last_name">Last Name</label>
-        <input type="text" id="last_name" name="last_name"
-               class="form-control"
-               value="{{ user.last_name }}">
-    </div>
-
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email"
-               class="form-control"
-               value="{{ user.email }}">
-    </div>
-    {% endif %}
-
-    <p><strong>Time Zone:</strong> <span id="userTimezone" class="timezone"></span></p>
-    <p><strong>Current Date and Time (Your Time Zone):</strong> <span id="currentDateTimeUserTz"></span></p>
-    <p><strong>Current Date and Time (UTC):</strong> <span id="currentDateTimeUtc"></span></p>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -150,21 +267,10 @@
                 day: '2-digit',
                 hour: '2-digit',
                 minute: '2-digit',
-                hour12: false // 24-hour format
+                hour12: false
             });
             document.getElementById('currentDateTimeUtc').textContent = utcDateTime;
         });
     </script>
-
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-
-    {% if messages %}
-    <div class="alert alert-success text-center" style="margin-top:10px">
-        {% for message in messages %}
-        {{ message }}
-        {% endfor %}
-    </div>
-    {% endif %}
-</form>
-
+</body>
 {% endblock %}

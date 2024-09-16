@@ -1,172 +1,231 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
+<head>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
-<h2>{{ title }}</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="registerForm">
-            <form method="post" class="form-horizontal" enctype="multipart/form-data">
-                {% csrf_token %}
-                <h4>Create a local account.</h4>
-                <hr />
-                <div class="form-group">
-                    <label for="username" class="col-md-2 control-label">Username</label>
-                    <div class="col-md-10">
-                        <input type="text" id="username" name="username" required
-                               class="form-control {% if errors.username %}is-invalid{% endif %}"
-                               value="{{ form_data.username|default:'' }}">
-                        {% if errors.username %}
-                        <div class="invalid-feedback">{{ errors.username }}</div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="first_name" class="col-md-2 control-label">First Name</label>
-                    <div class="col-md-10">
-                        <input type="text" id="first_name" name="first_name" required
-                               class="form-control"
-                               value="{{ form_data.first_name|default:'' }}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="last_name" class="col-md-2 control-label">Last Name</label>
-                    <div class="col-md-10">
-                        <input type="text" id="last_name" name="last_name" required
-                               class="form-control"
-                               value="{{ form_data.last_name|default:'' }}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="email" class="col-md-2 control-label">Email</label>
-                    <div class="col-md-10">
-                        <input type="email" id="email" name="email" required
-                               class="form-control {% if errors.email %}is-invalid{% endif %}"
-                               value="{{ form_data.email|default:'' }}">
-                        {% if errors.email %}
-                        <div class="invalid-feedback" style="color: red; margin-top: 10px;">{{ errors.email }}</div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="age" class="col-md-2 control-label">Age</label>
-                    <div class="col-md-10">
-                        <input type="number" id="age" name="age" min="18" max="120" required
-                               class="form-control {% if errors.age %}is-invalid{% endif %}"
-                               value="{{ form_data.age|default:'' }}">
-                        {% if errors.age %}
-                        <div class="invalid-feedback">{{ errors.age }}</div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="is_employee" class="col-md-2 control-label">Are you an employee?</label>
-                    <div class="col-md-10">
-                        <input type="checkbox" id="is_employee" name="is_employee" value="1"
-                               class="form-control" {% if form_data.is_employee %}checked{% endif %}>
-                    </div>
-                </div>
-                <div id="employeeFields" style="display: {% if form_data.is_employee %}block{% else %}none{% endif %};">
-                    <div class="form-group">
-                        <label for="position" class="col-md-2 control-label">Position</label>
-                        <div class="col-md-10">
-                            <select name="position" id="position" class="form-control">
-                                {% for position in positions %}
-                                <option value="{{ position.id }}" {% if position.id == form_data.position_id|default:'' %}selected{% endif %}>
-                                    {{ position.name }}
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
+        .registration-container {
+            max-width: 600px;
+            margin: 0 auto 80px auto;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
 
-                    <div class="form-group">
-                        <label for="hall" class="col-md-2 control-label">Hall</label>
-                        <div class="col-md-10">
-                            <select name="hall" id="hall" class="form-control">
-                                {% for hall in halls %}
-                                <option value="{{ hall.id }}" {% if hall.id == form_data.hall_id|default:'' %}selected{% endif %}>
-                                    {{ hall.name }}
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
 
-                    <div class="form-group">
-                        <label for="phone" class="col-md-2 control-label">Phone</label>
-                        <div class="col-md-10">
-                            <input type="text" id="phone" name="phone" required
-                                   class="form-control {% if errors.phone %}is-invalid{% endif %}"
-                                   value="{{ form_data.phone|default:'' }}"
-                                   placeholder="+375 (29) XXX-XX-XX">
-                            {% if errors.phone %}
-                            <div class="invalid-feedback">{{ errors.phone }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="col-md-2 control-label">Password</label>
-                    <div class="col-md-10">
-                        <input type="password" id="password" name="password" required
-                               class="form-control {% if errors.password %}is-invalid{% endif %}">
-                        {% if errors.password %}
-                        <div class="invalid-feedback">{{ errors.password }}</div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password_confirm" class="col-md-2 control-label">Confirm Password</label>
-                    <div class="col-md-10">
-                        <input type="password" id="password_confirm" name="password_confirm" required
-                               class="form-control {% if errors.password %}is-invalid{% endif %}">
-                    </div>
-                </div>
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Register" class="btn btn-default">
-                    </div>
-                </div>
+        label {
+            font-weight: bold;
+            color: #2c3e50;
+            flex: 1;
+            text-align: right;
+            padding-right: 15px;
+        }
 
-                {% if error %}
-                <div class="error" style="
-                    color: red;
-                    border: 1px solid red;
-                    padding: 10px;
-                    margin-bottom: 10px;
-                    text-align: center;
-                    border-radius: 5px;
-                    ">
-                    {{ error }}
-                </div>
+        .form-control {
+            flex: 2;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+            .form-control:focus {
+                border-color: #3498db;
+                outline: none;
+            }
+
+        .invalid-feedback {
+            color: #e74c3c;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .btn-default {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-default:hover {
+                background-color: #2980b9;
+            }
+
+        .error {
+            color: red;
+            border: 1px solid red;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        #employeeFields {
+            margin-top: 20px;
+        }
+
+        .form-group select,
+        .form-group input[type="checkbox"] {
+            flex: 2;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+
+<div class="registration-container">
+    <h2>{{ title }}</h2>
+    <form method="post" class="form-horizontal" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h4>Create a local account.</h4>
+        <hr />
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required
+                   class="form-control {% if errors.username %}is-invalid{% endif %}"
+                   value="{{ form_data.username|default:'' }}">
+            {% if errors.username %}
+            <div class="invalid-feedback">{{ errors.username }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name" required
+                   class="form-control"
+                   value="{{ form_data.first_name|default:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" name="last_name" required
+                   class="form-control"
+                   value="{{ form_data.last_name|default:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required
+                   class="form-control {% if errors.email %}is-invalid{% endif %}"
+                   value="{{ form_data.email|default:'' }}">
+            {% if errors.email %}
+            <div class="invalid-feedback">{{ errors.email }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" min="18" max="120" required
+                   class="form-control {% if errors.age %}is-invalid{% endif %}"
+                   value="{{ form_data.age|default:'' }}">
+            {% if errors.age %}
+            <div class="invalid-feedback">{{ errors.age }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="is_employee">Are you an employee?</label>
+            <input type="checkbox" id="is_employee" name="is_employee" value="1"
+                   class="form-control" {% if form_data.is_employee %}checked{% endif %}>
+        </div>
+        <div id="employeeFields" style="display: {% if form_data.is_employee %}block{% else %}none{% endif %}">
+            <div class="form-group">
+                <label for="position">Position</label>
+                <select name="position" id="position" class="form-control">
+                    {% for position in positions %}
+                    <option value="{{ position.id }}" {% if position.id == form_data.position_id|default:'' %}selected{% endif %}>
+                        {{ position.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="hall">Hall</label>
+                <select name="hall" id="hall" class="form-control">
+                    {% for hall in halls %}
+                    <option value="{{ hall.id }}" {% if hall.id == form_data.hall_id|default:'' %}selected{% endif %}>
+                        {{ hall.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" required
+                       class="form-control {% if errors.phone %}is-invalid{% endif %}"
+                       value="{{ form_data.phone|default:'' }}"
+                       placeholder="+375 (29) XXX-XX-XX">
+                {% if errors.phone %}
+                <div class="invalid-feedback">{{ errors.phone }}</div>
                 {% endif %}
-            </form>
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section id="socialRegisterForm"></section>
-    </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required
+                   class="form-control {% if errors.password %}is-invalid{% endif %}">
+            {% if errors.password %}
+            <div class="invalid-feedback">{{ errors.password }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="password_confirm">Confirm Password</label>
+            <input type="password" id="password_confirm" name="password_confirm" required
+                   class="form-control {% if errors.password %}is-invalid{% endif %}">
+        </div>
+
+        <div class="form-group">
+            <div class="text-center">
+                <input type="submit" value="Register" class="btn btn-default">
+            </div>
+        </div>
+
+        {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+        {% endif %}
+    </form>
 </div>
 
 {% endblock %}
 
 {% block scripts %}
     {% load static %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/3epwJ5tGFiM5z5mAi2vH5cfz5HFe0j72g8p02M7" crossorigin="anonymous"></script>
 <script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const employeeCheckbox = document.getElementById('is_employee');
-        const employeeFields = document.getElementById('employeeFields');
+  document.addEventListener('DOMContentLoaded', function () {
+    const employeeCheckbox = document.getElementById('is_employee');
+    const employeeFields = document.getElementById('employeeFields');
 
-        employeeCheckbox.addEventListener('change', function () {
-            if (employeeCheckbox.checked) {
-                employeeFields.style.display = 'block';
-            } else {
-                employeeFields.style.display = 'none';
-            }
-        });
+    employeeCheckbox.addEventListener('change', function () {
+        console.log('Checkbox changed:', employeeCheckbox.checked); 
+        if (employeeCheckbox.checked) {
+            employeeFields.style.display = 'block';
+        } else {
+            employeeFields.style.display = 'none';
+        }
     });
+});
 </script>
 {% endblock %}

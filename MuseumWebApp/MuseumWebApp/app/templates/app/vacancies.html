@@ -2,28 +2,132 @@
 
 {% block content %}
 
-<h2>Vacancies</h2>
+<head>
+    <title>Vacancies</title>
+    <style>
+        .vacancy-container {
+            max-width: 900px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
 
-<form action="create_job/">
-    {% csrf_token %}
-    {% if user.is_superuser %}
-        <button id="showFormButton" class="btn btn-primary" style="margin-bottom: 20px;">Add Vacancy</button>
-    {% endif %}
-</form>
+        .vacancy-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
 
-<ul class="list-group">
-    {% for job in jobs %}
-    <li class="list-group-item">
-        <h4>{{ job.title }}</h4>
-        <p><strong>Description:</strong> {{ job.description}}</p>
-        <p><strong>Requirements:</strong> {{ job.requirements}}</p>
-        <p><strong>Salary:</strong> {{ job.salary }}</p>
-        {% if user.is_superuser %}
-            <a href="edit_job/{{job.id}}" class="btn btn-warning">Edit</a>
-            <a href="delete_job/{{job.id}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this vacancy?');">Delete</a>
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
+            .vacancy-card h4 {
+                margin-bottom: 10px;
+                color: #2c3e50;
+            }
+
+            .vacancy-card p {
+                margin-bottom: 8px;
+                font-size: 1.1em;
+                color: #555;
+            }
+
+            .vacancy-card .btn {
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                text-decoration: none;
+                margin-right: 10px;
+            }
+
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                background-color: #2980b9;
+            }
+
+        .btn-warning {
+            background-color: #f39c12;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-warning:hover {
+                background-color: #e67e22;
+            }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-danger:hover {
+                background-color: #c0392b;
+            }
+
+        .vacancy-actions {
+            margin-top: 15px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0px;
+            margin-bottom: 20px;
+        }
+
+        #showFormButton {
+            display: block;
+            margin: 0 auto 30px auto;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #27ae60;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            #showFormButton:hover {
+                background-color: #2ecc71;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="vacancy-container">
+        <h2>Vacancies</h2>
+
+        <form action="create_job/">
+            {% csrf_token %}
+            {% if user.is_superuser %}
+            <button id="showFormButton">Add Vacancy</button>
+            {% endif %}
+        </form>
+
+        <div>
+            {% for job in jobs %}
+            <div class="vacancy-card">
+                <h4>{{ job.title }}</h4>
+                <p><strong>Description:</strong> {{ job.description}}</p>
+                <p><strong>Requirements:</strong> {{ job.requirements}}</p>
+                <p><strong>Salary:</strong> {{ job.salary }}</p>
+
+                {% if user.is_superuser %}
+                <div class="vacancy-actions">
+                    <a href="edit_job/{{ job.id }}" class="btn btn-warning">Edit</a>
+                    <a href="delete_job/{{ job.id }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this vacancy?');">Delete</a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
 
 {% endblock %}
