@@ -1,25 +1,46 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
-    <h1 style="text-align: center; font-size: 2em; margin-bottom: 20px;">Excursions by {{ guide.first_name }} {{ guide.last_name }}</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Excursions by {{ guide.first_name }} {{ guide.last_name }}</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
 
-    {% if excursions %}
-    <ul style="list-style: none; padding: 0;">
-        {% for excursion in excursions %}
-        <li style="background-color: #eef; margin-bottom: 10px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <div style="font-size: 1.2em; font-weight: bold; margin-bottom: 5px;">
-                {{ excursion.name }} ({{ excursion.code }})
-            </div>
-            <div style="font-size: 1em; color: #555;">Date: {{ excursion.date|date:"Y-m-d" }}</div>
-            <div style="font-size: 1em; color: #555;">Season: {{ excursion.get_season_display }}</div>
-            <div style="font-size: 1em; color: #555;">Group Size: {{ excursion.group_size }}</div>
-            <div style="font-size: 1em; color: #555;">Price: {{ excursion.price }}</div>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p style="margin-top: 20px; font-size: 1.2em; color: #d9534f;">No excursions found for this guide or you are not a guide.</p>
-    {% endif %}
-</div>
+    <h1 style="text-align: center; color: #333; margin-bottom: 20px;">
+        Excursions by {{ guide.first_name }} {{ guide.last_name }}
+    </h1>
+
+    <div style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
+        {% if excursions %}
+        <ul style="list-style: none; padding: 0;">
+            {% for excursion in excursions %}
+            <li style="background-color: #eef; margin-bottom: 10px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                <div style="font-size: 1.2em; font-weight: bold; color: #333; margin-bottom: 5px;">
+                    {{ excursion.name }} ({{ excursion.code }})
+                </div>
+                <div style="color: #555; margin-bottom: 5px;">
+                    <strong>Date:</strong> {{ excursion.date|date:"Y-m-d" }}
+                </div>
+                <div style="color: #555; margin-bottom: 5px;">
+                    <strong>Season:</strong> {{ excursion.get_season_display }}
+                </div>
+                <div style="color: #555; margin-bottom: 5px;">
+                    <strong>Group Size:</strong> {{ excursion.group_size }}
+                </div>
+                <div style="color: #555; margin-bottom: 5px;">
+                    <strong>Price:</strong> {{ excursion.price }}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p style="text-align: center; color: #d9534f; font-size: 1.2em;">No excursions found for this guide or you are not a guide.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
 {% endblock %}

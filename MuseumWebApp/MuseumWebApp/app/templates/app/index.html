@@ -1,124 +1,103 @@
 ﻿{% extends "app/layout.html" %}
 
 {% block content %}
-
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        color: #333;
-        margin: 0;
-    }
-
-    h1, h2 {
-        color: #1a73e8;
-    }
-
-    .article-preview {
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-        padding: 20px;
-    }
-
-        .article-preview img {
-            max-width: 100%;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-    .short-description {
-        font-size: 1.1em;
-        margin-bottom: 10px;
-    }
-
-    .publication-date {
-        color: #777;
-        font-size: 0.9em;
-        margin-bottom: 20px;
-    }
-
-    .btn {
-        background-color: #1a73e8;
-        color: white;
-        padding: 10px 15px;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
-
-        .btn:hover {
-            background-color: #155bb5;
-        }
-
-    .weather-container {
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        margin-top: 30px;
-    }
-
-    .weather-title {
-        font-size: 1.5em;
-        margin-bottom: 15px;
-    }
-
-    .weather-details {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .weather-temp, .weather-condition {
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-
-    .temp-value, .condition-description {
-        font-weight: bold;
-        color: #1a73e8;
-    }
-
-    pre {
-        background-color: #e9ecef;
-        padding: 15px;
-        border-radius: 8px;
-        white-space: pre-wrap;
-    }
-</style>
-
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+</head>
 <body>
-    <h1 style="margin-bottom:10px;">Latest Article</h1>
+    <header style="text-align: center; padding: 20px;">
+        <div style="margin-bottom: 20px;">
+            <img src="{{ info.logo.url }}" alt="Company Logo" style="max-width: 200px; height: auto;">
+        </div>
+        <h1>Welcome to Our Museum</h1>
+    </header>
 
-    {% if article %}
-    <div class="article-preview">
-        <h2>{{ article.title }}</h2>
-        {% if article.image %}
-        <img src="{{ article.image.url }}" alt="{{ article.title }}" class="img-responsive">
-        {% endif %}
-        <p class="short-description">{{ article.short_description }}</p>
-        <p class="publication-date">Published on: {{ article.published_at|date:"d/m/Y" }}</p>
-        <a href="article_all/{{article.id}}" class="btn btn-info">Read More</a>
-    </div>
-    {% else %}
-    <p>No articles available.</p>
-    {% endif %}
+    <section style="padding: 20px; background-color: #f8f9fa;">
+        <h2 style="text-align: center; font-size: 2em;">Our Banners</h2>
+        <div style="text-align: center; margin: 30px 0;">
+            {% for banner in info.banners.all %}
+            <img src="{{ banner.image.url }}" alt="Banner" style="max-width: 200px; height: auto; margin: 20px;">
+            {% endfor %}
+        </div>
+    </section>
 
-    <div class="weather-container">
-        {% if user.is_authenticated %}
-        <h1 class="weather-title">Weather in {{ city }}</h1>
-        <div class="weather-details">
-            <p class="weather-temp">Temperature: <span class="temp-value">{{ temperature }}</span> °C</p>
-            <p class="weather-condition">Condition: <span class="condition-description">{{ description }}</span></p>
+    <section style="padding: 15px;">
+        <h1 style="text-align: center; color: #333; font-size: 1.5em;">Our Excursions</h1>
+        <div style="max-width: 800px; margin: 0 auto; background-color: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px; text-align: center;">
+            {% if excursions %}
+            <div>
+                {% for excursion in excursions %}
+                <p style="font-size: 1.2em; color: #555;">
+                    <a href="{% url 'excursion_detail' excursion.id %}" style="color: #007bff; text-decoration: none;">{{ excursion.name }}</a>
+                </p>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p style="text-align: center; color: #d9534f; font-size: 1.2em;">No excursions found.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <section style="padding: 15px;">
+        <h1 style="text-align: center; color: #333; font-size: 1.5em;">Our Exhibitions</h1>
+        <div style="max-width: 800px; margin: 0 auto; background-color: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px; text-align: center;">
+            {% if exhibitions %}
+            <ul style="list-style: none; padding: 0;">
+                {% for exhibition in exhibitions %}
+                <p style="font-size: 1.2em; color: #555;">
+                    <a href="{% url 'exhibition_detail' exhibition.id %}" style="color: #007bff; text-decoration: none;">{{ exhibition.name }}</a>
+                </p>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p style="text-align: center; color: #d9534f; font-size: 1.2em;">No exhibitions found.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <section style="padding: 15px;">
+        <h1 style="text-align: center; font-size: 1.5em;">Latest Article</h1>
+        {% if article %}
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f8f9fa;">
+            <h2 style="text-align: center;">{{ article.title }}</h2>
+            {% if article.image %}
+            <div style="text-align: center; margin-bottom: 15px;">
+                <img src="{{ article.image.url }}" alt="{{ article.title }}" style="max-width: 80%; height: auto; border-radius: 10px;">
+            </div>
+            {% endif %}
+            <p>{{ article.short_description }}</p>
+            <p style="text-align: center; color: #555;">Published on: {{ article.published_at|date:"d/m/Y" }}</p>
+            <div style="text-align: center;">
+                <a href="article_all/{{ article.id }}" style="color: #007bff; text-decoration: none; font-weight: bold; border: 1px solid #007bff; padding: 10px 15px; border-radius: 5px;">Read More</a>
+            </div>
         </div>
         {% else %}
-        <p>Please <a href="{% url 'login' %}">login</a> to see the weather information.</p>
+        <p style="text-align: center;">No articles available.</p>
         {% endif %}
-    </div>
-    <pre>
-        {{ calendar }}
-    </pre>
+    </section>
+
+    <section style="padding: 15px;">
+        <h2 style="text-align: center; font-size: 1.5em;">Our Partners</h2>
+        <div style="text-align: center;">
+            {% for partner in partners %}
+            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                {% if partner.logo %}
+                <div style="margin-right: 20px;">
+                    <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" style="max-width: 150px; height: auto;">
+                </div>
+                {% endif %}
+                <div style="max-width: 450px;">
+                    <p style="font-size: 1.2em; color: #555;">
+                        <a href="{{ partner.website }}" target="_blank" style="color: #007bff; text-decoration: none;">{{ partner.name }}</a>
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
 </body>
-   {% endblock %}
+</html>
+{% endblock %}

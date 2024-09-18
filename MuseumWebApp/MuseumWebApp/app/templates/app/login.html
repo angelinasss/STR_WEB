@@ -1,132 +1,46 @@
+<!DOCTYPE html>
+
 {% extends "app/layout.html" %}
-
 {% block content %}
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .login-container {
-            max-width: 500px;
-            margin: 80px auto;
-            padding: 40px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            margin-right: 50px; 
-        }
-
-        label {
-            font-weight: bold;
-            color: #2c3e50;
-            flex: 1;
-            text-align: right;
-            padding-right: 10px;
-        }
-
-        .form-control {
-            flex: 2;
-            padding: 12px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-
-            .form-control:focus {
-                border-color: #3498db;
-                outline: none;
-            }
-
-        .btn-primary {
-            background-color: #3498db;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
-
-            .btn-primary:hover {
-                background-color: #2980b9;
-            }
-
-        .btn-default {
-            background-color: #95a5a6;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
-
-            .btn-default:hover {
-                background-color: #7f8c8d;
-            }
-
-        .validation-summary-errors {
-            color: #e74c3c;
-            margin-top: 10px;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .create-account {
-            margin-top: 20px;
-        }
-
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    </style>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
 </head>
 
-<div class="login-container">
-    <h2>{{ title }}</h2>
-    <form action="." method="post" class="form-horizontal">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="id_username">User name</label>
-            {{ form.username }}
-        </div>
-        <div class="form-group">
-            <label for="id_password">Password</label>
-            {{ form.password }}
-        </div>
-        <div class="form-group btn-container">
-            <input type="submit" value="Log in" class="btn btn-primary">
-        </div>
-        {% if form.errors %}
-        <p class="validation-summary-errors text-center">Please enter a correct user name and password.</p>
-        {% endif %}
-        <div class="form-group btn-container create-account">
-            <a href="register/" class="btn btn-default">Create an account</a>
-        </div>
-    </form>
-</div>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
 
+    <div style="max-width: 500px; margin: 80px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+        <h2 style="text-align: center; color: #2c3e50; margin-bottom: 20px;">{{ title }}</h2>
+
+        <form action="." method="post" style="display: flex; flex-direction: column;">
+            {% csrf_token %}
+
+            <div style="margin-bottom: 20px;">
+                <label for="id_username" style="font-weight: bold; color: #2c3e50; display: block; margin-bottom: 8px;">User name</label>
+                <input type="text" id="id_username" name="username" style="width: 90%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px; transition: border-color 0.3s ease;">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="id_password" style="font-weight: bold; color: #2c3e50; display: block; margin-bottom: 8px;">Password</label>
+                <input type="password" id="id_password" name="password" style="width: 90%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px; transition: border-color 0.3s ease;">
+            </div>
+
+            <div style="text-align: center; margin-bottom: 20px;">
+                <input type="submit" value="Log in" style="background-color: #3498db; color: #fff; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; font-size: 16px;">
+            </div>
+
+            {% if form.errors %}
+            <p style="color: #e74c3c; text-align: center;">Please enter a correct user name and password.</p>
+            {% endif %}
+
+            <div style="text-align: center;">
+                <a href="register/" style="background-color: #95a5a6; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-size: 16px;">Create an account</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
 {% endblock %}

@@ -1,0 +1,41 @@
+{% extends "app/layout.html" %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+
+    <div style="max-width: 800px; margin: 0 auto; background-color: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+        <h1 style="text-align: center; color: #333; font-size: 1.5em;">Payment for Item</h1>
+
+        <form method="post" action="{% url 'process_payment' item.id %}">
+            {% csrf_token %}
+
+            <div style="margin-bottom: 20px;">
+                <h2 style="color: #333;">Item Details</h2>
+                <p style="color: #555;"><strong>Item Name:</strong> {{ item.content_object.name }}</p>
+                <p style="color: #555;"><strong>Quantity:</strong> {{ item.quantity }}</p>
+                <p style="color: #555;"><strong>Price per Item:</strong> ${{ item.content_object.price }}</p>
+                <p style="color: #555;"><strong>Total Price:</strong> ${{ item.total_price }}</p>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h2 style="color: #333;">Apply Promo Code</h2>
+                <label for="promo_code" style="display: block; color: #555;">Enter your promo code:</label>
+                <input type="text" id="promo_code" name="promo_code" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px;" />
+            </div>
+
+            <div style="text-align: right;">
+                <button type="submit" style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer; font-size: 16px;">Proceed to Payment</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
+
+{% endblock %}

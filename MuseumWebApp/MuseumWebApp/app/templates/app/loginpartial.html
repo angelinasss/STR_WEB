@@ -1,16 +1,16 @@
 {% if user.is_authenticated %}
-<form id="logoutForm" action="/logout/" method="post" class="navbar-right">
+<form id="logoutForm" action="/logout/" method="post">
     {% csrf_token %}
-    <ul class="nav navbar-nav navbar-right">
-        <li><a href="{% url 'profile' user.id %}" class="navbar-brand">Hello {{ user.username }}!</a></li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    <ul style="list-style-type: none; padding: 0; margin: 0; display: flex;">
+        <li style="margin-right: 15px;"><a href="{% url 'profile' user.id %}" style="text-decoration: none; color: #333; padding: 8px 12px; border-radius: 5px; background-color: #e2e2e2; transition: background-color 0.3s;">Hello {{ user.username }}!</a></li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()" style="text-decoration: none; color: #333; padding: 8px 12px; border-radius: 5px; background-color: #e2e2e2; transition: background-color 0.3s;">Log off</a></li>
     </ul>
 </form>
 
 {% else %}
 
-<ul class="nav navbar-nav navbar-right">
-    <li><a href="{% url 'login' %}">Log in</a></li>
+<ul style="list-style-type: none; padding: 0; margin: 0; display: flex;">
+    <li><a href="{% url 'login' %}" style="text-decoration: none; color: #333; padding: 8px 12px; border-radius: 5px; background-color: #e2e2e2; transition: background-color 0.3s;">Log in</a></li>
 </ul>
 
 {% endif %}

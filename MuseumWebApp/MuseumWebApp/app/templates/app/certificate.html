@@ -1,0 +1,50 @@
+<!-- templates/museum_certificate.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum Qualification Certificate</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+
+    <div style="width: 80%; max-width: 700px; margin: 0 auto; padding: 20px; background-color: #ffffff; border: 2px solid #000; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <h1 style="text-align: center; font-size: 28px; color: #333;">Certificate of Museum Qualification</h1>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <h2 style="font-size: 24px; color: #555;">This is to Certify That</h2>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            <tr>
+                <td style="width: 50%; padding: 10px; border: 1px solid #ddd; text-align: left;">
+                    <strong style="font-size: 18px;">Museum Name:</strong><br>
+                    <span style="font-size: 16px; color: #666;">{{ museum_name }}</span>
+                </td>
+                <td style="width: 50%; padding: 10px; border: 1px solid #ddd; text-align: left;">
+                    <strong style="font-size: 18px;">Date:</strong><br>
+                    <span style="font-size: 16px; color: #666;">{{ date }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding: 10px; border: 1px solid #ddd; text-align: center;">
+                    <p style="font-size: 18px; color: #555;">has been officially recognized for achieving</p>
+                    <h3 style="font-size: 22px; color: #333;">{{ qualification }}</h3>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding: 10px; border: 1px solid #ddd; text-align: center;">
+                    <p style="font-size: 18px; color: #555;">Presented by</p>
+                    <strong style="font-size: 20px; color: #333;">{{ presenter }}</strong>
+                </td>
+            </tr>
+        </table>
+
+        <p style="text-align: center; margin-top: 30px;">
+            <strong style="font-size: 18px; color: #333;">Signature:</strong><br>
+            <span style="font-size: 16px; color: #666;">[Signature]</span>
+        </p>
+    </div>
+
+</body>
+</html>

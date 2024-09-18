@@ -1,231 +1,133 @@
+<!DOCTYPE html>
+
 {% extends "app/layout.html" %}
-
 {% block content %}
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const isEmployeeCheckbox = document.getElementById('is_employee');
+            const employeeFields = document.getElementById('employee-fields');
 
-        .registration-container {
-            max-width: 600px;
-            margin: 0 auto 80px auto;
-            padding: 40px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+            // Hide employee fields initially using hidden attribute
+            employeeFields.hidden = true;
 
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        label {
-            font-weight: bold;
-            color: #2c3e50;
-            flex: 1;
-            text-align: right;
-            padding-right: 15px;
-        }
-
-        .form-control {
-            flex: 2;
-            padding: 12px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-
-            .form-control:focus {
-                border-color: #3498db;
-                outline: none;
-            }
-
-        .invalid-feedback {
-            color: #e74c3c;
-            margin-top: 5px;
-            font-size: 14px;
-        }
-
-        .btn-default {
-            background-color: #3498db;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
-
-            .btn-default:hover {
-                background-color: #2980b9;
-            }
-
-        .error {
-            color: red;
-            border: 1px solid red;
-            padding: 10px;
-            margin-bottom: 10px;
-            text-align: center;
-            border-radius: 5px;
-        }
-
-        #employeeFields {
-            margin-top: 20px;
-        }
-
-        .form-group select,
-        .form-group input[type="checkbox"] {
-            flex: 2;
-            margin-left: 15px;
-        }
-    </style>
+            // Toggle display of employee fields based on checkbox
+            isEmployeeCheckbox.addEventListener('change', function () {
+                employeeFields.hidden = !isEmployeeCheckbox.checked;
+            });
+        });
+    </script>
 </head>
 
-<div class="registration-container">
-    <h2>{{ title }}</h2>
-    <form method="post" class="form-horizontal" enctype="multipart/form-data">
-        {% csrf_token %}
-        <h4>Create a local account.</h4>
-        <hr />
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required
-                   class="form-control {% if errors.username %}is-invalid{% endif %}"
-                   value="{{ form_data.username|default:'' }}">
-            {% if errors.username %}
-            <div class="invalid-feedback">{{ errors.username }}</div>
-            {% endif %}
-        </div>
-        <div class="form-group">
-            <label for="first_name">First Name</label>
-            <input type="text" id="first_name" name="first_name" required
-                   class="form-control"
-                   value="{{ form_data.first_name|default:'' }}">
-        </div>
-        <div class="form-group">
-            <label for="last_name">Last Name</label>
-            <input type="text" id="last_name" name="last_name" required
-                   class="form-control"
-                   value="{{ form_data.last_name|default:'' }}">
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required
-                   class="form-control {% if errors.email %}is-invalid{% endif %}"
-                   value="{{ form_data.email|default:'' }}">
-            {% if errors.email %}
-            <div class="invalid-feedback">{{ errors.email }}</div>
-            {% endif %}
-        </div>
-        <div class="form-group">
-            <label for="age">Age</label>
-            <input type="number" id="age" name="age" min="18" max="120" required
-                   class="form-control {% if errors.age %}is-invalid{% endif %}"
-                   value="{{ form_data.age|default:'' }}">
-            {% if errors.age %}
-            <div class="invalid-feedback">{{ errors.age }}</div>
-            {% endif %}
-        </div>
-        <div class="form-group">
-            <label for="is_employee">Are you an employee?</label>
-            <input type="checkbox" id="is_employee" name="is_employee" value="1"
-                   class="form-control" {% if form_data.is_employee %}checked{% endif %}>
-        </div>
-        <div id="employeeFields" style="display: {% if form_data.is_employee %}block{% else %}none{% endif %}">
-            <div class="form-group">
-                <label for="position">Position</label>
-                <select name="position" id="position" class="form-control">
-                    {% for position in positions %}
-                    <option value="{{ position.id }}" {% if position.id == form_data.position_id|default:'' %}selected{% endif %}>
-                        {{ position.name }}
-                    </option>
-                    {% endfor %}
-                </select>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+
+    <div style="max-width: 600px; margin: 0 auto 80px auto; padding: 40px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+        <h2 style="text-align: center; color: #2c3e50; margin-bottom: 20px;">{{ title }}</h2>
+
+        <form method="post" action="">
+            {% csrf_token %}
+            <h4>Create a local account.</h4>
+            <hr />
+
+            <!-- Regular registration fields -->
+
+            <div style="margin-bottom: 20px;">
+                <label for="username" style="display: block; font-weight: bold; color: #2c3e50;">Username</label>
+                <input type="text" id="username" name="username" required
+                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px;">
             </div>
 
-            <div class="form-group">
-                <label for="hall">Hall</label>
-                <select name="hall" id="hall" class="form-control">
-                    {% for hall in halls %}
-                    <option value="{{ hall.id }}" {% if hall.id == form_data.hall_id|default:'' %}selected{% endif %}>
-                        {{ hall.name }}
-                    </option>
-                    {% endfor %}
-                </select>
+            <div style="margin-bottom: 20px;">
+                <label for="first_name" style="display: block; font-weight: bold; color: #2c3e50;">First Name</label>
+                <input type="text" id="first_name" name="first_name" required
+                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px;">
             </div>
 
-            <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="text" id="phone" name="phone" required
-                       class="form-control {% if errors.phone %}is-invalid{% endif %}"
-                       value="{{ form_data.phone|default:'' }}"
-                       placeholder="+375 (29) XXX-XX-XX">
-                {% if errors.phone %}
-                <div class="invalid-feedback">{{ errors.phone }}</div>
-                {% endif %}
+            <div style="margin-bottom: 20px;">
+                <label for="last_name" style="display: block; font-weight: bold; color: #2c3e50;">Last Name</label>
+                <input type="text" id="last_name" name="last_name" required
+                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px;">
             </div>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required
-                   class="form-control {% if errors.password %}is-invalid{% endif %}">
-            {% if errors.password %}
-            <div class="invalid-feedback">{{ errors.password }}</div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="email" style="display: block; font-weight: bold; color: #2c3e50;">Email</label>
+                <input type="email" id="email" name="email" required
+                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px;">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="age" style="display: block; font-weight: bold; color: #2c3e50;">Age</label>
+                <input type="number" id="age" name="age" min="18" max="120" required
+                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px;">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="is_employee" style="display: block; font-weight: bold; color: #2c3e50;">Are you an employee?</label>
+                <input type="checkbox" id="is_employee" name="is_employee" value="1"
+                       style="margin-right: 10px;">
+            </div>
+
+            <!-- Employee fields, initially hidden -->
+            <div id="employee-fields" hidden>
+                <div style="margin-bottom: 20px;">
+                    <label for="position_display" style="display: block; font-weight: bold; color: #2c3e50;">Position</label>
+                    <select name="position" id="position">
+                        {% for position in positions %}
+                        <option value="{{ position.id }}" {% if position.id == form_data.position_id|default:'' %}selected{% endif %}>
+                            {{ position.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label for="hall_display" style="display: block; font-weight: bold; color: #2c3e50;">Hall</label>
+                    <select name="hall" id="hall">
+                        {% for hall in halls %}
+                        <option value="{{ hall.id }}" {% if hall.id == form_data.hall_id|default:'' %}selected{% endif %}>
+                            {{ hall.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label for="phone_display" style="display: block; font-weight: bold; color: #2c3e50;">Phone</label>
+                    <input type="text" id="phone" name="phone" value="{{ form_data.phone|default:'' }}" placeholder="+375 (29) XXX-XX-XX">
+                </div>
+            </div>
+
+            <!-- Password fields -->
+            <div style="margin-bottom: 20px;">
+                <label for="password" style="display: block; font-weight: bold; color: #2c3e50;">Password</label>
+                <input type="password" id="password" name="password" required
+                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px;">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="password_confirm" style="display: block; font-weight: bold; color: #2c3e50;">Confirm Password</label>
+                <input type="password" id="password_confirm" name="password_confirm" required
+                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px;">
+            </div>
+
+            <div style="text-align: center; margin-bottom: 20px;">
+                <input type="submit" value="Register"
+                       style="background-color: #3498db; color: #fff; padding: 10px 20px; border-radius: 5px; border: none; font-size: 16px; cursor: pointer;">
+            </div>
+
+            {% if error %}
+            <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 10px; text-align: center; border-radius: 5px;">
+                {{ error }}
+            </div>
             {% endif %}
-        </div>
-        <div class="form-group">
-            <label for="password_confirm">Confirm Password</label>
-            <input type="password" id="password_confirm" name="password_confirm" required
-                   class="form-control {% if errors.password %}is-invalid{% endif %}">
-        </div>
+        </form>
+    </div>
 
-        <div class="form-group">
-            <div class="text-center">
-                <input type="submit" value="Register" class="btn btn-default">
-            </div>
-        </div>
-
-        {% if error %}
-        <div class="error">
-            {{ error }}
-        </div>
-        {% endif %}
-    </form>
-</div>
-
-{% endblock %}
-
-{% block scripts %}
-    {% load static %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/3epwJ5tGFiM5z5mAi2vH5cfz5HFe0j72g8p02M7" crossorigin="anonymous"></script>
-<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const employeeCheckbox = document.getElementById('is_employee');
-    const employeeFields = document.getElementById('employeeFields');
-
-    employeeCheckbox.addEventListener('change', function () {
-        console.log('Checkbox changed:', employeeCheckbox.checked); 
-        if (employeeCheckbox.checked) {
-            employeeFields.style.display = 'block';
-        } else {
-            employeeFields.style.display = 'none';
-        }
-    });
-});
-</script>
+</body>
+</html>
 {% endblock %}

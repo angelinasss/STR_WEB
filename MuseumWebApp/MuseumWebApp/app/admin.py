@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, CompanyInfo, FAQ, Job, Review, PromoCode, PrivacyPolicy, ArtType, Hall, Position, Employee, Exhibit, Exhibition, Excursion, Ticket_Excursion, Ticket_Exhibition
+from .models import Article, Banner, CompanyInfo, FAQ, Job, Partners, Review, PromoCode, PrivacyPolicy, ArtType, Hall, Position, Employee, Exhibit, Exhibition, Excursion, Ticket_Excursion, Ticket_Exhibition
 
 admin.site.register(PrivacyPolicy)
 admin.site.register(ArtType)
@@ -8,6 +8,8 @@ admin.site.register(Exhibition)
 admin.site.register(Excursion)
 admin.site.register(Ticket_Excursion)
 admin.site.register(Ticket_Exhibition)
+admin.site.register(Banner)
+admin.site.register(Partners)
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):

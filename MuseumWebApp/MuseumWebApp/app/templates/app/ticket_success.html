@@ -1,61 +1,34 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<div class="success-container">
-    <div class="success-content">
-        <h1>Purchase Successful</h1>
-        <p>Your ticket has been successfully purchased!</p>
-        <a href="{% url 'all_exhibitions' %}" class="back-link">View More Exhibitions</a>
-    </div>
-</div>
-
-<style>
-    .success-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-        font-family: 'Arial', sans-serif;
-    }
-
-    .success-content {
-        background-color: #ffffff;
-        padding: 40px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        max-width: 500px;
-        width: 100%;
-    }
-
-        .success-content h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            color: #4CAF50;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .success-content p {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            color: #333333;
-        }
-
-    .back-link {
-        display: inline-block;
-        padding: 12px 24px;
-        background-color: #4CAF50;
-        color: #ffffff;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-    }
-
-        .back-link:hover {
-            background-color: #45a049;
-        }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase Successful</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f0f0f0; margin: 0; padding: 0;">
+    <table width="100%" height="100%" align="center" style="background-color: #f0f0f0; padding: 20px;">
+        <tr>
+            <td align="center">
+                <table width="500" border="0" cellpadding="20" cellspacing="0" bgcolor="#ffffff" align="center" style="border-radius: 10px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);">
+                    <tr>
+                        <td align="center">
+                            <h1 style="color: #4CAF50; font-size: 28px; margin-bottom: 20px;">Purchase Successful</h1>
+                            <p style="color: #333; font-size: 16px; margin-bottom: 30px;">Your ticket has been successfully purchased!</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <a href="{% url 'all_exhibitions' %}" style="background-color: #4CAF50; color: #ffffff; text-decoration: none; padding: 12px 24px; font-weight: bold; border-radius: 5px; display: inline-block;">
+                                View More Exhibitions
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
 {% endblock %}

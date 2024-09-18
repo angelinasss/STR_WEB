@@ -2,175 +2,52 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Profile</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .profile-container {
-            max-width: 800px;
-            margin: 0px auto 40px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center; 
-        }
-
-        h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-            .form-group label {
-                font-weight: bold;
-                margin-bottom: 8px;
-                color: #2c3e50;
-            }
-
-        .form-control {
-            width: 100%;
-            max-width: 400px; 
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            font-size: 1em;
-            transition: border-color 0.3s ease;
-        }
-
-            .form-control:focus {
-                border-color: #3498db;
-                outline: none;
-            }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 1em;
-            font-weight: bold;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-decoration: none;
-            text-align: center;
-            margin: 10px; 
-        }
-
-        .btn-primary {
-            background-color: #3498db;
-        }
-
-            .btn-primary:hover {
-                background-color: #2980b9;
-            }
-
-        .btn-warning {
-            background-color: #f39c12;
-        }
-
-            .btn-warning:hover {
-                background-color: #e67e22;
-            }
-
-        .btn-secondary {
-            background-color: #95a5a6;
-        }
-
-            .btn-secondary:hover {
-                background-color: #7f8c8d;
-            }
-
-        .btn-danger {
-            background-color: #e74c3c;
-        }
-
-            .btn-danger:hover {
-                background-color: #c0392b;
-            }
-
-        .profile-photo {
-            display: block;
-            max-width: 150px;
-            height: auto;
-            border-radius: 5px;
-            margin: 10px auto;
-        }
-
-        .timezone {
-            font-weight: bold;
-            color: #2c3e50;
-        }
-
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-
-            .alert-success p {
-                margin: 0;
-            }
-    </style>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
 </head>
 
-<body>
-    <div class="profile-container">
-        <h2>{{ title }}</h2>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
 
-        <form method="post" enctype="multipart/form-data">
+    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <h2 style="text-align: center; color: #2c3e50; margin-bottom: 20px;">{{ title }}</h2>
+
+        <form method="post" enctype="multipart/form-data" style="text-align: center;">
             {% csrf_token %}
 
             {% if is_employee %}
-            <div class="form-group">
-                <label for="photo">Profile Photo</label>
+            <div style="margin-bottom: 20px;">
+                <label for="photo" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Profile Photo</label>
                 {% if employee.photo %}
-                <img src="{{ employee.photo.url }}" alt="Profile Photo" class="profile-photo">
+                <img src="{{ employee.photo.url }}" alt="Profile Photo" style="display: block; max-width: 150px; height: auto; border-radius: 5px; margin: 0 auto; margin-bottom:10px;">
                 {% endif %}
-                <input type="file" id="photo" name="photo" class="form-control">
+                <input type="file" id="photo" name="photo" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
             </div>
 
-            <div class="form-group">
-                <label for="first_name">First Name</label>
-                <input type="text" id="first_name" name="first_name" class="form-control" value="{{ employee.first_name }}">
+            <div style="margin-bottom: 20px;">
+                <label for="first_name" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">First Name</label>
+                <input type="text" id="first_name" name="first_name" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" value="{{ employee.first_name }}">
             </div>
 
-            <div class="form-group">
-                <label for="last_name">Last Name</label>
-                <input type="text" id="last_name" name="last_name" class="form-control" value="{{ employee.last_name }}">
+            <div style="margin-bottom: 20px;">
+                <label for="last_name" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Last Name</label>
+                <input type="text" id="last_name" name="last_name" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" value="{{ employee.last_name }}">
             </div>
 
-            <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="text" id="phone" name="phone" class="form-control" value="{{ employee.phone }}">
+            <div style="margin-bottom: 20px;">
+                <label for="phone" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Phone</label>
+                <input type="text" id="phone" name="phone" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" value="{{ employee.phone }}">
             </div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" class="form-control" value="{{ employee.email }}">
+            <div style="margin-bottom: 20px;">
+                <label for="email" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Email</label>
+                <input type="email" id="email" name="email" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" value="{{ employee.email }}">
             </div>
 
-            <div class="form-group">
-                <label for="position">Position</label>
-                <select id="position" name="position" class="form-control">
+            <div style="margin-bottom: 20px;">
+                <label for="position" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Position</label>
+                <select id="position" name="position" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                     {% for position in positions %}
                     <option value="{{ position.id }}" {% if position.id == employee.position.id %}selected{% endif %}>
                         {{ position.name }}
@@ -179,9 +56,9 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="hall">Hall</label>
-                <select id="hall" name="hall" class="form-control">
+            <div style="margin-bottom: 20px;">
+                <label for="hall" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Hall</label>
+                <select id="hall" name="hall" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                     {% for hall in halls %}
                     <option value="{{ hall.id }}" {% if hall.id == employee.hall.id %}selected{% endif %}>
                         {{ hall.name }}
@@ -192,85 +69,43 @@
             {% endif %}
 
             {% if not is_employee %}
-            <div class="form-group">
-                <label for="first_name">First Name</label>
-                <input type="text" id="first_name" name="first_name" class="form-control" value="{{ user.first_name }}">
+            <div style="margin-bottom: 20px;">
+                <label for="first_name" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">First Name</label>
+                <input type="text" id="first_name" name="first_name" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" value="{{ user.first_name }}">
             </div>
 
-            <a href="{% url 'nationality_by_name' %}" class="btn btn-warning">Find Out Nationality by Name</a>
+            <a href="{% url 'nationality_by_name' %}" style="display: block; padding: 10px; font-size: 1em; font-weight: bold; color: #fff; background-color: #f39c12; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; margin-bottom: 20px;">Find Out Nationality by Name</a>
 
-            <div class="form-group">
-                <label for="last_name">Last Name</label>
-                <input type="text" id="last_name" name="last_name" class="form-control" value="{{ user.last_name }}">
+            <div style="margin-bottom: 20px;">
+                <label for="last_name" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Last Name</label>
+                <input type="text" id="last_name" name="last_name" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" value="{{ user.last_name }}">
             </div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}">
+            <div style="margin-bottom: 20px;">
+                <label for="email" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Email</label>
+                <input type="email" id="email" name="email" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" value="{{ user.email }}">
             </div>
             {% endif %}
 
-            <div class="form-group">
-                <p><strong>Time Zone:</strong> <span id="userTimezone" class="timezone"></span></p>
+            <div style="margin-bottom: 20px;">
+                <p><strong>Time Zone:</strong> <span id="userTimezone" style="font-weight: bold; color: #2c3e50;"></span></p>
                 <p><strong>Current Date and Time (Your Time Zone):</strong> <span id="currentDateTimeUserTz"></span></p>
                 <p><strong>Current Date and Time (UTC):</strong> <span id="currentDateTimeUtc"></span></p>
             </div>
 
-            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button type="submit" style="display: block; width: 100%; padding: 10px; font-size: 1em; font-weight: bold; color: #fff; background-color: #3498db; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; margin-top: 10px;">Save Changes</button>
 
             {% if messages %}
-            <div class="alert alert-success text-center">
+            <div style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 5px; margin-top: 20px;">
                 {% for message in messages %}
-                <p>{{ message }}</p>
+                <p style="margin: 0;">{{ message }}</p>
                 {% endfor %}
             </div>
             {% endif %}
         </form>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Get user time zone
-            const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            document.getElementById('userTimezone').textContent = userTimezone;
-
-            // Function to get timezone offset in GMT format
-            function getTimezoneOffset() {
-                const offset = new Date().getTimezoneOffset();
-                const hours = Math.floor(Math.abs(offset) / 60);
-                const minutes = Math.abs(offset) % 60;
-                const sign = offset > 0 ? '-' : '+';
-                return `GMT${sign}${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-            }
-
-            // Display timezone offset
-            document.getElementById('userTimezone').textContent += ` (${getTimezoneOffset()})`;
-
-            // Get current date and time in user's time zone
-            const userDateTime = new Date();
-            const userDateTimeOptions = {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false // 24-hour format
-            };
-            const userDateTimeString = userDateTime.toLocaleString('en-GB', userDateTimeOptions); // 'en-GB' for DD/MM/YYYY format
-            document.getElementById('currentDateTimeUserTz').textContent = userDateTimeString;
-
-            // Get current date and time in UTC
-            const utcDateTime = new Date().toLocaleString('en-GB', {
-                timeZone: 'UTC',
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
-            });
-            document.getElementById('currentDateTimeUtc').textContent = utcDateTime;
-        });
-    </script>
 </body>
+
+</html>
 {% endblock %}

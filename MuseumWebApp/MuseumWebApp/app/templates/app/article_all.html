@@ -7,63 +7,27 @@
 <head>
     <meta charset="utf-8" />
     <title>{{ article.title }}</title>
-    <style>
-
-        h1 {
-            color: #1a73e8;
-        }
-
-        img {
-            display: block;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
-
-        p {
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
-
-        .date-info {
-            font-size: 0.9em;
-            color: #777;
-            margin-bottom: 15px;
-        }
-
-        .btn {
-            background-color: #1a73e8;
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            display: inline-block; 
-            margin-bottom: 15px; 
-        }
-
-            .btn:hover {
-                background-color: #155bb5;
-            }
-    </style>
 </head>
 
-<body>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
+        <h1 style="color: #1a73e8; text-align: center;">{{ article.title }}</h1>
 
-    <h1>{{ article.title }}</h1>
+        {% if article.image %}
+        <img src="{{ article.image.url }}" alt="{{ article.title }}" style="display: block; margin: 20px auto; border-radius: 8px; max-width: 100%; height: auto;">
+        {% endif %}
 
-    {% if article.image %}
-    <img src="{{ article.image.url }}" alt="{{ article.title }}" style="max-width: 650px; max-height: 650px;">
-    {% endif %}
+        <div style="font-size: 0.9em; color: #777; text-align: center; margin-bottom: 20px;">
+            <p><strong>Published (UTC):</strong> {{ published_at_utc }} UTC</p>
+            <p><strong>Published (Local Time):</strong> {{ published_at_local }}</p>
+        </div>
 
-    <div class="date-info">
-        <strong>Published (UTC):</strong> {{ published_at_utc }} UTC<br>
-        <strong>Published (Local Time):</strong> {{ published_at_local }}
+        <p style="font-size: 1.1em; line-height: 1.6; color: #333;">{{ article.content }}</p>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{% url 'home' %}" style="background-color: #1a73e8; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; transition: background-color 0.3s ease;">Back to Home</a>
+        </div>
     </div>
-
-    <p>{{ article.content }}</p>
-
-    <a href="{% url 'home' %}" class="btn">Back to Home</a>
-
 </body>
 </html>
 {% endblock %}

@@ -1,109 +1,51 @@
+<!DOCTYPE html>
+
 {% extends "app/layout.html" %}
-
 {% block content %}
-{% load static %}
 
-<style>
-    .hall-item {
-        margin-bottom: 20px;
-        padding: 15px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background-color: #f8f9fa;
-        display: flex;
-        gap: 20px;
-        align-items: center;
-    }
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+</head>
 
-        .hall-item h3 {
-            margin: 0 0 10px;
-            font-size: 24px;
-        }
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
 
-        .hall-item p {
-            margin: 5px 0;
-        }
-
-        .hall-item a {
-            text-decoration: none;
-            color: #007bff;
-        }
-
-            .hall-item a:hover {
-                text-decoration: underline;
-            }
-
-    .hall-actions {
-        display: flex;
-        gap: 10px;
-    }
-
-        .hall-actions a {
-            text-decoration: none;
-            padding: 5px 10px;
-            border: 1px solid #007bff;
-            border-radius: 5px;
-            color: #fff;
-            background-color: #007bff;
-        }
-
-            .hall-actions a:hover {
-                background-color: #0056b3;
-            }
-
-    .add-hall-btn {
-        margin-bottom: 20px;
-        padding: 10px 15px;
-        border: 1px solid #28a745;
-        border-radius: 5px;
-        background-color: #28a745;
-        color: #fff;
-        text-decoration: none;
-        display: inline-block;
-    }
-
-        .add-hall-btn:hover {
-            background-color: #218838;
-        }
-
-    .hall-item img {
-        width: 120px;
-        height: auto;
-        border-radius: 5px;
-        object-fit: cover;
-    }
-</style>
-
-<div class="container">
-    <h2 class="text-center mt-4">Exhibits in {{ hall.name }} Hall</h2>
+    <h1 style="text-align: center; color: #333;">Exhibits in {{ hall.name }} Hall</h1>
 
     {% if user.is_superuser %}
-    <a href="{% url 'create_exhibit' hall.id %}" class="add-hall-btn">Create New Exhibit In Current Hall</a>
+    <a href="{% url 'create_exhibit' hall.id %}" style="display: block; width: fit-content; margin: 0 auto; padding: 10px 15px; margin-bottom: 20px; border: 1px solid #28a745; border-radius: 5px; background-color: #28a745; color: #fff; text-decoration: none; text-align: center;">
+        Create New Exhibit In Current Hall
+    </a>
     {% endif %}
 
-    <div class="hall-list">
+    <div style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
         {% for exhibit in exhibits %}
-        <div class="hall-item">
-            {% if exhibit.image %}
-            <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}">
-            {% endif %}
-
-            <div>
-                <h3>{{ exhibit.name }}</h3>
-                <p><strong>Art Type:</strong> {{ exhibit.art_type }}</p>
-                <p><strong>Date acquired:</strong> {{ exhibit.date_acquired }}</p>
-                <p><strong>Caretaker:</strong> {{ exhibit.caretaker }}</p>
+        <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f8f9fa; display: flex; align-items: center;">
+            <div style="flex-shrink: 0; margin-right: 20px;">
+                {% if exhibit.image %}
+                <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}" style="max-width: 150px; border-radius: 5px; object-fit: cover;">
+                {% else %}
+                <img src="/static/images/default_exhibit.jpg" alt="{{ exhibit.name }}" style="max-width: 150px; border-radius: 5px; object-fit: cover;">
+                {% endif %}
             </div>
-
+            <div style="flex-grow: 1;">
+                <h2 style="margin: 0; font-size: 20px; color: #333;">{{ exhibit.name }}</h2>
+                <p style="margin: 5px 0; color: #555;"><strong>Art Type:</strong> {{ exhibit.art_type }}</p>
+                <p style="margin: 5px 0; color: #555;"><strong>Date Acquired:</strong> {{ exhibit.date_acquired }}</p>
+                <p style="margin: 5px 0; color: #555;"><strong>Caretaker:</strong> {{ exhibit.caretaker }}</p>
+            </div>
             {% if user.is_superuser %}
-            <div class="hall-actions">
-                <a href="{% url 'edit_exhibit' exhibit.id %}">Edit</a>
-                <a href="{% url 'delete_exhibit' exhibit.id %}" onclick="return confirm('Are you sure you want to delete this exhibit?');">Delete</a>
+            <div style="flex-shrink: 0; margin-left: 20px;">
+                <a href="{% url 'edit_exhibit' exhibit.id %}" style="display: block; padding: 5px 10px; margin-bottom: 5px; border: 1px solid #007bff; border-radius: 5px; background-color: #007bff; color: #fff; text-decoration: none; text-align: center;">Edit</a>
+                <a href="{% url 'delete_exhibit' exhibit.id %}" onclick="return confirm('Are you sure you want to delete this exhibit?');" style="display: block; padding: 5px 10px; border: 1px solid #dc3545; border-radius: 5px; background-color: #dc3545; color: #fff; text-decoration: none; text-align: center;">Delete</a>
             </div>
             {% endif %}
         </div>
         {% endfor %}
     </div>
-</div>
+
+</body>
+</html>
 
 {% endblock %}

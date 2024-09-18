@@ -1,34 +1,73 @@
-{% extends "app/layout.html" %}
+<!DOCTYPE html>
 
+{% extends "app/layout.html" %}
 {% block content %}
 
-<h1>About Company</h1>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+</head>
 
-{% if info %}
-<p>{{ info.description }}</p>
-    {% if info.logo %}
-<img src="{{ info.logo.url }}" alt="Company Logo">
-    {% endif %}
-    {% if info.video %}
-<h3>Company Video</h3>
-<iframe width="560" height="315" src="{{ info.video }}" frameborder="0" allowfullscreen></iframe>
-    {% endif %}
-    {% if info.history %}
-<h3>Company History</h3>
-<p>{{ info.history }}</p>
-    {% endif %}
-    {% if info.details %}
-<h3>Company Details</h3>
-<p>{{ info.details }}</p>
-    {% endif %}
-{% if user.is_superuser %}
-<a href="edit_company_info/" class="btn btn-primary">Edit Information</a>
-{% endif %}
-{% else %}
-<p>No company information available.</p>
-{% if user.is_superuser %}
-<a href="edit_company_info/" class="btn btn-primary">Add Information</a>
-{% endif %}
-{% endif %}
+<body>
 
+    <h2 style="text-align: center; font-size: 1.7em; color: #333;">{{ title }}</h2>
+
+    <div style="width: 90%; max-width: 1000px; margin: 0 auto; padding: 15px;">
+        {% if info %}
+        <section style="display: flex; align-items: flex-start; justify-content: center; margin-bottom: 20px; width: 100%;">
+            {% if info.logo %}
+            <div style="flex-shrink: 0; margin-right: 20px;">
+                <img src="{{ info.logo.url }}" alt="Company Logo" style="max-width: 150px; height: auto;">
+            </div>
+            {% endif %}
+            <p style="font-size: 1.2em; color: #555; margin: 0; width: calc(100% - 170px); text-align: left;">{{ info.description }}</p>
+        </section>
+
+        {% if info.video %}
+        <section style="text-align: center; margin-bottom: 20px; width: 100%;">
+            <h3 style="font-size: 1.5em; color: #444;">Museum Video</h3>
+            <video width="80%" height="auto" controls>
+                <source src="{{ info.video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </section>
+        {% endif %}
+
+        {% if info.history %}
+        <section style="margin-bottom: 20px; width: 100%; text-align: center;">
+            <h3 style="font-size: 1.5em; color: #444;">Museum History</h3>
+            <p style="font-size: 1.2em; color: #666; margin: 0;">{{ info.history }}</p>
+        </section>
+        {% endif %}
+
+        {% if info.details %}
+        <section style="margin-bottom: 20px; width: 100%; text-align: center;">
+            <h3 style="font-size: 1.5em; color: #444;">Museum Details</h3>
+            <p style="font-size: 1.2em; color: #666; margin: 0;">{{ info.details }}</p>
+        </section>
+        {% endif %}
+
+        <section style="text-align: center; margin-bottom: 20px; width: 100%;">
+            <h3 style="font-size: 1.5em; color: #444;">Certificate</h3>
+            {% include 'app/certificate.html' with museum_name='Museum of Natural History' date='September 10, 2024' qualification='Certified Excellence in Museum Management' presenter='National Museum Accreditation Board' %}
+        </section>
+
+        {% if user.is_superuser %}
+        <section style="text-align: center; width: 100%;">
+            <a href="edit_company_info/" class="btn btn-primary" style="display: inline-block; padding: 10px 20px; font-size: 1em; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">Edit Information</a>
+        </section>
+        {% endif %}
+
+        {% else %}
+        <p style="text-align: center; font-size: 1.2em; color: #666;">No company information available.</p>
+        {% if user.is_superuser %}
+        <section style="text-align: center; margin-top: 20px; width: 100%;">
+            <a href="edit_company_info/" class="btn btn-primary" style="display: inline-block; padding: 10px 20px; font-size: 1em; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">Add Information</a>
+        </section>
+        {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
 {% endblock %}

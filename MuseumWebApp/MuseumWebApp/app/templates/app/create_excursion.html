@@ -1,143 +1,150 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-    <h1 style="text-align: center;">Create New Item</h1>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+</head>
 
-    <form method="POST" style="background-color: #f9f9f9; padding: 20px; border-radius: 8px;">
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+
+    <h1 style="text-align: center; color: #333;">{{ title }}</h1>
+
+    <form method="POST" enctype="multipart/form-data" style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
         {% csrf_token %}
-        <div class="form-group" style="margin-bottom: 15px;">
-            <label for="item_type" style="font-size: 1.2em;">Select Item Type:</label>
-            <select id="item_type" name="item_type" onchange="toggleFields()" style="width: 100%; padding: 8px; margin-bottom: 20px;">
-                <option value="excursion">Excursion</option>
-                <option value="exhibition">Exhibition</option>
-            </select>
-        </div>
 
-        <!-- Excursion Fields -->
-        <div id="excursion_fields">
-            <div class="form-group">
-                <label for="code">Code:</label>
-                <input type="text" id="code" name="code" class="form-control" style="width: 100%; padding: 8px;">
-            </div>
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="excursion_name" name="excursion_name" class="form-control" style="width: 100%; padding: 8px;">
-            </div>
-            <div class="form-group">
-                <label for="date">Date:</label>
-                <input type="date" id="date" name="date" class="form-control" style="width: 100%; padding: 8px;">
-            </div>
-            <div class="form-group">
-                <label for="season">Season:</label>
-                <select id="season" name="season" class="form-control" style="width: 100%; padding: 8px;">
-                    <option value="summer">Summer</option>
-                    <option value="autumn">Autumn</option>
-                    <option value="winter">Winter</option>
-                    <option value="spring">Spring</option>
+        <fieldset style="border: none; padding: 0;">
+            <legend style="font-size: 20px; font-weight: bold; color: #444; margin-bottom: 10px;">Select Item Type</legend>
+
+            <div style="margin-bottom: 15px;">
+                <label for="item_type" style="display: block; font-weight: bold; color: #555;">Item Type:</label>
+                <select id="item_type" name="item_type" onchange="toggleFields()" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="excursion">Excursion</option>
+                    <option value="exhibition">Exhibition</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="group_size">Group Size:</label>
-                <input type="number" id="group_size" name="group_size" class="form-control" style="width: 100%; padding: 8px;">
-            </div>
-            <div class="form-group">
-                <label for="guide">Guide</label>
-                <select id="guide" name="guide" class="form-control">
-                    {% for guide in guides %}
-                    <option value="{{ guide.id }}">
-                        {{ guide.first_name }} {{ guide.last_name }}
-                    </option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="excursion_price">Price:</label>
-                <input type="number" step="0.01" id="excursion_price" min="0" max="10000" name="excursion_price" class="form-control" required>
-            </div>
-        </div>
 
-        <!-- Exhibition Fields -->
-        <div id="exhibition_fields" style="display: none;">
-            <div class="form-group">
-                <label for="exhibition_name">Name:</label>
-                <input type="text" id="exhibition_name" name="exhibition_name" class="form-control" style="width: 100%; padding: 8px;">
-            </div>
-            <div class="form-group">
-                <label for="start_date">Start Date:</label>
-                <input type="date" id="start_date" name="start_date" class="form-control" style="width: 100%; padding: 8px;">
-            </div>
-            <div class="form-group">
-                <label for="end_date">End Date:</label>
-                <input type="date" id="end_date" name="end_date" class="form-control" style="width: 100%; padding: 8px;">
-            </div>
-            <div class="form-group">
-                <label for="exhibits_list">Select Exhibits:</label>
-                <select id="exhibits_list" name="exhibits_list[]" class="form-control" style="width: 100%; padding: 8px;" multiple>
-                    {% for exhibit in exhibits %}
-                    <option value="{{ exhibit.id }}">{{ exhibit.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="exhibition_price">Price:</label>
-                <input type="number" step="0.01" id="exhibition_price" min="0" max="10000" name="exhibition_price" class="form-control" required>
-            </div>
-        </div>
+            <!-- Excursion Fields -->
+            <div id="excursion_fields">
+                <h2 style="font-size: 18px; color: #555;">Excursion Details</h2>
 
-        <button type="submit" style="background-color: #007bff; color: #fff; padding: 10px 20px; font-size: 1em; border: none; border-radius: 4px; cursor: pointer;">
-            Create
-        </button>
+                <div style="margin-bottom: 15px;">
+                    <label for="code" style="display: block; font-weight: bold; color: #555;">Code:</label>
+                    <input type="text" id="code" name="code" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="excursion_name" style="display: block; font-weight: bold; color: #555;">Name:</label>
+                    <input type="text" id="excursion_name" name="excursion_name" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="date" style="display: block; font-weight: bold; color: #555;">Date:</label>
+                    <input type="date" id="date" name="date" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="season" style="display: block; font-weight: bold; color: #555;">Season:</label>
+                    <select id="season" name="season" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                        <option value="summer">Summer</option>
+                        <option value="autumn">Autumn</option>
+                        <option value="winter">Winter</option>
+                        <option value="spring">Spring</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="group_size" style="display: block; font-weight: bold; color: #555;">Group Size:</label>
+                    <input type="number" id="group_size" name="group_size" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="guide" style="display: block; font-weight: bold; color: #555;">Guide:</label>
+                    <select id="guide" name="guide" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                        {% for guide in guides %}
+                        <option value="{{ guide.id }}">{{ guide.first_name }} {{ guide.last_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="excursion_price" style="display: block; font-weight: bold; color: #555;">Price:</label>
+                    <input type="number" step="0.01" id="excursion_price" name="excursion_price" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                </div>
+            </div>
+
+            <!-- Exhibition Fields -->
+            <div id="exhibition_fields" style="display: none;">
+                <h2 style="font-size: 18px; color: #555;">Exhibition Details</h2>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="exhibition_name" style="display: block; font-weight: bold; color: #555;">Name:</label>
+                    <input type="text" id="exhibition_name" name="exhibition_name" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="start_date" style="display: block; font-weight: bold; color: #555;">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="end_date" style="display: block; font-weight: bold; color: #555;">End Date:</label>
+                    <input type="date" id="end_date" name="end_date" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="exhibits_list" style="display: block; font-weight: bold; color: #555;">Select Exhibits:</label>
+                    <select id="exhibits_list" name="exhibits_list[]" multiple style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                        {% for exhibit in exhibits %}
+                        <option value="{{ exhibit.id }}">{{ exhibit.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="exhibition_price" style="display: block; font-weight: bold; color: #555;">Price:</label>
+                    <input type="number" step="0.01" id="exhibition_price" name="exhibition_price" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="submit" style="background-color: #007bff; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">
+                    Create
+                </button>
+            </div>
+        </fieldset>
+
         {% if messages %}
-        {% for message in messages %}
-        <div class="alert
-        {% if message.tags == 'error' %}
-          alert-danger
-        {% else %}
-          alert-success
-        {% endif %}
-        text-center" style="margin-top:10px">
-            {{ message }}
+        <div style="margin-top: 20px;">
+            {% for message in messages %}
+            <div style="padding: 10px; border-radius: 4px; text-align: center;
+                        {% if message.tags == 'error' %}background-color: #f8d7da; color: #721c24;{% else %}background-color: #d4edda; color: #155724;{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
         {% endif %}
     </form>
 
-<script>
-    function toggleFields() {
-        var itemType = document.getElementById("item_type").value;
-        var excursionFields = document.getElementById("excursion_fields");
-        var exhibitionFields = document.getElementById("exhibition_fields");
+    <script>
+        function toggleFields() {
+            var itemType = document.getElementById("item_type").value;
+            var excursionFields = document.getElementById("excursion_fields");
+            var exhibitionFields = document.getElementById("exhibition_fields");
 
-        // Get all inputs for validation
-        var excursionInputs = excursionFields.querySelectorAll('input, select');
-        var exhibitionInputs = exhibitionFields.querySelectorAll('input, select');
-
-        if (itemType === "excursion") {
-            excursionFields.style.display = "block";
-            exhibitionFields.style.display = "none";
-
-            // Set required for excursion and remove it for exhibition
-            excursionInputs.forEach(function (input) {
-                input.required = true;
-            });
-            exhibitionInputs.forEach(function (input) {
-                input.required = false;
-            });
-        } else {
-            excursionFields.style.display = "none";
-            exhibitionFields.style.display = "block";
-
-            // Set required for exhibition and remove it for excursion
-            excursionInputs.forEach(function (input) {
-                input.required = false;
-            });
-            exhibitionInputs.forEach(function (input) {
-                input.required = true;
-            });
+            if (itemType === "excursion") {
+                excursionFields.style.display = "block";
+                exhibitionFields.style.display = "none";
+            } else {
+                excursionFields.style.display = "none";
+                exhibitionFields.style.display = "block";
+            }
         }
-    }
 
-    window.onload = toggleFields;
+        window.onload = toggleFields;
+    </script>
 
-</script>
+</body>
+</html>
 {% endblock %}

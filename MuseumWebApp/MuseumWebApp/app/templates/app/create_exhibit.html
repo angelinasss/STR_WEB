@@ -1,57 +1,81 @@
-{% extends "app/layout.html" %}
+<!DOCTYPE html>
 
+{% extends "app/layout.html" %}
 {% block content %}
 
-<h1>Create An Exhibit In {{hall.name}} Hall</h1>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+</head>
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="image">Image</label>
-        <input type="file" id="image" name="image">
-    </div>
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" class="form-control" required>
-    </div>
-    <div class="form-group">
-        <label for="art_type">Art Type</label>
-        <select id="art_type" name="art_type" class="form-control">
-            {% for art_type in art_types %}
-            <option value="{{ art_type.id }}">
-                {{ art_type.name }}
-            </option>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+
+    <h1 style="text-align: center; color: #333;">Create An Exhibit In {{ hall.name }} Hall</h1>
+
+    <form method="POST" enctype="multipart/form-data" style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        {% csrf_token %}
+
+        <fieldset style="border: none; padding: 0;">
+            <legend style="font-size: 20px; font-weight: bold; color: #444; margin-bottom: 10px;">Exhibit Details</legend>
+
+            <div style="margin-bottom: 15px;">
+                <label for="image" style="display: block; font-weight: bold; color: #555;">Image</label>
+                <input type="file" id="image" name="image" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="name" style="display: block; font-weight: bold; color: #555;">Name</label>
+                <input type="text" id="name" name="name" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="art_type" style="display: block; font-weight: bold; color: #555;">Art Type</label>
+                <select id="art_type" name="art_type" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                    {% for art_type in art_types %}
+                    <option value="{{ art_type.id }}">
+                        {{ art_type.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="date_acquired" style="display: block; font-weight: bold; color: #555;">Date Acquired</label>
+                <input type="date" id="date_acquired" name="date_acquired" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="caretaker" style="display: block; font-weight: bold; color: #555;">Caretaker</label>
+                <select id="caretaker" name="caretaker" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                    {% for caretaker in caretakers %}
+                    <option value="{{ caretaker.id }}">
+                        {{ caretaker.first_name }} {{ caretaker.last_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="submit" style="background-color: #007bff; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">
+                    Save
+                </button>
+            </div>
+        </fieldset>
+
+        {% if messages %}
+        <div style="margin-top: 20px;">
+            {% for message in messages %}
+            <div style="padding: 10px; border-radius: 4px; text-align: center;
+                        {% if message.tags == 'error' %}background-color: #f8d7da; color: #721c24;{% else %}background-color: #d4edda; color: #155724;{% endif %}">
+                {{ message }}
+            </div>
             {% endfor %}
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="date_acquired">Date Acquired</label>
-        <input type="date" id="date_acquired" name="date_acquired" class="form-control" required>
-    </div>
-    <div class="form-group">
-        <label for="caretaker">Caretaker</label>
-        <select id="caretaker" name="caretaker" class="form-control">
-            {% for caretaker in caretakers %}
-            <option value="{{ caretaker.id }}">
-                {{ caretaker.first_name }} {{ caretaker.last_name }}
-            </option>
-            {% endfor %}
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert
-         {% if message.tags == 'error' %}
-             alert-danger
-         {% else %}
-             alert-success
-         {% endif %}
-         text-center" style="margin-top:10px">
-        {{ message }}
-    </div>
-    {% endfor %}
-    {% endif %}
-</form>
+        </div>
+        {% endif %}
+    </form>
+
+</body>
+</html>
 
 {% endblock %}

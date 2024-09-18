@@ -1,13 +1,20 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
-    <h1 style="text-align: center; font-size: 2em; margin-bottom: 20px;">Exhibits</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Exhibits</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
 
-    <div style="margin-bottom: 20px;">
-        <form method="GET" action="{% url 'all_exhibits' %}">
-            <label for="sort_by">Sort by:</label>
-            <select id="sort_by" name="sort_by" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+    <h1 style="text-align: center; color: #333; font-size: 24px;">Exhibits</h1>
+
+    <div style="max-width: 800px; margin: 0 auto; background-color: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+        <form method="GET" action="{% url 'all_exhibits' %}" style="margin-bottom: 20px;">
+            <label for="sort_by" style="font-weight: bold; margin-right: 10px;">Sort by:</label>
+            <select id="sort_by" name="sort_by" style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
                 <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
                 <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
                 <option value="date_asc" {% if sort_by == 'date_asc' %}selected{% endif %}>Date Acquired (Old to New)</option>
@@ -15,32 +22,42 @@
                 <option value="hall_asc" {% if sort_by == 'hall_asc' %}selected{% endif %}>Hall (A-Z)</option>
                 <option value="hall_desc" {% if sort_by == 'hall_desc' %}selected{% endif %}>Hall (Z-A)</option>
             </select>
-            <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; margin-left: 10px;">Sort</button>
+            <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Sort
+            </button>
         </form>
+
+        {% if exhibits %}
+        <div style="margin-top: 20px;">
+            {% for exhibit in exhibits %}
+            <div style="border: 1px solid #ddd; margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 10px;">
+                <div style="display: flex; align-items: center;">
+                    {% if exhibit.image %}
+                    <div style="margin-right: 20px;">
+                        <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}" style="max-width: 150px; border-radius: 8px;">
+                    </div>
+                    {% else %}
+                    <div style="margin-right: 20px;">
+                        <img src="/static/images/default_exhibit.jpg" alt="{{ exhibit.name }}" style="max-width: 150px; border-radius: 8px;">
+                    </div>
+                    {% endif %}
+
+                    <div>
+                        <h2 style="font-size: 18px; margin: 0; color: #333;">{{ exhibit.name }}</h2>
+                        <p style="margin: 5px 0; color: #555;"><strong>Art Type:</strong> {{ exhibit.art_type }}</p>
+                        <p style="margin: 5px 0; color: #555;"><strong>Hall:</strong> {{ exhibit.hall }}</p>
+                        <p style="margin: 5px 0; color: #555;"><strong>Date Acquired:</strong> {{ exhibit.date_acquired }}</p>
+                        <p style="margin: 5px 0; color: #555;"><strong>Caretaker:</strong> {{ exhibit.caretaker }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p style="text-align: center; color: #d9534f; font-size: 18px; margin-top: 20px;">No exhibits found.</p>
+        {% endif %}
     </div>
 
-    {% if exhibits %}
-    <ul style="list-style: none; padding: 0;">
-        {% for exhibit in exhibits %}
-        <li style="background-color: #eef; margin-bottom: 20px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; gap: 15px; align-items: center;">
-            {% if exhibit.image %}
-            <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}" style="width: 150px; height: auto; border-radius: 5px; object-fit: cover;">
-            {% endif %}
-
-            <div>
-                <div style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">
-                    {{ exhibit.name }}
-                </div>
-                <div style="font-size: 1.1em; color: #555;">Art Type: {{ exhibit.art_type }}</div>
-                <div style="font-size: 1.1em; color: #555;">Date Acquired: {{ exhibit.date_acquired|date:"Y-m-d" }}</div>
-                <div style="font-size: 1.1em; color: #555;">Hall: {{ exhibit.hall }}</div>
-                <div style="font-size: 1.1em; color: #555;">Caretaker: {{ exhibit.caretaker }}</div>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p style="margin-top: 20px; font-size: 1.2em; color: #d9534f;">No exhibits found.</p>
-    {% endif %}
-</div>
+</body>
+</html>
 {% endblock %}

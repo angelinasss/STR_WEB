@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 class Article(models.Model):
     title = models.CharField(max_length=200)
@@ -10,13 +12,29 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Banner(models.Model):
+    image = models.ImageField(upload_to='banners/')
+    alt_text = models.CharField(max_length=255, blank=True, null=True) 
+
+    def __str__(self):
+        return self.alt_text or "Without description"
+    
+class Partners(models.Model):
+    name = models.CharField(max_length=255)
+    logo = models.ImageField(upload_to='partners/')
+    website = models.URLField()
+
+    def __str__(self):
+        return self.name
 
 class CompanyInfo(models.Model):
     description = models.TextField()
     logo = models.ImageField(upload_to='company_logo/', blank=True, null=True)
-    video = models.URLField(blank=True, null=True)
+    video = models.FileField(upload_to='company_videos/', blank=True, null=True)
     history = models.TextField(blank=True, null=True)
     details = models.TextField(blank=True, null=True)  
+    banners = models.ManyToManyField(Banner, blank=True)  
 
     def __str__(self):
         return "Company Info"
@@ -129,6 +147,34 @@ class Excursion(models.Model):
 
     def __str__(self):
         return self.name
+    
+class CartItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+    
+    quantity = models.PositiveIntegerField(default=1)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.content_object.name} x {self.quantity}"
+
+    @property
+    def total_price(self):
+        return self.content_object.price * self.quantity
+    
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    items = models.ManyToManyField(CartItem)
+
+    def __str__(self):
+        return f"Cart for {self.user.username}"
+
+    @property
+    def total_cost(self):
+        return sum(item.total_price for item in self.items.all())
     
 class Ticket_Excursion(models.Model):
     visitor = models.ForeignKey(User, on_delete=models.CASCADE)

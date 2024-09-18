@@ -1,0 +1,83 @@
+{% extends "app/layout.html" %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+
+    <div style="max-width: 800px; margin: 0 auto; background-color: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+        <h1 style="text-align: center; color: #333; font-size: 1.5em;">My Cart</h1>
+
+        {% if cart_items %}
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Item</th>
+                    <th style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Quantity</th>
+                    <th style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Price</th>
+                    <th style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Total</th>
+                    <th style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td style="border-bottom: 1px solid #ddd; padding: 10px;">{{ item.content_object.name }}</td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 10px;">{{ item.quantity }}</td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 10px;">${{ item.content_object.price }}</td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 10px;">${{ item.total_price }}</td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 10px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="text-align: center; padding: 5px;">
+                                    <form method="post" action="{% url 'increase_quantity' item.id %}" style="display: block;">
+                                        {% csrf_token %}
+                                        <button type="submit" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 8px 16px; cursor: pointer; font-size: 14px;">Increase</button>
+                                    </form>
+                                </td>
+                                <td style="text-align: center; padding: 5px;">
+                                    <form method="post" action="{% url 'decrease_quantity' item.id %}" style="display: block;">
+                                        {% csrf_token %}
+                                        <button type="submit" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; cursor: pointer; font-size: 14px;">Decrease</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center; padding: 5px;">
+                                    <form method="post" action="{% url 'pay_page' item.id %}" style="display: block;">
+                                        {% csrf_token %}
+                                        <button type="submit" style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 8px 16px; cursor: pointer; font-size: 14px;">Pay</button>
+                                    </form>
+                                </td>
+                                <td style="text-align: center; padding: 5px;">
+                                    <form method="post" action="{% url 'remove_from_cart' item.id %}" style="display: block;">
+                                        {% csrf_token %}
+                                        <button type="submit" style="background-color: #d9534f; color: white; border: none; border-radius: 5px; padding: 8px 16px; cursor: pointer; font-size: 14px;">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" style="text-align: center; color: #d9534f;">Your cart is empty.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if cart_items %}
+        <div style="text-align: right; margin-top: 20px;">
+            <h3 style="color: #333;">Total Cost: ${{ total_cost }}</h3>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+{% endblock %}

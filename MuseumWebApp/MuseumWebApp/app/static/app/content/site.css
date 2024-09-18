@@ -1,4 +1,4 @@
-body {
+/*body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -107,10 +107,10 @@ input[type="checkbox"].input-validation-error {
 .employee-name {
     font-size: 1.2em;
     margin-bottom: 10px;
-}
+}*/
 
 /* Reset some default styles */
-body, h1, ul {
+/*body, h1, ul {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -121,25 +121,25 @@ body {
 }
 
 .navbar {
-    background-color: #222; /* Darker shade of the background color */
-    color: #fff;
-    padding: 15px 0; /* Reduced padding to decrease header height */
-    position: fixed;
+    background-color: #222;*/ /* Darker shade of the background color */
+    /*color: #fff;
+    padding: 15px 0;*/ /* Reduced padding to decrease header height */
+    /*position: fixed;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 1000;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Optional: subtle shadow for better separation */
-}
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);*/ /* Optional: subtle shadow for better separation */
+/*}
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
-    align-items: center; /* Center items vertically */
-    justify-content: space-between; /* Distribute space between items */
-}
+    align-items: center;*/ /* Center items vertically */
+    /*justify-content: space-between;*/ /* Distribute space between items */
+/*}
 
 .navbar-header {
     display: flex;
@@ -149,9 +149,9 @@ body {
 .navbar-brand {
     color: #fff;
     text-decoration: none;
-    font-size: 20px; /* Font size for better visibility */
-    margin-right: 20px; /* Decrease margin to reduce space between brand and toggle */
-}
+    font-size: 20px;*/ /* Font size for better visibility */
+    /*margin-right: 20px;*/ /* Decrease margin to reduce space between brand and toggle */
+/*}
 
 .navbar-toggle {
     display: none;
@@ -163,17 +163,17 @@ body {
 
 .icon-bar {
     display: block;
-    width: 25px; /* Width of icon bars */
-    height: 2px; /* Height of icon bars */
-    background-color: #fff;
-    margin: 3px auto; /* Reduced margin to decrease space between bars */
-}
+    width: 25px;*/ /* Width of icon bars */
+    /*height: 2px;*/ /* Height of icon bars */
+    /*background-color: #fff;
+    margin: 3px auto;*/ /* Reduced margin to decrease space between bars */
+/*}
 
 .navbar-collapse {
     display: flex;
     align-items: center;
-    justify-content: center; /* Center items horizontally */
-    flex: 1;
+    justify-content: center;*/ /* Center items horizontally */
+    /*flex: 1;
 }
 
 .nav {
@@ -181,46 +181,46 @@ body {
     display: flex;
     margin: 0;
     padding: 0;
-    flex-wrap: nowrap; /* Prevent wrapping */
-}
+    flex-wrap: nowrap;*/ /* Prevent wrapping */
+/*}
 
     .nav li {
-        margin: 0 8px; /* Reduced spacing between menu items */
-    }
+        margin: 0 8px;*/ /* Reduced spacing between menu items */
+    /*}
 
     .nav a {
-        color: #bbb; /* Gray color for the text */
-        text-decoration: none;
-        font-size: 14px; /* Font size for navigation links */
-        transition: color 0.3s ease; /* Smooth color transition */
-        padding: 4px 8px; /* Adjusted padding to reduce space around links */
-        white-space: nowrap; /* Prevent text wrapping */
-    }
+        color: #bbb;*/ /* Gray color for the text */
+        /*text-decoration: none;
+        font-size: 14px;*/ /* Font size for navigation links */
+        /*transition: color 0.3s ease;*/ /* Smooth color transition */
+        /*padding: 4px 8px;*/ /* Adjusted padding to reduce space around links */
+        /*white-space: nowrap;*/ /* Prevent text wrapping */
+    /*}
 
         .nav a:hover {
-            color: #fff; /* White color on hover */
-            background-color: #222; /* Ensure no background color on hover */
-        }
+            color: #fff;*/ /* White color on hover */
+            /*background-color: #222;*/ /* Ensure no background color on hover */
+        /*}*/
 
     /* Main content container */
-    .container1 {
+    /*.container1 {
         display: flex;
-        margin-top: 60px; /* Adjust based on the header height */
-    }
+        margin-top: 60px;*/ /* Adjust based on the header height */
+    /*}
 
     .sidebar-menu1 {
-        width: 250px; /* Adjust width as needed */
-        background-color: #f4f4f4; /* Background color for sidebar */
-        padding: 15px; /* Padding around sidebar content */
-    }
+        width: 250px;*/ /* Adjust width as needed */
+        /*background-color: #f4f4f4;*/ /* Background color for sidebar */
+        /*padding: 15px;*/ /* Padding around sidebar content */
+    /*}
 
     .content1 {
-        flex: 1; /* Take up the remaining space */
-        padding: 15px; /* Padding around content */
-    }
+        flex: 1;*/ /* Take up the remaining space */
+        /*padding: 15px;*/ /* Padding around content */
+    /*}*/
 
 /* Responsive design */
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
     .navbar-toggle {
         display: block;
     }
@@ -230,10 +230,10 @@ body {
         flex-direction: column;
         width: 100%;
         position: absolute;
-        top: 50px; /* Adjusted to align with reduced header height */
-        left: 0;
-        background-color: #222; /* Darker shade for the mobile menu */
-    }
+        top: 50px;*/ /* Adjusted to align with reduced header height */
+        /*left: 0;
+        background-color: #222;*/ /* Darker shade for the mobile menu */
+    /*}
 
         .navbar-collapse.active {
             display: flex;
@@ -244,42 +244,42 @@ body {
     }
 
         .nav li {
-            margin: 4px 0; /* Reduced spacing for mobile view */
-        }
+            margin: 4px 0;*/ /* Reduced spacing for mobile view */
+        /*}
 
     .container1 {
         flex-direction: column;
     }
 
     .sidebar-menu1 {
-        width: 100%; /* Full width on mobile */
-    }
+        width: 100%;*/ /* Full width on mobile */
+    /*}
 
     .content1 {
-        width: 100%; /* Full width on mobile */
-    }
-}
+        width: 100%;*/ /* Full width on mobile */
+    /*}
+}*/
 
 
 /* Container for the entire layout */
-.container1 {
+/*.container1 {
     display: flex;
     flex-direction: row;
     height: 100vh;
     box-sizing: border-box;
     padding: 0 20px;
-}
+}*/
 
 /* Sidebar menu */
-.sidebar-menu1 {
+/*.sidebar-menu1 {
     width: 250px;
     background-color: #f4f4f4;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
+}*/
 
 /* Sidebar menu items */
-.menu1 {
+/*.menu1 {
     display: flex;
     flex-direction: column;
 }
@@ -297,10 +297,10 @@ body {
 
     .menu-item1:hover {
         background-color: #d4d4d4;
-    }
+    }*/
 
 /* Content area */
-.content1 {
+/*.content1 {
     flex: 1;
     padding: 20px;
 }
@@ -339,4 +339,4 @@ footer {
     position: relative;
     bottom: 0;
     color: #fff;
-}
+}*/

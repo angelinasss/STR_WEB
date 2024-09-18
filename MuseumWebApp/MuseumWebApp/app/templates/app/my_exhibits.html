@@ -1,34 +1,43 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
-    <h1 style="text-align: center; font-size: 2em; margin-bottom: 20px;">My Exhibits</h1>
-    {% if exhibits %}
-    <ul style="list-style: none; padding: 0;">
-        {% for exhibit in exhibits|dictsort:"hall.name" %}
-        {% ifchanged exhibit.hall %}
-        <li style="margin-top: 30px; font-size: 1.5em; font-weight: bold; color: #333;">
-            Hall: {{ exhibit.hall.name }}
-        </li>
-        {% endifchanged %}
-        <li style="background-color: #eef; margin-bottom: 10px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; gap: 15px; align-items: center;">
- 
-            {% if exhibit.image %}
-            <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}" style="width: 120px; height: auto; border-radius: 5px; object-fit: cover;">
-            {% endif %}
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
 
-            <div>
-                <div style="font-size: 1.2em; font-weight: bold; margin-bottom: 5px;">
-                    {{ exhibit.name }}
+    <h1 style="text-align: center; color: #333;">{{ title }}</h1>
+
+    <div style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
+        {% if exhibits %}
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            {% for exhibit in exhibits|dictsort:"hall.name" %}
+            {% ifchanged exhibit.hall %}
+            <li style="margin-top: 30px; font-size: 1.5em; font-weight: bold; color: #333;">
+                Hall: {{ exhibit.hall.name }}
+            </li>
+            {% endifchanged %}
+            <li style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f8f9fa; display: flex; align-items: center;">
+                {% if exhibit.image %}
+                <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}" style="max-width: 150px; border-radius: 5px; object-fit: cover; margin-right: 20px;">
+                {% else %}
+                <img src="/static/images/default_exhibit.jpg" alt="{{ exhibit.name }}" style="max-width: 150px; border-radius: 5px; object-fit: cover; margin-right: 20px;">
+                {% endif %}
+                <div style="flex-grow: 1;">
+                    <h2 style="margin: 0; font-size: 20px; color: #333;">{{ exhibit.name }}</h2>
+                    <p style="margin: 5px 0; color: #555;"><strong>Art Type:</strong> {{ exhibit.art_type }}</p>
+                    <p style="margin: 5px 0; color: #555;"><strong>Date Acquired:</strong> {{ exhibit.date_acquired|date:"Y-m-d" }}</p>
                 </div>
-                <div style="font-size: 1em; color: #555;">Date Acquired: {{ exhibit.date_acquired|date:"Y-m-d" }}</div>
-                <div style="font-size: 1em; color: #555;">Art Type: {{ exhibit.art_type }}</div>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p style="margin-top: 20px; font-size: 1.2em; color: #d9534f;">No exhibits found for the selected season.</p>
-    {% endif %}
-</div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p style="margin-top: 20px; font-size: 1.2em; color: #d9534f;">No exhibits found.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
 {% endblock %}

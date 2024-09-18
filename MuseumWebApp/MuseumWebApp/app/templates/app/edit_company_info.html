@@ -1,56 +1,105 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<h1>Edit Company Information</h1>
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="description">Description</label>
-        <textarea id="description" name="description" class="form-control" rows="5" required>{{ info.description|default_if_none:'' }}</textarea>
-    </div>
-    <div class="form-group">
-        <label for="logo">Company Logo</label>
-        {% if info.logo %}
-        <img id="image-preview" src="{{ info.logo.url }}" alt="Company Logo" style="max-width: 200px; height: auto;">
-        {% else %}
-        <div>
-            <img id="image-preview" src="" alt="No image" style="max-width: 200px; height: auto;">
-        </div>
-        {% endif %}
-        <input type="file" id="image" name="image" class="form-control" onchange="previewImage()">
-    </div>
-    <div class="form-group">
-        <label for="video">Video URL</label>
-        <input type="url" id="video" name="video" value="{{ info.video|default_if_none:'' }}" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="history">History</label>
-        <textarea id="history" name="history" class="form-control" rows="5">{{ info.history|default_if_none:'' }}</textarea>
-    </div>
-    <div class="form-group">
-        <label for="details">Company Details</label>
-        <textarea id="details" name="details" class="form-control" rows="5">{{ info.details|default_if_none:'' }}</textarea>
-    </div>
-    <button type="submit" class="btn btn-success">Save</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+</head>
 
-<script>
-    function previewImage() {
-        var file = document.getElementById('image').files[0];
-        var preview = document.getElementById('image-preview');
-        var reader = new FileReader();
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+    <h1 style="text-align: center; color: #333;">{{ title }}</h1>
+    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div style="margin-bottom: 20px;">
+                <label for="description" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Description</label>
+                <textarea id="description" name="description" rows="5" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>{{ info.description|default_if_none:'' }}</textarea>
+            </div>
 
-        reader.onloadend = function () {
-            preview.src = reader.result;
+            <div style="margin-bottom: 20px;">
+                <label for="logo" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Company Logo</label>
+                <div style="text-align: center; margin-bottom: 10px;">
+                    {% if info.logo %}
+                    <img id="image-preview" src="{{ info.logo.url }}" alt="Company Logo" style="max-width: 200px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                    {% else %}
+                    <img id="image-preview" src="" alt="No image" style="max-width: 200px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                    {% endif %}
+                </div>
+                <input type="file" id="image" name="image" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" onchange="previewImage()">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="video" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Company Video</label>
+                <div style="text-align: center; margin-bottom: 10px;">
+                    {% if info.video %}
+                    <video id="video-preview" width="100%" height="auto" controls>
+                        <source src="{{ info.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    {% else %}
+                    <video id="video-preview" width="100%" height="auto" controls>
+                        <source src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    {% endif %}
+                </div>
+                <input type="file" id="video-file" name="video" accept="video/*" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" onchange="previewVideo()">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="history" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">History</label>
+                <textarea id="history" name="history" rows="5" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">{{ info.history|default_if_none:'' }}</textarea>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="details" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Company Details</label>
+                <textarea id="details" name="details" rows="5" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">{{ info.details|default_if_none:'' }}</textarea>
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Save</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function previewImage() {
+            var file = document.getElementById('image').files[0];
+            var preview = document.getElementById('image-preview');
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = ""; // Default image or no image
+            }
         }
 
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            preview.src = ""; // Default image or no image
+        function previewVideo() {
+            var file = document.getElementById('video-file').files[0];
+            var preview = document.getElementById('video-preview');
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+                preview.load(); // Reload the video
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = ""; // Default video or no video
+            }
         }
-    }
-</script>
+    </script>
+</body>
+</html>
 
 {% endblock %}

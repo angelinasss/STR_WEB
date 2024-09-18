@@ -1,114 +1,43 @@
 <!DOCTYPE html>
-
 {% extends "app/layout.html" %}
-{% block content %}
 
-<html lang="en">
+{% block content %}
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
     <title>{{ title }}</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            box-sizing: border-box;
-        }
-
-        h1 {
-            color: #444;
-            font-size: 24px;
-            text-align: center;
-        }
-
-        .promocode-form {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-            .form-group label {
-                display: block;
-                font-weight: 600;
-                margin-bottom: 8px;
-                color: #555;
-            }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-            color: #333;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-            .form-control:focus {
-                border-color: #007bff;
-                outline: none;
-                box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.2);
-            }
-
-        .submit-button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            display: inline-block;
-            text-align: center;
-        }
-
-            .submit-button:hover {
-                background-color: #0056b3;
-                transform: translateY(-2px);
-            }
-
-        .timestamp {
-            font-size: 14px;
-            color: #666;
-            margin-top: 20px;
-            text-align: center;
-        }
-    </style>
 </head>
 
-<body>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; margin: 0; padding: 0;">
 
-    <h1>Promo Code Editing</h1>
+    <h1 style="text-align: center; color: #444; margin-top: 20px;">{{ title }}</h1>
 
-    <form method="POST" class="promocode-form">
-        {% csrf_token %}
+    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        <form method="POST">
+            {% csrf_token %}
 
-        <div class="form-group">
-            <label for="code">Code:</label>
-            <input type="text" id="code" name="code" class="form-control" value="{{promo_code.code}}" required>
-        </div>
+            <div style="margin-bottom: 20px;">
+                <label for="code" style="display: block; font-weight: bold; margin-bottom: 8px; color: #555;">Code:</label>
+                <input type="text" id="code" name="code" style="width: 90%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" value="{{ promo_code.code }}" required>
+            </div>
 
-        <div class="form-group">
-            <label for="discount">Discount:</label>
-            <input type="number" step="0.01" id="discount" min="0" max="100" name="discount" class="form-control" value="{{promo_code.discount}}" required>
-        </div>
+            <div style="margin-bottom: 20px;">
+                <label for="discount" style="display: block; font-weight: bold; margin-bottom: 8px; color: #555;">Discount:</label>
+                <input type="number" step="0.01" id="discount" name="discount" min="0" max="100" style="width: 90%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" value="{{ promo_code.discount }}" required>
+            </div>
 
-        <div class="form-group">
-            <label for="expiration_date">Expiration Date:</label>
-            <input type="date" id="expiration_date" name="expiration_date" class="form-control" value="{{ promo_code.expiration_date|date:'Y-m-d' }}" required>
-        </div>
+            <div style="margin-bottom: 20px;">
+                <label for="expiration_date" style="display: block; font-weight: bold; margin-bottom: 8px; color: #555;">Expiration Date:</label>
+                <input type="date" id="expiration_date" name="expiration_date" style="width: 90%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" value="{{ promo_code.expiration_date|date:'Y-m-d' }}" required>
+            </div>
 
-        <button type="submit" class="submit-button">Submit</button>
-    </form>
+            <div style="text-align: center;">
+                <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">Submit</button>
+            </div>
+        </form>
+    </div>
+
 </body>
+
 </html>
 {% endblock %}

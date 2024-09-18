@@ -1,7 +1,7 @@
 import re
 from django.shortcuts import redirect, render, get_object_or_404
 import requests
-from .models import ArtType, Article, CompanyInfo, FAQ, Employee, Job, Review, PromoCode, PrivacyPolicy, Hall, Position, Exhibit, Excursion, Exhibition, Ticket_Excursion, Ticket_Exhibition
+from .models import ArtType, Article, Cart, CartItem, CompanyInfo, FAQ, Employee, Job, Partners, Review, PromoCode, PrivacyPolicy, Hall, Position, Exhibit, Excursion, Exhibition, Ticket_Excursion, Ticket_Exhibition
 from datetime import datetime, timedelta
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.http import HttpRequest
@@ -21,6 +21,7 @@ from django.db.models.functions import Coalesce
 from statistics import mode, median
 import calendar
 from django.db.models.functions import Cast
+from django.contrib.contenttypes.models import ContentType
 
 def home(request):
     latest_article = Article.objects.order_by('-published_at').first()
@@ -29,6 +30,10 @@ def home(request):
     month = datetime.now().month
     cal = calendar.TextCalendar(calendar.SUNDAY)
     month_calendar = cal.formatmonth(year, month)
+    company_info = CompanyInfo.objects.first()
+    excursions = Excursion.objects.all()
+    exhibitions = Exhibition.objects.all()
+    partners = Partners.objects.all()
 
     weather_data = None
     city = None
@@ -71,6 +76,10 @@ def home(request):
         'description': description,
         'calendar': month_calendar,
         'is_employee': is_employee,
+        'info' : company_info,
+        'excursions' : excursions,
+        'exhibitions' : exhibitions,  
+        'partners' : partners,
         'year': year,
     }
 
@@ -96,7 +105,7 @@ def contact(request):
         request,
         'app/contact.html',
         {
-            'title':'Contact',
+            'title':'Employees',
             'employees': employees,
             'is_employee' : is_employee,
             'year':datetime.now().year,
@@ -192,7 +201,7 @@ def about(request):
         request,
         'app/about.html',
         {
-            'title':'About',
+            'title':'About Us',
             'info': company_info,
             'is_employee' : is_employee,
             'year':datetime.now().year,
@@ -209,13 +218,14 @@ def edit_company_info(request):
         info.description = request.POST.get("description")
         if request.FILES.get('logo'):
             info.logo = request.FILES['logo']
-        info.video = request.POST.get("video")
+        if 'video' in request.FILES:
+                info.video = request.FILES['video']
         info.history = request.POST.get("history")
         info.details = request.POST.get("details")
         info.save()
         return HttpResponseRedirect("/about/")
     
-    return render(request, 'app/edit_company_info.html', {'info': info})
+    return render(request, 'app/edit_company_info.html', {'info': info, 'title':'Edit Company Information',})
 
 def news(request):
     articles = Article.objects.all()
@@ -397,7 +407,7 @@ def faq(request):
     )
 
 def create_FAQ(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         faq = FAQ()
         faq.question = request.POST.get("question")
         faq.answer = request.POST.get("answer")
@@ -513,7 +523,7 @@ def edit_job(request, id):
                 request,
                 'app/edit_job.html',
                 {
-                    'title':'Edit Vacancy',
+                    'title':'Vacancy Editing',
                     'vacancy': vacancy,
                     'year':datetime.now().year,
                 }
@@ -577,7 +587,7 @@ def edit_review(request, id):
             request,
             'app/edit_review.html',
             {
-                'title':'Edit Review',
+                'title':'Review Editing',
                 'review': review,
                 'year':datetime.now().year,
             }
@@ -689,7 +699,7 @@ def edit_promo_code(request, id):
                 request,
                 'app/edit_promo_code.html',
                 {
-                    'title':'Edit Promo Code',
+                    'title':'Promo Code Editing',
                     'promo_code': promo_code,
                     'year':datetime.now().year,
                 }
@@ -765,6 +775,8 @@ def register(request):
                 hall=hall,
                 photo=photo
             )
+        else:
+            Cart.objects.create(user=user)
         
         login(request, user)
         return HttpResponseRedirect("/")
@@ -907,7 +919,7 @@ def hall_info(request):
 
     # ¬озвращаем ответ с отсортированными залами
     return render(request, 'app/hall_info.html', {
-        'title': 'Hall Information',
+        'title': 'Museum Halls',
         'halls': halls,
         'is_employee': is_employee,
         'sort_by': sort_by,  # ѕередаем выбранную сортировку в шаблон
@@ -1819,10 +1831,10 @@ def nationality_by_name(request):
         else:
             result = []
         
-        return render(request, 'app/nationality.html', {'name': name, 'nationalities': result})
+        return render(request, 'app/nationality.html', {'name': name, 'nationalities': result, 'title' : 'Nationality By Name'})
     
     except requests.RequestException as e:
-        return render(request, 'app/nationality.html', {'error': str(e)})
+        return render(request, 'app/nationality.html', {'error': str(e), 'title' : 'Nationality By Name'})
     
 def statistics(request):
     context = {}
@@ -1892,7 +1904,240 @@ def statistics(request):
         'sales_labels': labels,
         'sales_data': sales_data,
         'sales_data_all' : sales_data_all,
+        'title' : 'Sales Statistics',
         'year': datetime.now().year,
     })
 
     return render(request, 'app/statistics.html', context)
+
+def certificate_view(request):
+    context = {
+        'name': 'John Doe',
+        'date': 'September 17, 2024',
+        'course_title': 'Course Title',
+        'company_name': 'Company Name',
+    }
+    return render(request, 'certificate.html', context)
+
+def excursion_detail(request, id):
+    
+    excursion = Excursion.objects.get(id=id)
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+        
+    return render(request, 'app/excursion_detail.html', {
+        'excursion': excursion,
+        'is_employee' : is_employee,
+        'year' : datetime.now().year,
+    })
+
+def exhibition_detail(request, id):
+    
+    exhibition = Exhibition.objects.get(id=id)
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+        
+    return render(request, 'app/exhibition_detail.html', {
+        'exhibition': exhibition,
+        'is_employee' : is_employee,
+        'year':datetime.now().year,
+    })
+
+def add_to_cart_excursion(request, id):
+    excursion = Excursion.objects.get(id=id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+
+    excursion_content_type = ContentType.objects.get_for_model(Excursion)
+    
+    cart_item, item_created = CartItem.objects.get_or_create(
+        user=request.user,
+        content_type=excursion_content_type,
+        object_id=excursion.id,
+        defaults={'quantity': 1}
+    )
+    
+    if not item_created:
+        cart_item.quantity += 1
+        cart_item.save()
+        
+    if cart_item not in cart.items.all():
+        cart.items.add(cart_item)
+    
+    # Add success message
+    messages.success(request, 'Ticket for current excursion successfully added to your cart.')
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def add_to_cart_exhibition(request, id):
+    exhibition = Exhibition.objects.get(id=id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+
+    exhibition_content_type = ContentType.objects.get_for_model(Exhibition)
+    
+    cart_item, item_created = CartItem.objects.get_or_create(
+        user=request.user,
+        content_type=exhibition_content_type,
+        object_id=exhibition.id,
+        defaults={'quantity': 1}
+    )
+    
+    if not item_created:
+        cart_item.quantity += 1
+        cart_item.save()
+        
+    if cart_item not in cart.items.all():
+        cart.items.add(cart_item)
+    
+    # Add success message
+    messages.success(request, 'Ticket for current exhibition successfully added to your cart.')
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+def my_cart(request):
+    try:
+        cart = Cart.objects.get(user=request.user)
+    except Cart.DoesNotExist:
+        cart = None
+    
+    cart_items = CartItem.objects.filter(user=request.user)
+    total_cost = cart.total_cost if cart else 0
+    
+    return render(request, 'app/my_cart.html', {
+        'title' : 'My Cart',
+        'cart': cart,
+        'cart_items': cart_items,
+        'total_cost': total_cost,
+    })
+
+def remove_from_cart(request, item_id):
+    cart = get_object_or_404(Cart, user=request.user)
+
+    cart_item = get_object_or_404(CartItem, id=item_id, user=request.user)
+    
+    if cart.items.filter(id=cart_item.id).exists():
+        cart.items.remove(cart_item)
+        cart_item.delete()
+
+    return redirect('my_cart')
+
+@login_required
+def increase_quantity(request, item_id):
+    cart = get_object_or_404(Cart, user=request.user)
+    
+    cart_item = get_object_or_404(CartItem, id=item_id, user=request.user)
+    
+    cart_item.quantity += 1
+    cart_item.save()
+    
+    return redirect('my_cart')
+
+@login_required
+def decrease_quantity(request, item_id):
+    cart = get_object_or_404(Cart, user=request.user)
+    
+    cart_item = get_object_or_404(CartItem, id=item_id, user=request.user)
+    
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    else:
+        cart.items.remove(cart_item)
+        cart_item.delete()
+    
+    return redirect('my_cart')
+
+@login_required
+def pay_page(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id, user=request.user)
+    
+    return render(request, 'app/pay_page.html', {
+        'title' : 'Payment Page',
+        'item': cart_item,
+    })
+
+def get_model_instance(cart_item):
+    content_type = cart_item.content_type
+    model_class = content_type.model_class()
+    return model_class.objects.get(id=cart_item.object_id)
+
+@login_required
+def process_payment(request, item_id):
+    item = get_object_or_404(CartItem, id=item_id, user=request.user)
+
+    instance = get_model_instance(item)
+    total_price = 0
+        
+    if isinstance(instance, Excursion):
+        excursion = Excursion.objects.get(id=item.object_id)
+        total_price = excursion.price
+    elif isinstance(instance, Exhibition):
+        exhibition = Exhibition.objects.get(id=item.object_id)
+        total_price = exhibition.price
+    
+    promo_code_input = request.POST.get('promo_code', '').strip()
+
+    promo_code = None
+    
+    if promo_code_input:
+        try:
+            promo_code = PromoCode.objects.get(
+                code=promo_code_input,
+                is_active=True,
+                expiration_date__gte=date.today()
+            )
+            total_price = total_price - total_price * promo_code.discount * Decimal('0.01')
+        except PromoCode.DoesNotExist:
+            promo_code = None
+            
+    if isinstance(instance, Excursion):
+        ticket = Ticket_Excursion.objects.create(
+        visitor=request.user,
+        excursion=excursion,
+        promo_code=promo_code,
+        total_price = total_price,
+        purchase_date=timezone.now()
+ 
+    )
+        
+    elif isinstance(instance, Exhibition):
+        ticket = Ticket_Exhibition.objects.create(
+        visitor=request.user,
+        exhibition=exhibition,
+        purchase_date=timezone.now(),
+        promo_code=promo_code,
+        total_price = total_price
+    )
+        
+    cart = get_object_or_404(Cart, user=request.user)
+
+    cart_item = get_object_or_404(CartItem, id=item_id, user=request.user)
+    
+    if cart.items.filter(id=cart_item.id).exists():
+        cart.items.remove(cart_item)
+        cart_item.delete()
+
+    return render(
+    request,
+    'app/ticket_success.html',
+    {
+        'title': 'Ticket Purchase',
+        'year': datetime.now().year,
+    }
+    )

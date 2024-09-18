@@ -1,42 +1,60 @@
-{% extends "app/layout.html" %}
+<!DOCTYPE html>
 
+{% extends "app/layout.html" %}
 {% block content %}
 
-<h1>Hall Information Editing</h1>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+</head>
 
-<form method="POST">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="number">Number</label>
-        <input type="number" id="number" name="number" value="{{hall.number}}" class="form-control {% if messages %}{% for message in messages %}{% if message.tags == 'error' %}is-invalid{% endif %}{% endfor %}{% endif %}" required>
-    </div>
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" value="{{hall.name}}" class="form-control" required>
-    </div>
-    <div class="form-group">
-        <label for="floor">Floor</label>
-        <input type="number" id="floor" name="floor" value="{{hall.floor}}" class="form-control" required>
-    </div>
-    <div class="form-group">
-        <label for="area">Area</label>
-        <input type="text" id="area" name="area" value="{{hall.area}}" class="form-control" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Save changes</button>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+    <h1 style="text-align: center; color: #333;">{{ title }}</h1>
+    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
+        <form method="POST">
+            {% csrf_token %}
 
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert
-            {% if message.tags == 'error' %}
-                alert-danger
-            {% else %}
-                alert-success
-            {% endif %}
-            text-center" style="margin-top:10px">
-        {{ message }}
+            <div style="margin-bottom: 20px;">
+                <label for="number" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Number</label>
+                <input type="number" id="number" name="number" value="{{ hall.number }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="name" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Name</label>
+                <input type="text" id="name" name="name" value="{{ hall.name }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="floor" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Floor</label>
+                <input type="number" id="floor" name="floor" value="{{ hall.floor }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="area" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Area</label>
+                <input type="text" id="area" name="area" value="{{ hall.area }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Save changes</button>
+            </div>
+        </form>
+
+        {% if messages %}
+        <div style="margin-top: 20px;">
+            {% for message in messages %}
+            <div style="padding: 10px; border: 1px solid;
+                            {% if message.tags == 'error' %}border-color: red;{% else %}border-color: green;{% endif %}
+                            text-align: center; margin-bottom: 10px; border-radius: 4px;">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
     </div>
-    {% endfor %}
-    {% endif %}
-</form>
+</body>
+
+</html>
 
 {% endblock %}
