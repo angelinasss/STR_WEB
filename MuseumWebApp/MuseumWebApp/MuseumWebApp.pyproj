@@ -55,6 +55,7 @@
     <Folder Include="app\static\app\content\" />
     <Folder Include="app\static\app\fonts\" />
     <Folder Include="app\static\app\scripts\" />
+    <Folder Include="app\static\images\" />
     <Folder Include="app\templates\" />
     <Folder Include="app\templates\app\" />
     <Folder Include="MuseumWebApp\" />
@@ -66,8 +67,6 @@
     <Content Include="app\templates\app\article_all.html" />
     <Content Include="app\templates\app\article_detail.html" />
     <Content Include="app\templates\app\certificate.html" />
-    <Content Include="app\templates\app\contact_create.html" />
-    <Content Include="app\templates\app\contact_edit.html" />
     <Content Include="app\templates\app\create_article.html" />
     <Content Include="app\templates\app\create_excursion.html" />
     <Content Include="app\templates\app\create_exhibit.html" />

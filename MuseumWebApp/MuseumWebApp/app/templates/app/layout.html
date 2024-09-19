@@ -1,18 +1,22 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
     <title>{{ title }} - Museum Web App</title>
 </head>
 
 <body style="margin: 0; padding: 0;">
     <header>
         <div style="background-color: #333; color: white; padding: 10px 20px; display: flex; align-items: center; border-bottom: 2px solid #666; justify-content: space-between;">
-            <!-- Museum Title -->
-            <a href="{% url 'home' %}" style="color: white; text-decoration: none; font-size: 28px; font-weight: bold; text-shadow: 1px 1px 2px #000;">Museum</a>
+            <a href="{% url 'home' %}" style="color: white; text-decoration: none; font-size: 28px; font-weight: bold; text-shadow: 1px 1px 2px #000; display: flex; align-items: center;">
+                <img src="{% static 'images/favicon.png' %}" alt="Museum Icon" style="width: 32px; height: 32px; margin-right: 10px;">
+                Museum
+            </a>
 
-            <!-- Navigation and Login/Logout -->
             <div style="display: flex; align-items: center;">
                 <nav style="padding: 0; border-radius: 5px;">
                     <ul style="list-style-type: none; padding: 0; margin: 0; display: flex;">
@@ -63,10 +67,13 @@
                             <li style="margin-bottom: 10px;"><a href="{% url 'all_exhibits' %}" style="text-decoration: none; color: #333; padding: 10px; border-radius: 5px; background-color: #e2e2e2; display: block;">Exhibits</a></li>
                             {% endif %}
                             {% else %}
-                            <li style="margin-bottom: 10px;"><a href="{% url 'all_excursions' %}" style="text-decoration: none; color: #333; padding: 10px; border-radius: 5px; background-color: #e2e2e2; display: block;">Excursions</a></li>
-                            <li style="margin-bottom: 10px;"><a href="{% url 'all_exhibitions' %}" style="text-decoration: none; color: #333; padding: 10px; border-radius: 5px; background-color: #e2e2e2; display: block;">Exhibitions</a></li>
-                            <li style="margin-bottom: 10px;"><a href="{% url 'hall_info' %}" style="text-decoration: none; color: #333; padding: 10px; border-radius: 5px; background-color: #e2e2e2; display: block;">Halls</a></li>
-                            <li style="margin-bottom: 10px;"><a href="{% url 'all_exhibits' %}" style="text-decoration: none; color: #333; padding: 10px; border-radius: 5px; background-color: #e2e2e2; display: block;">Exhibits</a></li>
+                            <label for="menu">Выберите раздел:</label>
+                            <select id="menu" name="menu" onchange="location = this.value;" style="padding: 10px; border-radius: 5px; background-color: #e2e2e2; color: #333;">
+                                <option value="{% url 'all_excursions' %}">Excursions</option>
+                                <option value="{% url 'all_exhibitions' %}">Exhibitions</option>
+                                <option value="{% url 'hall_info' %}">Halls</option>
+                                <option value="{% url 'all_exhibits' %}">Exhibits</option>
+                            </select>
                             {% endif %}
                         </ul>
                     </aside>

@@ -140,43 +140,6 @@ def employee_list(request):
             'year':datetime.now().year,
         }
     )
-
-def contact_create(request):
-     if request.method == 'POST':
-        user = request.user
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        phone = request.POST.get('phone')
-        email = request.POST.get('email')
-        position = Position.objects.get(id=request.POST.get('position'))
-        hall = Hall.objects.get(id=request.POST.get('hall'))
-        photo = request.FILES.get('photo')
-        
-        Employee.objects.create(
-            user=user,
-            first_name=first_name,
-            last_name=last_name,
-            phone=phone,
-            email=email,
-            position=position,
-            hall=hall,
-            photo=photo
-        )
-        return HttpResponseRedirect("/contact/")
-     else:
-        halls = Hall.objects.all()
-        positions = Position.objects.all()
-    
-        return render(
-              request,
-              'app/contact_create.html',
-              {
-                  'title':'Create Employee',
-                  'halls' : halls,
-                  'positions' : positions,
-                  'year':datetime.now().year,
-              }
-        )
         
 def contact_delete(request, id):
     employee = Employee.objects.get(id=id)
@@ -748,8 +711,9 @@ def register(request):
             errors['email'] = 'Email already exists'
             
         phone_pattern = re.compile(r'^\+375 \(\d{2}\) \d{3}-\d{2}-\d{2}$')
-        if not phone_pattern.match(phone):
-            errors['phone'] = 'Phone number must be in the format +375 (XX) XXX-XX-XX'
+        if is_employee:
+            if not phone_pattern.match(phone):
+                errors['phone'] = 'Phone number must be in the format +375 (XX) XXX-XX-XX'
 
         if errors:
             return render(request, 'app/register.html', {
@@ -1355,6 +1319,7 @@ def create_excursion(request):
     exhibits = Exhibit.objects.all()
     guides = Employee.objects.filter(position__name='Guide')
     
+
     if request.method == "POST":
         item_type = request.POST.get('item_type')
         

@@ -13,24 +13,24 @@
         <h1 style="text-align: center; color: #333; font-size: 1.5em;">My Cart</h1>
 
         {% if cart_items %}
-        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;" itemscope itemtype="https://schema.org/ItemList">
             <thead>
                 <tr>
-                    <th style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Item</th>
-                    <th style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Quantity</th>
-                    <th style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Price</th>
-                    <th style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Total</th>
-                    <th style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Actions</th>
+                    <th id="item-header" style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Item</th>
+                    <th id="quantity-header" style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Quantity</th>
+                    <th id="price-header" style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Price</th>
+                    <th id="total-header" style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Total</th>
+                    <th id="actions-header" style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in cart_items %}
-                <tr>
-                    <td style="border-bottom: 1px solid #ddd; padding: 10px;">{{ item.content_object.name }}</td>
-                    <td style="border-bottom: 1px solid #ddd; padding: 10px;">{{ item.quantity }}</td>
-                    <td style="border-bottom: 1px solid #ddd; padding: 10px;">${{ item.content_object.price }}</td>
-                    <td style="border-bottom: 1px solid #ddd; padding: 10px;">${{ item.total_price }}</td>
-                    <td style="border-bottom: 1px solid #ddd; padding: 10px;">
+                <tr itemscope itemprop="itemListElement" itemtype="https://schema.org/Product">
+                    <td headers="item-header" style="border-bottom: 1px solid #ddd; padding: 10px;" itemprop="name">{{ item.content_object.name }}</td>
+                    <td headers="quantity-header" style="border-bottom: 1px solid #ddd; padding: 10px;" itemprop="quantity">{{ item.quantity }}</td>
+                    <td headers="price-header" style="border-bottom: 1px solid #ddd; padding: 10px;" itemprop="priceCurrency" content="USD">${{ item.content_object.price }}</td>
+                    <td headers="total-header" style="border-bottom: 1px solid #ddd; padding: 10px;" itemprop="totalPrice">${{ item.total_price }}</td>
+                    <td headers="actions-header" style="border-bottom: 1px solid #ddd; padding: 10px;">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="text-align: center; padding: 5px;">
@@ -72,7 +72,7 @@
         </table>
         {% endif %}
         {% if cart_items %}
-        <div style="text-align: right; margin-top: 20px;">
+        <div style="text-align: right; margin-top: 20px;" itemprop="totalPrice">
             <h3 style="color: #333;">Total Cost: ${{ total_cost }}</h3>
         </div>
         {% endif %}

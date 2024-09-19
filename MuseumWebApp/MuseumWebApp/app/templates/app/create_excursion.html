@@ -31,17 +31,17 @@
 
                 <div style="margin-bottom: 15px;">
                     <label for="code" style="display: block; font-weight: bold; color: #555;">Code:</label>
-                    <input type="text" id="code" name="code" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                    <input type="text" id="code" name="code" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
                 </div>
 
                 <div style="margin-bottom: 15px;">
                     <label for="excursion_name" style="display: block; font-weight: bold; color: #555;">Name:</label>
-                    <input type="text" id="excursion_name" name="excursion_name" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                    <input type="text" id="excursion_name" name="excursion_name" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
                 </div>
 
                 <div style="margin-bottom: 15px;">
                     <label for="date" style="display: block; font-weight: bold; color: #555;">Date:</label>
-                    <input type="date" id="date" name="date" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                    <input type="date" id="date" name="date" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
                 </div>
 
                 <div style="margin-bottom: 15px;">
@@ -56,7 +56,7 @@
 
                 <div style="margin-bottom: 15px;">
                     <label for="group_size" style="display: block; font-weight: bold; color: #555;">Group Size:</label>
-                    <input type="number" id="group_size" name="group_size" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                    <input type="number" id="group_size" name="group_size" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
                 </div>
 
                 <div style="margin-bottom: 15px;">
@@ -70,11 +70,10 @@
 
                 <div style="margin-bottom: 15px;">
                     <label for="excursion_price" style="display: block; font-weight: bold; color: #555;">Price:</label>
-                    <input type="number" step="0.01" id="excursion_price" name="excursion_price" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                    <input type="number" step="0.01" id="excursion_price" name="excursion_price" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
                 </div>
             </div>
 
-            <!-- Exhibition Fields -->
             <div id="exhibition_fields" style="display: none;">
                 <h2 style="font-size: 18px; color: #555;">Exhibition Details</h2>
 
@@ -104,7 +103,7 @@
 
                 <div style="margin-bottom: 15px;">
                     <label for="exhibition_price" style="display: block; font-weight: bold; color: #555;">Price:</label>
-                    <input type="number" step="0.01" id="exhibition_price" name="exhibition_price" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                    <input type="number" step="0.01" id="exhibition_price" name="exhibition_price" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
                 </div>
             </div>
 
@@ -136,10 +135,27 @@
             if (itemType === "excursion") {
                 excursionFields.style.display = "block";
                 exhibitionFields.style.display = "none";
+
+                setFieldRequired('excursion_fields', true);
+                setFieldRequired('exhibition_fields', false);
             } else {
                 excursionFields.style.display = "none";
                 exhibitionFields.style.display = "block";
+
+                setFieldRequired('excursion_fields', false);
+                setFieldRequired('exhibition_fields', true);
             }
+        }
+
+        function setFieldRequired(fieldId, isRequired) {
+            var fields = document.getElementById(fieldId).querySelectorAll('input, select');
+            fields.forEach(function (field) {
+                if (isRequired) {
+                    field.setAttribute('required', 'required');
+                } else {
+                    field.removeAttribute('required');
+                }
+            });
         }
 
         window.onload = toggleFields;

@@ -1,103 +1,178 @@
 ﻿{% extends "app/layout.html" %}
 
 {% block content %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <meta name="author" content="Angelina Kanavalchik" />
+    <meta name="description" content="Home Page For Museum Web Application" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="Museum, Excursions, Exhibitions" />
     <title>{{ title }}</title>
 </head>
 <body>
+    <audio controls autoplay style="width: 100%;">
+        <source src="{% static 'audio/Muzei_vystavochnyi_zal.mp3' %}" type="audio/mpeg">
+    </audio>
+
     <header style="text-align: center; padding: 20px;">
         <div style="margin-bottom: 20px;">
             <img src="{{ info.logo.url }}" alt="Company Logo" style="max-width: 200px; height: auto;">
         </div>
-        <h1>Welcome to Our Museum</h1>
+        <h1>Welcome to Our <dfn title="is a not-for-profit, permanent institution in the service of society that researches, collects, conserves, interprets and exhibits tangible and intangible heritage. Open to the public, accessible and inclusive, museums foster diversity and sustainability. They operate and communicate ethically, professionally and with the participation of communities, offering varied experiences for education, enjoyment, reflection and knowledge sharing.">Museum</dfn> <abbr title="Lorem Ipsum">LI</abbr></h1>
+        <a href="#exhibitions_section">Go To Exhibitions</a>
     </header>
+
+    <section style="padding: 30px; background-color: #f0f0f0; border-top: 1px solid #ccc;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+
+            <div style="flex: 1; padding-right: 20px;">
+                <blockquote>
+                    И музей одежды, <br>
+                    Что носили прежде, <br>
+                    Есть ещё и боевой <br>
+                    Весь пропитанный войной. <br><br>
+                </blockquote>
+
+                <pre style="font-size: 1.2em; color: #333; font-style: italic; margin-bottom: 10px;">
+                    Есть музей технический, 
+                    Есть биологический, 
+                    Есть музей игрушек 
+                    И лесных зверюшек. 
+                </pre>
+            </div>
+
+            <div style="flex: 1; padding-left: 20px; border-left: 1px solid #ccc;">
+                <q style="font-size: 1.1em; color: #555;">
+                    <cite>Читайте, ходите в музеи, слушайте оперу… Только, ради Бога, не изучайте жизнь по фильмам, телевизору и Интернету.</cite>
+                </q>
+                <p style="font-size: 0.9em; color: #555; text-align: right;">
+                </p>
+            </div>
+        </div>
+    </section>
 
     <section style="padding: 20px; background-color: #f8f9fa;">
         <h2 style="text-align: center; font-size: 2em;">Our Banners</h2>
         <div style="text-align: center; margin: 30px 0;">
             {% for banner in info.banners.all %}
-            <img src="{{ banner.image.url }}" alt="Banner" style="max-width: 200px; height: auto; margin: 20px;">
+            <a href="https://developer.mozilla.org/ru/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure" style="max-width: 200px; height: auto; margin: 20px;">
+                <img src="{{ banner.image.url }}" alt="Banner">
+            </a>
             {% endfor %}
         </div>
     </section>
 
-    <section style="padding: 15px;">
-        <h1 style="text-align: center; color: #333; font-size: 1.5em;">Our Excursions</h1>
-        <div style="max-width: 800px; margin: 0 auto; background-color: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px; text-align: center;">
-            {% if excursions %}
-            <div>
-                {% for excursion in excursions %}
-                <p style="font-size: 1.2em; color: #555;">
-                    <a href="{% url 'excursion_detail' excursion.id %}" style="color: #007bff; text-decoration: none;">{{ excursion.name }}</a>
-                </p>
-                {% endfor %}
-            </div>
-            {% else %}
-            <p style="text-align: center; color: #d9534f; font-size: 1.2em;">No excursions found.</p>
-            {% endif %}
-        </div>
+    <section id="image-section" style="width:100%">
+        <picture>
+          <source media="(max-width: 700px)"
+                    sizes="(max-width: 500px) 50vw, 10vw"
+                    srcset="{% static 'images/small/low-ressm.jpg' %} 138w,
+                            {% static 'images/small/low-ressm.jpg' %} 138w"
+                    title="Низкое разрешение изображения для экранов до 700px">
+
+          <source media="(max-width: 1400px)"
+                    sizes="(max-width: 1000px) 100vw, 50vw"
+                    srcset="{% static 'images/large/low-reslr.jpg' %} 416w,
+                            {% static 'images/large/low-reslr.jpg' %} 416w"
+                    title="Изображение для экранов до 1400px">
+
+         <img src="{% static 'images/large/low-res.jpg' %}"
+                 alt="adaptive picture"
+                 title="Основное изображение для остальных экранов">
+        </picture>
     </section>
 
-    <section style="padding: 15px;">
-        <h1 style="text-align: center; color: #333; font-size: 1.5em;">Our Exhibitions</h1>
-        <div style="max-width: 800px; margin: 0 auto; background-color: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px; text-align: center;">
-            {% if exhibitions %}
-            <ul style="list-style: none; padding: 0;">
-                {% for exhibition in exhibitions %}
-                <p style="font-size: 1.2em; color: #555;">
-                    <a href="{% url 'exhibition_detail' exhibition.id %}" style="color: #007bff; text-decoration: none;">{{ exhibition.name }}</a>
-                </p>
-                {% endfor %}
-            </ul>
-            {% else %}
-            <p style="text-align: center; color: #d9534f; font-size: 1.2em;">No exhibitions found.</p>
-            {% endif %}
-        </div>
-    </section>
-
-    <section style="padding: 15px;">
-        <h1 style="text-align: center; font-size: 1.5em;">Latest Article</h1>
-        {% if article %}
-        <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f8f9fa;">
-            <h2 style="text-align: center;">{{ article.title }}</h2>
-            {% if article.image %}
-            <div style="text-align: center; margin-bottom: 15px;">
-                <img src="{{ article.image.url }}" alt="{{ article.title }}" style="max-width: 80%; height: auto; border-radius: 10px;">
-            </div>
-            {% endif %}
-            <p>{{ article.short_description }}</p>
-            <p style="text-align: center; color: #555;">Published on: {{ article.published_at|date:"d/m/Y" }}</p>
-            <div style="text-align: center;">
-                <a href="article_all/{{ article.id }}" style="color: #007bff; text-decoration: none; font-weight: bold; border: 1px solid #007bff; padding: 10px 15px; border-radius: 5px;">Read More</a>
-            </div>
-        </div>
-        {% else %}
-        <p style="text-align: center;">No articles available.</p>
-        {% endif %}
-    </section>
-
-    <section style="padding: 15px;">
-        <h2 style="text-align: center; font-size: 1.5em;">Our Partners</h2>
-        <div style="text-align: center;">
-            {% for partner in partners %}
-            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                {% if partner.logo %}
-                <div style="margin-right: 20px;">
-                    <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" style="max-width: 150px; height: auto;">
+            <section style="padding: 15px;">
+                <h1 style="text-align: center; color: #333; font-size: 1.5em;"><mark>Our Excursions</mark></h1>
+                <div style="max-width: 800px; margin: 0 auto; background-color: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px; text-align: center;">
+                    {% if excursions %}
+                    <div>
+                        {% for excursion in excursions %}
+                        <p style="font-size: 1.2em; color: #555;">
+                            <a href="{% url 'excursion_detail' excursion.id %}" style="color: #007bff; text-decoration: none;">{{ excursion.name }}</a>
+                        </p>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p style="text-align: center; color: #d9534f; font-size: 1.2em;">No excursions found.</p>
+                    {% endif %}
                 </div>
+            </section>
+
+            <section id="exhibitions_section" style="padding: 15px;">
+                <h1 style="text-align: center; color: #333; font-size: 1.5em;"><mark>Our Exhibitions</mark></h1>
+                <div style="max-width: 800px; margin: 0 auto; background-color: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px; text-align: center;">
+                    {% if exhibitions %}
+                    <ul style="list-style: none; padding: 0;">
+                        {% for exhibition in exhibitions %}
+                        <p style="font-size: 1.2em; color: #555;">
+                            <a href="{% url 'exhibition_detail' exhibition.id %}" style="color: #007bff; text-decoration: none;">{{ exhibition.name }}</a>
+                        </p>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p style="text-align: center; color: #d9534f; font-size: 1.2em;">No exhibitions found.</p>
+                    {% endif %}
+                </div>
+            </section>
+
+            <section style="padding: 15px;">
+                <h1 style="text-align: center; font-size: 1.5em;">Latest Article</h1>
+                {% if article %}
+                <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f8f9fa;">
+                    <h2 style="text-align: center;">{{ article.title }}</h2>
+                    {% if article.image %}
+                    <div style="text-align: center; margin-bottom: 15px;">
+                        <img src="{{ article.image.url }}" alt="{{ article.title }}" style="max-width: 80%; height: auto; border-radius: 10px;">
+                    </div>
+                    {% endif %}
+                    <p>{{ article.short_description }}</p>
+                    <p style="text-align: center; color: #555;">Published on: {{ article.published_at|date:"d/m/Y" }}</p>
+                    <div style="text-align: center;">
+                        <a href="article_all/{{ article.id }}" style="color: #007bff; text-decoration: none; font-weight: bold; border: 1px solid #007bff; padding: 10px 15px; border-radius: 5px;">Read More</a>
+                        <a href="article_all/{{ article.id }}" style="color: #007bff; text-decoration: none; font-weight: bold; border: 1px solid #007bff; padding: 10px 15px; border-radius: 5px;" download="readmore.html">Download Read More Page</a>
+                    </div>
+                </div>
+                {% else %}
+                <p style="text-align: center;">No articles available.</p>
                 {% endif %}
-                <div style="max-width: 450px;">
-                    <p style="font-size: 1.2em; color: #555;">
-                        <a href="{{ partner.website }}" target="_blank" style="color: #007bff; text-decoration: none;">{{ partner.name }}</a>
-                    </p>
+            </section>
+            <figure>
+                <figcaption>Listing 1. Using the code element</figcaption>
+                <code>
+                    exhibition = Exhibition.objects.get(id=id)
+
+                    if request.user.is_authenticated:
+                    try:
+                    employee = Employee.objects.get(user=request.user)
+                    is_employee = True
+                    except Employee.DoesNotExist:
+                    employee = None
+                    is_employee = False
+                </code>
+            </figure>
+            <section style="padding: 15px;">
+                <h2 style="text-align: center; font-size: 1.5em;">Our Partners</h2>
+                <div style="text-align: center;">
+                    {% for partner in partners %}
+                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                        {% if partner.logo %}
+                        <div style="margin-right: 20px;">
+                            <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" style="max-width: 150px; height: auto;">
+                        </div>
+                        {% endif %}
+                        <div style="max-width: 450px;">
+                            <p style="font-size: 1.2em; color: #555;">
+                                <a href="{{ partner.website }}" target="_blank" style="color: #007bff; text-decoration: none;">{{ partner.name }}</a>
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
+            </section>
 </body>
 </html>
 {% endblock %}
