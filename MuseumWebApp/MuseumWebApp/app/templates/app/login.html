@@ -1,46 +1,43 @@
-<!DOCTYPE html>
-
 {% extends "app/layout.html" %}
-{% block content %}
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% block content %}
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/login.css' %}">
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <div style="max-width: 500px; margin: 80px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-        <h2 style="text-align: center; color: #2c3e50; margin-bottom: 20px;">{{ title }}</h2>
-
-        <form action="." method="post" style="display: flex; flex-direction: column;">
+        <form action="." method="post" class="login-form">
             {% csrf_token %}
 
-            <div style="margin-bottom: 20px;">
-                <label for="id_username" style="font-weight: bold; color: #2c3e50; display: block; margin-bottom: 8px;">User name</label>
-                <input type="text" id="id_username" name="username" style="width: 90%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px; transition: border-color 0.3s ease;">
+            <div class="div-between-button">
+                <label for="id_username">User name</label>
+                <input type="text" id="id_username" name="username" class="input-areas">
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="id_password" style="font-weight: bold; color: #2c3e50; display: block; margin-bottom: 8px;">Password</label>
-                <input type="password" id="id_password" name="password" style="width: 90%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px; transition: border-color 0.3s ease;">
+            <div class="div-between-button">
+                <label for="id_password">Password</label>
+                <input type="password" id="id_password" name="password" class="input-areas">
             </div>
 
-            <div style="text-align: center; margin-bottom: 20px;">
-                <input type="submit" value="Log in" style="background-color: #3498db; color: #fff; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; font-size: 16px;">
+            <div class="button-align">
+                <button type="submit" class="positive-button">
+                    Log In
+                </button>
+            </div>
+
+            <div class="button-align">
+                <a href="register/" class="positive-button change-color">Create an account</a>
             </div>
 
             {% if form.errors %}
-            <p style="color: #e74c3c; text-align: center;">Please enter a correct user name and password.</p>
+            <p class="message">Please enter a correct user name and password.</p>
             {% endif %}
-
-            <div style="text-align: center;">
-                <a href="register/" style="background-color: #95a5a6; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-size: 16px;">Create an account</a>
-            </div>
         </form>
     </div>
-
 </body>
-</html>
 {% endblock %}

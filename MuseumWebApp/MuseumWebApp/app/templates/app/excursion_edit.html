@@ -1,39 +1,47 @@
-<!DOCTYPE html>
-
 {% extends "app/layout.html" %}
 
 {% block content %}
-<html lang="en">
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/create_excursion.css' %}">
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
-    <h1 style="text-align: center; color: #333;">{{ title }}</h1>
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
-        <form method="POST" style="margin: 0;">
+        <form method="POST" enctype="multipart/form-data" class="excursion-form">
             {% csrf_token %}
 
-            <div style="margin-bottom: 20px;">
-                <label for="code" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Code:</label>
-                <input type="text" id="code" name="code" value="{{ excursion.code }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            <div class="div-between">
+                <label for="code">Code:</label>
+                <input type="text" id="code" name="code" value="{{ excursion.code }}" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="excursion_name" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Name:</label>
-                <input type="text" id="excursion_name" name="excursion_name" value="{{ excursion.name }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            <div class="div-between">
+                <label for="excursion_name">Name:</label>
+                <input type="text" id="excursion_name" name="excursion_name" value="{{ excursion.name }}" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="date" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Date:</label>
-                <input type="date" id="date" name="date" value="{{ excursion.date|date:'Y-m-d' }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            <div class="div-between">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" class="input-areas" value="{{ excursion.date|date:'Y-m-d' }}" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="season" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Season:</label>
-                <select id="season" name="season" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <div class="div-between">
+                <label for="group_size">Group Size:</label>
+                <input type="number" id="group_size" name="group_size" class="input-areas" value="{{ excursion.group_size }}" required>
+            </div>
+
+            <div class="div-between">
+                <label for="excursion_price">Price:</label>
+                <input type="number" step="0.01" id="excursion_price" name="excursion_price" value="{{ excursion.price }}" min="0" max="10000" class="input-areas" required>
+            </div>
+
+            <div class="div-between">
+                <label for="season">Season:</label>
+                <select id="season" name="season" class="input-areas">
                     <option value="summer" {% if excursion.season == 'summer' %}selected{% endif %}>Summer</option>
                     <option value="autumn" {% if excursion.season == 'autumn' %}selected{% endif %}>Autumn</option>
                     <option value="winter" {% if excursion.season == 'winter' %}selected{% endif %}>Winter</option>
@@ -41,14 +49,9 @@
                 </select>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="group_size" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Group Size:</label>
-                <input type="number" id="group_size" name="group_size" value="{{ excursion.group_size }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
-            </div>
-
-            <div style="margin-bottom: 20px;">
-                <label for="guide" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Guide:</label>
-                <select id="guide" name="guide" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <div class="div-between">
+                <label for="guide">Guide:</label>
+                <select id="guide" name="guide" class="input-areas">
                     {% for guide in guides %}
                     <option value="{{ guide.id }}" {% if guide.id == excursion.guide.id %}selected{% endif %}>
                         {{ guide.first_name }} {{ guide.last_name }}
@@ -57,21 +60,17 @@
                 </select>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="excursion_price" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Price:</label>
-                <input type="number" step="0.01" id="excursion_price" name="excursion_price" value="{{ excursion.price }}" min="0" max="10000" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
-            </div>
-
-            <div style="text-align: center;">
-                <button type="submit" style="background-color: #007bff; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 1em;">
-                    Save
+            <div class="button-align">
+                <button type="submit" class="positive-button">
+                    Save changes
                 </button>
             </div>
 
             {% if messages %}
-            <div style="margin-top: 20px;">
+            <div>
                 {% for message in messages %}
-                <div style="padding: 10px; border: 1px solid; border-color: {% if message.tags == 'error' %}red{% else %}green{% endif %}; text-align: center; margin-bottom: 10px; border-radius: 4px;">
+                <div class="message" style="
+                        {% if message.tags == 'error' %}background-color: #f89cff; color: white;{% else %}background-color: #d4edda; color: #155724;{% endif %}">
                     {{ message }}
                 </div>
                 {% endfor %}
@@ -80,6 +79,4 @@
         </form>
     </div>
 </body>
-</html>
-
 {% endblock %}

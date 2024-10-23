@@ -1,90 +1,86 @@
-<!DOCTYPE html>
-
 {% extends "app/layout.html" %}
-{% block content %}
 
-<html lang="en">
+{% block content %}
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/create_exhibit.css' %}">
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <h1 style="text-align: center; color: #333;">Edit Exhibit Information</h1>
-
-    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" class="exhibit-form" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <div style="margin-bottom: 20px;">
-                <label for="image" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Image</label>
+            <div class="div-between image-position">
+                <label for="image">Image</label>
                 <div>
                     {% if exhibit.image %}
-                    <img id="image-preview" src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}" style="max-width: 200px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                    <img id="image-preview" src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}">
                     {% else %}
-                    <img id="image-preview" src="" alt="No image" style="max-width: 200px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                    <img id="image-preview" src="" alt="No image">
                     {% endif %}
                 </div>
-                <input type="file" id="image" name="image" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" onchange="previewImage()">
+                <input type="file" id="image" name="image" class="input-areas">
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="name" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Name</label>
-                <input type="text" id="name" name="name" value="{{ exhibit.name }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            <div class="div-between">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" value="{{ exhibit.name }}" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="art_type" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Art Type</label>
-                <select id="art_type" name="art_type" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <div class="div-between">
+                <label for="date_acquired">Date Acquired</label>
+                <input type="date" id="date_acquired" name="date_acquired" value="{{ exhibit.date_acquired|date:'Y-m-d' }}" class="input-areas" required>
+            </div>
+
+            <div class="div-between">
+                <label for="art_type">Art Type</label>
+                <select id="art_type" name="art_type" class="input-areas">
                     {% for art_type in art_types %}
                     <option value="{{ art_type.id }}" {% if art_type.id == exhibit.art_type.id %}selected{% endif %}>{{ art_type.name }}</option>
                     {% endfor %}
                 </select>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="date_acquired" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Date Acquired</label>
-                <input type="date" id="date_acquired" name="date_acquired" value="{{ exhibit.date_acquired|date:'Y-m-d' }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
-            </div>
-
-            <div style="margin-bottom: 20px;">
-                <label for="hall" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Hall</label>
-                <select id="hall" name="hall" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <div class="div-between">
+                <label for="hall">Hall</label>
+                <select id="hall" name="hall" class="input-areas">
                     {% for hall in halls %}
                     <option value="{{ hall.id }}" {% if hall.id == exhibit.hall.id %}selected{% endif %}>{{ hall.name }}</option>
                     {% endfor %}
                 </select>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="caretaker" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Caretaker</label>
-                <select id="caretaker" name="caretaker" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <div class="div-between">
+                <label for="caretaker">Caretaker</label>
+                <select id="caretaker" name="caretaker" class="input-areas">
                     {% for caretaker in caretakers %}
                     <option value="{{ caretaker.id }}" {% if caretaker.id == exhibit.caretaker.id %}selected{% endif %}>{{ caretaker.first_name }} {{ caretaker.last_name }}</option>
                     {% endfor %}
                 </select>
             </div>
 
-            <div style="text-align: center;">
-                <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Save</button>
+            <div class="button-align">
+                <button type="submit" class="positive-button">
+                    Save changes
+                </button>
             </div>
+
+            {% if messages %}
+            <div>
+                {% for message in messages %}
+                <div class="message" style="
+                        {% if message.tags == 'error' %}background-color: #f89cff; color: white;{% else %}background-color: #d4edda; color: #155724;{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
         </form>
-
-        {% if messages %}
-        <div style="margin-top: 20px;">
-            {% for message in messages %}
-            <div style="padding: 10px; border: 1px solid; {% if message.tags == 'error' %}border-color: red;{% else %}border-color: green;{% endif %} text-align: center; margin-bottom: 10px; border-radius: 4px;">
-                {{ message }}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
     </div>
-
 </body>
-
-</html>
 
 {% endblock %}

@@ -1,36 +1,37 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
+{% load static %}
 
-<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/create_exhibit.css' %}">
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <h1 style="text-align: center; color: #333;">{{ title }}</h1>
+        <form method="POST" enctype="multipart/form-data" class="exhibit-form">
+            {% csrf_token %}
 
-    <form method="POST" enctype="multipart/form-data" style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        {% csrf_token %}
-
-        <fieldset style="border: none; padding: 0;">
-            <legend style="font-size: 20px; font-weight: bold; color: #444; margin-bottom: 10px;">Exhibit Details</legend>
-
-            <div style="margin-bottom: 15px;">
-                <label for="image" style="display: block; font-weight: bold; color: #555;">Image</label>
-                <input type="file" id="image" name="image" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            <div class="div-between">
+                <label for="image">Image</label>
+                <input type="file" id="image" name="image" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 15px;">
-                <label for="name" style="display: block; font-weight: bold; color: #555;">Name</label>
-                <input type="text" id="name" name="name" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            <div class="div-between">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 15px;">
-                <label for="art_type" style="display: block; font-weight: bold; color: #555;">Art Type</label>
-                <select id="art_type" name="art_type" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <div class="div-between">
+                <label for="date_acquired">Date Acquired</label>
+                <input type="date" id="date_acquired" name="date_acquired" class="input-areas" required>
+            </div>
+
+            <div class="div-between">
+                <label for="art_type">Art Type</label>
+                <select id="art_type" name="art_type" class="input-areas">
                     {% for art_type in art_types %}
                     <option value="{{ art_type.id }}">
                         {{ art_type.name }}
@@ -39,14 +40,9 @@
                 </select>
             </div>
 
-            <div style="margin-bottom: 15px;">
-                <label for="date_acquired" style="display: block; font-weight: bold; color: #555;">Date Acquired</label>
-                <input type="date" id="date_acquired" name="date_acquired" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
-            </div>
-
-            <div style="margin-bottom: 15px;">
-                <label for="hall" style="display: block; font-weight: bold; color: #555;">Hall</label>
-                <select id="hall" name="hall" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <div class="div-between">
+                <label for="hall">Hall</label>
+                <select id="hall" name="hall" class="input-areas">
                     {% for hall in halls %}
                     <option value="{{ hall.id }}">
                         {{ hall.name }}
@@ -55,9 +51,9 @@
                 </select>
             </div>
 
-            <div style="margin-bottom: 15px;">
-                <label for="caretaker" style="display: block; font-weight: bold; color: #555;">Caretaker</label>
-                <select id="caretaker" name="caretaker" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <div class="div-between">
+                <label for="caretaker">Caretaker</label>
+                <select id="caretaker" name="caretaker" class="input-areas">
                     {% for caretaker in caretakers %}
                     <option value="{{ caretaker.id }}">
                         {{ caretaker.first_name }} {{ caretaker.last_name }}
@@ -66,27 +62,24 @@
                 </select>
             </div>
 
-            <div style="text-align: center; margin-top: 20px;">
-                <button type="submit" style="background-color: #007bff; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">
-                    Save
+            <div class="button-align">
+                <button type="submit" class="positive-button">
+                    Submit
                 </button>
             </div>
-        </fieldset>
 
-        {% if messages %}
-        <div style="margin-top: 20px;">
-            {% for message in messages %}
-            <div style="padding: 10px; border-radius: 4px; text-align: center;
-                        {% if message.tags == 'error' %}background-color: #f8d7da; color: #721c24;{% else %}background-color: #d4edda; color: #155724;{% endif %}">
-                {{ message }}
+            {% if messages %}
+            <div>
+                {% for message in messages %}
+                <div class="message" style="
+                        {% if message.tags == 'error' %}background-color: #f89cff; color: white;{% else %}background-color: #d4edda; color: #155724;{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-    </form>
-
+            {% endif %}
+        </form>
+    </div>
 </body>
-
-</html>
 
 {% endblock %}

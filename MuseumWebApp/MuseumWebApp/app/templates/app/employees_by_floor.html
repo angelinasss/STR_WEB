@@ -1,60 +1,64 @@
-<!DOCTYPE html>
-
 {% extends "app/layout.html" %}
-{% block content %}
 
-<html lang="en">
+{% block content %}
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'app/content/employees_by_floor.css' %}">
     <title>Employees on Floor {{ selected_floor }}</title>
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+<body>
+    <div class="container-box">
+        <h1>Employees on Floor {{ selected_floor }}</h1>
 
-    <h1 style="text-align: center; color: #333;">Employees on Floor {{ selected_floor }}</h1>
-
-    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
-        <form method="POST">
-            {% csrf_token %}
-            <div style="margin-bottom: 20px;">
-                <label for="floor" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Select Floor Number:</label>
-                <select id="floor" name="floor" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-                    {% for floor in floors %}
-                    <option value="{{ floor }}" {% if floor|stringformat:"s" == selected_floor|stringformat:"s" %}selected{% endif %}>
-                        {{ floor }}
-                    </option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div style="text-align: center;">
-                <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Search</button>
-            </div>
-        </form>
-
-        {% if employees %}
-        <h2 style="margin-top: 20px; color: #333;">Results:</h2>
-        <div>
-            {% for employee in employees %}
-            <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #fff;">
-                <div style="font-size: 18px; font-weight: bold; color: #333;">
-                    {{ employee.first_name }} {{ employee.last_name }}
+        <div class="employees-form">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="div-between">
+                    <label for="floor">Select Floor Number:</label>
+                    <select id="floor" name="floor">
+                        {% for floor in floors %}
+                        <option value="{{ floor }}" {% if floor|stringformat:"s" == selected_floor|stringformat:"s" %}selected{% endif %}>
+                            {{ floor }}
+                        </option>
+                        {% endfor %}
+                    </select>
                 </div>
-                <div style="margin-top: 10px;">
-                    <p style="margin: 5px 0; color: #555;"><strong>Position:</strong> {{ employee.position }}</p>
-                    <p style="margin: 5px 0; color: #555;"><strong>Phone:</strong> {{ employee.phone }}</p>
-                    <p style="margin: 5px 0; color: #555;"><strong>Hall:</strong> {{ employee.exhibit_set.first.hall.name }}</p>
+
+                <div class="button-position">
+                    <button type="submit" class="positive-button">Search</button>
                 </div>
+            </form>
+
+            {% if employees %}
+            <div class="employee-container">
+                {% for employee in employees %}
+               
+                <div class="employee-card">
+                        <div>
+                            {% if employee.photo %}
+                            <img src="{{ employee.photo.url }}" alt="{{ employee.name }}">
+                            {% else %}
+                            <img src="" alt="{{ employee.name }}">
+                            {% endif %}
+                        </div>
+                        <div class="left-position">
+                            <h4>
+                                {{ employee.first_name }} {{ employee.last_name }}
+                            </h4>
+                            <p><strong>Position:</strong> {{ employee.position }}</p>
+                            <p><strong>Phone:</strong> {{ employee.phone }}</p>
+                            <p><strong>Hall:</strong> {{ employee.exhibit_set.first.hall.name }}</p>
+                        </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p class="message">No employees found for the specified floor.</p>
+                {% endif %}
             </div>
-            {% endfor %}
+            </div>
         </div>
-        {% else %}
-        <p style="margin-top: 10px; text-align: center; color: #d9534f;">No employees found for the specified floor.</p>
-        {% endif %}
-    </div>
-
 </body>
-
-</html>
 
 {% endblock %}

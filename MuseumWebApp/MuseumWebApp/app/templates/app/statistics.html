@@ -1,131 +1,140 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/statistics.css' %}">
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-        <h1 style="text-align: center; color: #333;">{{ title }}</h1>
 
-        <form method="GET" action="{% url 'statistics' %}" style="margin-bottom: 20px;">
-            <label for="sale_type" style="font-weight: bold; color: #333;">Select Sales Type:</label>
-            <select id="sale_type" name="sale_type" style="padding: 5px; border-radius: 4px; border: 1px solid #ddd; margin-right: 10px;">
+        <form method="GET" action="{% url 'statistics' %}">
+            <label for="sale_type">Select Sales Type:</label>
+            <select id="sale_type" name="sale_type">
                 <option value="Excursion" {% if sales_type == 'Excursion' %}selected{% endif %}>Excursions</option>
                 <option value="Exhibition" {% if sales_type == 'Exhibition' %}selected{% endif %}>Exhibitions</option>
             </select>
-            <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px;">View Statistics</button>
+            <div class="button-position">
+                <button type="submit" class="positive-button">View Statistics</button>
+            </div>
         </form>
+        <div class="object-info">
+            <h2>Sales Type: <strong>{{ sales_type }}</strong></h2>
 
-        <h2 style="color: #333;">Sales Type: {{ sales_type }}</h2>
-
-        <p><strong>Total Tickets Sold:</strong> {{ total_tickets_sold }}</p>
-        <p><strong>Total Sales:</strong> {{ total_sales }}</p>
-        <p><strong>Average Sale Price:</strong> {{ avg_sales }}</p>
-        <p><strong>Median Sale Price:</strong> {{ med_sales }}</p>
-        <p><strong>Mode Sale Price:</strong> {% if mod_sales %}{{ mod_sales }}{% else %}No mode{% endif %}</p>
-
-        <h3 style="color: #333;">Most Popular {{ sales_type }}:</h3>
-        {% if most_popular %}
-        {% if sales_type == 'Excursion' %}
-        <p><strong>Name:</strong> {{ most_popular.excursion__name }}</p>
-        {% elif sales_type == 'Exhibition' %}
-        <p><strong>Name:</strong> {{ most_popular.exhibition__name }}</p>
-        {% endif %}
-        <p><strong>Number of Tickets Sold:</strong> {{ most_popular.ticket_count }}</p>
-        {% else %}
-        <p>No sales data available.</p>
-        {% endif %}
-
-        <div style="text-align: center; margin-top: 20px;">
-            <h4>Sales Chart</h4>
-            <canvas id="salesChart" width="600" height="400"></canvas>
+            <p><strong>Total Tickets Sold:</strong> {{ total_tickets_sold }}</p>
+            <p><strong>Total Sales:</strong> {{ total_sales }}</p>
+            <p><strong>Average Sale Price:</strong> {{ avg_sales }}</p>
+            <p><strong>Median Sale Price:</strong> {{ med_sales }}</p>
+            <p><strong>Mode Sale Price:</strong> {% if mod_sales %}{{ mod_sales }}{% else %}No mode{% endif %}</p>
         </div>
-
-        <div style="text-align: center; margin-top: 20px;">
-            <h4>Overall Sales</h4>
-            <canvas id="salesAll" width="600" height="400"></canvas>
+        <div class="most-info">
+            <h2><strong>Most Popular {{ sales_type }}:</strong></h2>
+            {% if most_popular %}
+            {% if sales_type == 'Excursion' %}
+            <p><strong>Name:</strong> {{ most_popular.excursion__name }}</p>
+            {% elif sales_type == 'Exhibition' %}
+            <p><strong>Name:</strong> {{ most_popular.exhibition__name }}</p>
+            {% endif %}
+            <p><strong>Number of Tickets Sold:</strong> {{ most_popular.ticket_count }}</p>
+            {% else %}
+            <p>No sales data available.</p>
+            {% endif %}
         </div>
+        <div class="graphics">
+            <div class="statistics-section">
+                <div class="chart-container">
+                    <div class="text-center">
+                        <h3>Sales Chart</h3>
+                        <canvas id="salesChart" width="600" height="400"></canvas>
+                    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <div class="text-center">
+                        <h3>Overall Sales</h3>
+                        <canvas id="salesAll" width="600" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
 
-        <script>
-            const labels = {{ sales_labels| safe }};
-            const data = {{ sales_data| safe }};
-            const ctx = document.getElementById('salesChart').getContext('2d');
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Sales Amount',
-                        data: data,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Number of Tickets Sold',
-                            font: {
-                                size: 18
+            <script>
+                const labels = {{ sales_labels| safe }};
+                const data = {{ sales_data| safe }};
+                const ctx = document.getElementById('salesChart').getContext('2d');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Sales Amount',
+                            data: data,
+                            backgroundColor: 'rgba(248, 156, 255, 0.2)',
+                            borderColor: '#ea0ffa',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Number of Tickets Sold',
+                                color: '#ea0ffa',
+                                font: {
+                                    size: 18
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
                             }
                         }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
                     }
-                }
-            });
-        </script>
+                });
+            </script>
 
-        <script>
-            const dataAll = {{ sales_data_all| safe }};
-            const ctx1 = document.getElementById('salesAll').getContext('2d');
+            <script>
+                const dataAll = {{ sales_data_all| safe }};
+                const ctx1 = document.getElementById('salesAll').getContext('2d');
 
-            new Chart(ctx1, {
-                type: 'bar',
-                data: {
-                    labels: ['Excursions', 'Exhibitions'],
-                    datasets: [{
-                        label: 'Sales Amount',
-                        data: dataAll,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Number of Tickets Sold',
-                            font: {
-                                size: 18
+                new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Excursions', 'Exhibitions'],
+                        datasets: [{
+                            label: 'Sales Amount',
+                            data: dataAll,
+                            backgroundColor: 'rgba(248, 156, 255, 0.2)',
+                            borderColor: '#ea0ffa',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Number of Tickets Sold',
+                                color: '#ea0ffa',
+                                font: {
+                                    size: 18
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
                             }
                         }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
                     }
-                }
-            });
-        </script>
-
+                });
+            </script>
+        </div>
     </div>
 
 </body>
-</html>
 {% endblock %}

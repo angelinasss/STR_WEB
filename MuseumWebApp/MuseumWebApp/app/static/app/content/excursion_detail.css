@@ -1,0 +1,82 @@
+.positive-button {
+    background-color: #ea0ffa;
+    padding: 7px 12px;
+}
+
+    .positive-button:hover {
+        background-color: #f89cff;
+    }
+
+label {
+    color: #ea0ffa;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.excursion-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.excursion-card {
+    display: inline-block;
+    padding: 0 20px 20px;
+    background-color: #eeedff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .excursion-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .excursion-card h4 {
+        font-size: 22px;
+        color: #710ffa;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .excursion-card p {
+        color: #710ffa;
+    }
+
+.message {
+    margin-top: 10px;
+    text-align: center;
+    color: #ea0ffa;
+    clear: both;
+}
+
+strong {
+    color: #ea0ffa;
+}
+
+p.message {
+    color: #ea0ffa;
+}
+
+.buttons-top {
+    margin-top: 10px;
+    text-align: center;
+    justify-content: center;
+}
+
+.success-message {
+    max-width: 800px;
+    margin: 20px auto 0;
+    clear: both;
+    text-align: center;
+}
+
+    .success-message div {
+        padding: 10px;
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        border-radius: 5px;
+        color: #155724;
+    }

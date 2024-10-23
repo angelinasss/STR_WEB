@@ -1,0 +1,54 @@
+.article-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 20px 0 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #eeedff;
+    overflow: hidden;
+}
+
+.div-between {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #710ffa;
+}
+
+.button-align {
+    text-align: center;
+}
+
+.positive-button {
+    padding: 7px 12px;
+}
+
+#image-preview {
+    max-width: 100%; /* Ограничиваем размер изображения */
+    height: 300px;
+    margin: 10px 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: transform 0.3s ease;
+}
+
+    #image-preview:hover {
+        transform: scale(1.05);
+    }
+
+.image-position {
+    display: flex;
+    flex-direction: column; /* Размещаем элементы вертикально */
+    align-items: center; /* Выравниваем элементы по центру по горизонтали */
+}
+
+.div-between p {
+    text-align: center;
+    color: #ea0ffa;
+    font-size: 14px;
+    font-weight: bold;
+}

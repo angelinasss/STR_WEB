@@ -1,0 +1,68 @@
+body {
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+}
+
+.certificate-container {
+    font-family: "Georgia", serif;
+    position: relative;
+    margin: 0 auto;
+    padding: 10px 20px 20px;
+    background-color: #ffffff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 720px; /* Фиксированная ширина */
+    height: 350px; /* Фиксированная высота */
+    border: 100px solid transparent;
+    -webkit-border-image: url("/static/images/certificate.jpg") 190 round;
+    z-index: 1; /* Это нужно для того, чтобы фоновое изображение было позади текста */
+}
+
+    .certificate-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("/static/images/birds_love.png");
+        background-size: cover; /* Изображение растянуто по размеру контейнера */
+        opacity: 0.1; /* Прозрачность изображения */
+        z-index: -1; /* Размещаем фоновое изображение за текстом */
+        border-radius: inherit; /* Чтобы псевдоэлемент следовал закругленным углам, если они есть */
+    }
+
+.certificate-header {
+    font-size: 36px; /* Увеличиваем размер заголовка */
+    color: #710ffa;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.certificate-subtitle {
+    font-size: 24px;
+    color: #710ffa;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.certificate-body {
+    font-size: 18px;
+    color: #333;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+.highlight {
+    font-size: 22px;
+    color: #ea0ffa;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Дополнительные стили для придания красоты */
+.certificate-header, .certificate-subtitle, .certificate-footer {
+    letter-spacing: 1px;
+}

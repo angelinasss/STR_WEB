@@ -1,31 +1,29 @@
-<!DOCTYPE html>
-
 {% extends "app/layout.html" %}
+
 {% block content %}
+{% load static %}
 
-<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/create_FAQ.css' %}">
 </head>
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; padding: 20px;">
 
-    <h2 style="text-align: center; color: #444;">Create New FAQ</h2>
+<body>
+    <div class="container-box">
+        <h1>Create New FAQ</h1>
 
-    <form method="POST" style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        {% csrf_token %}
-        <div style="margin-bottom: 15px;">
-            <label for="question" style="display: block; font-weight: bold; margin-bottom: 8px;">Question</label>
-            <input type="text" id="question" name="question" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
-        </div>
-        <div style="margin-bottom: 15px;">
-            <label for="answer" style="display: block; font-weight: bold; margin-bottom: 8px;">Answer</label>
-            <textarea id="answer" name="answer" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" rows="5" required></textarea>
-        </div>
-        <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 16px;">Submit</button>
-    </form>
-
+        <form method="POST" class="add-faq-form">
+            {% csrf_token %}
+            <div class="main-faq">
+                <label for="question">Question</label>
+                <input class="input-areas" type="text" id="question" name="question" required>
+            </div>
+            <div class="main-faq">
+                <label for="answer">Answer</label>
+                <textarea class="input-areas" id="answer" name="answer" rows="5" required></textarea>
+            </div>
+            <button class="positive-button" type="submit">Submit</button>
+        </form>
+    </div>
 </body>
-</html>
 
 {% endblock %}

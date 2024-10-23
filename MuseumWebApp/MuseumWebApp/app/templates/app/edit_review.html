@@ -1,36 +1,39 @@
-<!DOCTYPE html>
 {% extends "app/layout.html" %}
 
 {% block content %}
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/edit_review.css' %}">
 </head>
 
 <body>
-    <h1 style="text-align: center; color: #2c3e50;">{{ title }}</h1>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <form method="POST" style="max-width: 800px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
-        {% csrf_token %}
-        <div style="margin-bottom: 20px;">
-            <label for="rating" style="display: block; font-weight: bold; margin-bottom: 8px;">Rating:</label>
-            <select name="rating" id="rating" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
-                <option value="1" {% if review.rating == 1 %}selected{% endif %}>1</option>
-                <option value="2" {% if review.rating == 2 %}selected{% endif %}>2</option>
-                <option value="3" {% if review.rating == 3 %}selected{% endif %}>3</option>
-                <option value="4" {% if review.rating == 4 %}selected{% endif %}>4</option>
-                <option value="5" {% if review.rating == 5 %}selected{% endif %}>5</option>
-            </select>
-        </div>
-        <div style="margin-bottom: 20px;">
-            <label for="text" style="display: block; font-weight: bold; margin-bottom: 8px;">Review:</label>
-            <textarea name="text" id="text" style="width: 90%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" rows="4" required>{{ review.text }}</textarea>
-        </div>
-        <button type="submit" style="padding: 10px 20px; border: none; border-radius: 4px; background-color: #007bff; color: white; cursor: pointer;">
-            Save
-        </button>
-    </form>
+        <form method="POST" class="review-form">
+            {% csrf_token %}
+
+            <div class="div-between">
+                <label for="rating">Rating:</label>
+                <select name="rating" id="rating" required>
+                    <option value="1" {% if review.rating == 1 %}selected{% endif %}>1</option>
+                    <option value="2" {% if review.rating == 2 %}selected{% endif %}>2</option>
+                    <option value="3" {% if review.rating == 3 %}selected{% endif %}>3</option>
+                    <option value="4" {% if review.rating == 4 %}selected{% endif %}>4</option>
+                    <option value="5" {% if review.rating == 5 %}selected{% endif %}>5</option>
+                </select>
+            </div>
+            <div class="div-between">
+                <label for="text">Review:</label>
+                <textarea name="text" id="text" rows="4" class="input-areas" required>{{ review.text }}</textarea>
+            </div>
+            <div class="button-align">
+                <button type="submit" class="positive-button">
+                    Save changes
+                </button>
+            </div>
+        </form>
+    </div>
 </body>
-</html>
 {% endblock %}

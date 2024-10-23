@@ -1,51 +1,46 @@
-<!DOCTYPE html>
-
 {% extends "app/layout.html" %}
-{% block content %}
 
-<html lang="en">
+{% block content %}
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/hall_detail.css' %}">
+    <title>Exhibits in {{ hall.name }} Hall</title>
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+<body>
+    <div class="container-box">
+        <h1>Exhibits in {{ hall.name }} Hall</h1>
 
-    <h1 style="text-align: center; color: #333;">Exhibits in {{ hall.name }} Hall</h1>
+        {% if user.is_superuser %}
+        <a href="{% url 'create_exhibit' hall.id %}" class="positive-button">
+            Create New Exhibit In Current Hall
+        </a>
+        {% endif %}
 
-    {% if user.is_superuser %}
-    <a href="{% url 'create_exhibit' hall.id %}" style="display: block; width: fit-content; margin: 0 auto; padding: 10px 15px; margin-bottom: 20px; border: 1px solid #28a745; border-radius: 5px; background-color: #28a745; color: #fff; text-decoration: none; text-align: center;">
-        Create New Exhibit In Current Hall
-    </a>
-    {% endif %}
-
-    <div style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
-        {% for exhibit in exhibits %}
-        <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f8f9fa; display: flex; align-items: center;">
-            <div style="flex-shrink: 0; margin-right: 20px;">
+        <div class="exhibition-list">
+            {% for exhibit in exhibits %}
+            <div class="exhibition-card">
                 {% if exhibit.image %}
-                <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}" style="max-width: 150px; border-radius: 5px; object-fit: cover;">
+                <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}">
                 {% else %}
-                <img src="/static/images/default_exhibit.jpg" alt="{{ exhibit.name }}" style="max-width: 150px; border-radius: 5px; object-fit: cover;">
+                <img src="/static/images/default_exhibit.jpg" alt="{{ exhibit.name }}">
+                {% endif %}
+            
+                <h4>{{ exhibit.name }}</h4>
+                <p><strong>Art Type:</strong> {{ exhibit.art_type }}</p>
+                <p><strong>Date Acquired:</strong> {{ exhibit.date_acquired }}</p>
+                <p><strong>Caretaker:</strong> {{ exhibit.caretaker }}</p>
+                {% if user.is_superuser %}
+                <div class="buttons-top">
+                    <a href="{% url 'edit_exhibit' exhibit.id %}" class="positive-button edit-button">Edit</a>
+                    <a href="{% url 'delete_exhibit' exhibit.id %}" class="positive-button" onclick="return confirm('Are you sure you want to delete this exhibit?');">Delete</a>
+                </div>
                 {% endif %}
             </div>
-            <div style="flex-grow: 1;">
-                <h2 style="margin: 0; font-size: 20px; color: #333;">{{ exhibit.name }}</h2>
-                <p style="margin: 5px 0; color: #555;"><strong>Art Type:</strong> {{ exhibit.art_type }}</p>
-                <p style="margin: 5px 0; color: #555;"><strong>Date Acquired:</strong> {{ exhibit.date_acquired }}</p>
-                <p style="margin: 5px 0; color: #555;"><strong>Caretaker:</strong> {{ exhibit.caretaker }}</p>
-            </div>
-            {% if user.is_superuser %}
-            <div style="flex-shrink: 0; margin-left: 20px;">
-                <a href="{% url 'edit_exhibit' exhibit.id %}" style="display: block; padding: 5px 10px; margin-bottom: 5px; border: 1px solid #007bff; border-radius: 5px; background-color: #007bff; color: #fff; text-decoration: none; text-align: center;">Edit</a>
-                <a href="{% url 'delete_exhibit' exhibit.id %}" onclick="return confirm('Are you sure you want to delete this exhibit?');" style="display: block; padding: 5px 10px; border: 1px solid #dc3545; border-radius: 5px; background-color: #dc3545; color: #fff; text-decoration: none; text-align: center;">Delete</a>
-            </div>
-            {% endif %}
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-
 </body>
-</html>
 
 {% endblock %}

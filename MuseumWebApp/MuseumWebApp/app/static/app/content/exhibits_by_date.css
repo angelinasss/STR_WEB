@@ -1,0 +1,96 @@
+.exhibits-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 20px 0 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #eeedff;
+    overflow: hidden;
+}
+
+.div-between {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #710ffa;
+}
+
+.button-position {
+    text-align: center;
+    float: right;
+}
+
+.positive-button {
+    background-color: #ea0ffa;
+    padding: 7px 12px;
+}
+
+    .positive-button:hover {
+        background-color: #f89cff;
+    }
+
+.message {
+    margin-top: 10px;
+    text-align: center;
+    color: #ea0ffa;
+    clear: both;
+}
+
+.exhibits-container p {
+    color: #710ffa;
+}
+
+.exhibits-container {
+    margin-top: 0;
+    justify-content: center; /* Выравниваем по центру */
+    padding: 10px 20px 20px;
+    background-color: #eeedff;
+    border-radius: 5px;
+    align-items: center; /* Центрируем по вертикали, если потребуется */
+}
+
+.exhibit-card {
+    padding: 0 20px 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    clear: both;
+    float: left;
+    margin: 0 auto 20px; /* Центрируем карточку */
+    width: 93%;
+}
+
+    .exhibit-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .exhibit-card h4 {
+        font-size: 22px;
+        color: #710ffa;
+        margin-bottom: 10px;
+    }
+
+        .exhibit-card h4:hover {
+            text-decoration: underline;
+        }
+
+.input-areas {
+    float: left;
+    width: 50%;
+}
+
+.exhibit-card p {
+    color: #ea0ffa;
+}
+
+    .exhibit-card p strong {
+        color: #710ffa;
+    }

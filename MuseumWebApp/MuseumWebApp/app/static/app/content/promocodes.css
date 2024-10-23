@@ -1,0 +1,79 @@
+.container-box > p {
+    margin-bottom: 20px;
+    float: right;
+}
+
+h2 {
+    color: #26203d;
+    margin-top: 10px;
+    float: left;
+}
+
+.container-box > ul {
+    list-style-type: none;
+    padding: 0;
+    clear: both;
+}
+
+    .container-box > ul li {
+        margin-bottom: 15px;
+        padding: 15px 15px 0;
+        background-color: #eeedff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease
+    }
+
+        .container-box > ul li:hover {
+            transform: scale(1.05); /* Увеличение карточки */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Увеличенная тень */
+        }
+
+h4 {
+    margin: 0;
+    color: #ea0ffa;
+}
+
+h5 {
+    margin: 10px 0;
+    color: #710ffa;
+}
+
+.edit-button {
+    text-decoration: none;
+    background-color: #710ffa;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+    .edit-button:hover {
+        background-color: #ba8cfa;
+    }
+
+.delete-button {
+    text-decoration: none;
+    background-color: #ea0ffa;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+    .delete-button:hover {
+        background-color: #f89cff;
+    }
+
+.active-text {
+    color: green;
+}
+
+.expired-text {
+    color: red; 
+}

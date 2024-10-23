@@ -1,47 +1,46 @@
-<!DOCTYPE html>
-
 {% extends "app/layout.html" %}
-{% block content %}
 
-<html lang="en">
+{% block content %}
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'app/content/create_article.css' %}">
     <title>{{ title }}</title>
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <h1 style="text-align: center; color: #333;">Create a New News</h1>
+        <form method="POST" class="article-form" enctype="multipart/form-data">
+            {% csrf_token %}
 
-    <form method="POST" enctype="multipart/form-data" style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        {% csrf_token %}
-        <fieldset style="border: none; padding: 0;">
-            <legend style="font-size: 20px; font-weight: bold; color: #444; margin-bottom:10px;">News Details</legend>
-
-            <div style="margin-bottom: 15px;">
-                <label for="title" style="display: block; font-weight: bold; color: #555;">News Title</label>
-                <input type="text" id="title" name="title" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            <div class="div-between">
+                <label for="title">News Title</label>
+                <input type="text" id="title" name="title" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 15px;">
-                <label for="image" style="display: block; font-weight: bold; color: #555;">Image</label>
-                <input type="file" id="image" name="image" style="display: block; width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            <div class="div-between">
+                <label for="image">Image</label>
+                <input type="file" id="image" name="image" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 15px;">
-                <label for="short_description" style="display: block; font-weight: bold; color: #555;">Short Description</label>
-                <input type="text" id="short_description" name="short_description" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            <div class="div-between">
+                <label for="short_description">Short Description</label>
+                <input type="text" id="short_description" name="short_description" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 15px;">
-                <label for="content" style="display: block; font-weight: bold; color: #555;">Content</label>
-                <textarea id="content" name="content" rows="5" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required></textarea>
+            <div class="div-between">
+                <label for="content">Content</label>
+                <textarea id="content" name="content" rows="5" class="input-areas" required></textarea>
             </div>
 
-            <button type="submit" style="background-color: #007bff; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">Submit</button>
-        </fieldset>
-    </form>
-
+            <div class="button-align">
+                <button type="submit" class="positive-button">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
 </body>
-</html>
 {% endblock %}

@@ -1,0 +1,50 @@
+.success-box {
+    background-color: #eeedff;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .success-box:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+.container-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: 70vh;
+}
+
+    .success-box h1 {
+        color: #ea0ffa;
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    .success-box p {
+        color: #710ffa;
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+
+.success-box a {
+    background-color: #710ffa;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 25px;
+    font-weight: bold;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+    .success-box a:hover {
+        background-color: #ba8cfa;
+    }

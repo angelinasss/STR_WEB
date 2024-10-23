@@ -1,0 +1,37 @@
+.div-between {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #710ffa;
+}
+
+.pay-page-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 20px 0 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #eeedff;
+    overflow: hidden;
+}
+
+h2 {
+    color: #ea0ffa;
+    font-weight: bold;
+}
+
+.div-between p {
+    color: #ea0ffa;
+}
+
+    .div-between p strong {
+        color: #710ffa;
+    }
+
+#pay_button {
+    text-align: right;
+}

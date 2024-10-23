@@ -1,25 +1,22 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<html lang="en">
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/create_excursion.css' %}">
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <h1 style="text-align: center; color: #333;">{{ title }}</h1>
+        <form method="POST" enctype="multipart/form-data" class="excursion-form">
+            {% csrf_token %}
 
-    <form method="POST" enctype="multipart/form-data" style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        {% csrf_token %}
-
-        <fieldset style="border: none; padding: 0;">
-            <legend style="font-size: 20px; font-weight: bold; color: #444; margin-bottom: 10px;">Select Item Type</legend>
-
-            <div style="margin-bottom: 15px;">
-                <label for="item_type" style="display: block; font-weight: bold; color: #555;">Item Type:</label>
-                <select id="item_type" name="item_type" onchange="toggleFields()" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <div class="div-between">
+                <label for="item_type">Item Type:</label>
+                <select id="item_type" name="item_type" onchange="toggleFields()" class="input-areas">
                     <option value="excursion">Excursion</option>
                     <option value="exhibition">Exhibition</option>
                 </select>
@@ -27,26 +24,35 @@
 
             <!-- Excursion Fields -->
             <div id="excursion_fields">
-                <h2 style="font-size: 18px; color: #555;">Excursion Details</h2>
 
-                <div style="margin-bottom: 15px;">
-                    <label for="code" style="display: block; font-weight: bold; color: #555;">Code:</label>
-                    <input type="text" id="code" name="code" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                <div class="div-between">
+                    <label for="code">Code:</label>
+                    <input type="text" id="code" name="code" class="input-areas">
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label for="excursion_name" style="display: block; font-weight: bold; color: #555;">Name:</label>
-                    <input type="text" id="excursion_name" name="excursion_name" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                <div class="div-between">
+                    <label for="excursion_name">Name:</label>
+                    <input type="text" id="excursion_name" name="excursion_name" class="input-areas">
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label for="date" style="display: block; font-weight: bold; color: #555;">Date:</label>
-                    <input type="date" id="date" name="date" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                <div class="div-between">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" class="input-areas">
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label for="season" style="display: block; font-weight: bold; color: #555;">Season:</label>
-                    <select id="season" name="season" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                <div class="div-between">
+                    <label for="group_size">Group Size:</label>
+                    <input type="number" id="group_size" name="group_size" class="input-areas">
+                </div>
+
+                <div class="div-between">
+                    <label for="excursion_price">Price:</label>
+                    <input type="number" step="0.01" id="excursion_price" name="excursion_price" class="input-areas">
+                </div>
+
+                <div class="div-between">
+                    <label for="season">Season:</label>
+                    <select id="season" name="season" class="input-areas">
                         <option value="summer">Summer</option>
                         <option value="autumn">Autumn</option>
                         <option value="winter">Winter</option>
@@ -54,77 +60,66 @@
                     </select>
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label for="group_size" style="display: block; font-weight: bold; color: #555;">Group Size:</label>
-                    <input type="number" id="group_size" name="group_size" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-                </div>
-
-                <div style="margin-bottom: 15px;">
-                    <label for="guide" style="display: block; font-weight: bold; color: #555;">Guide:</label>
-                    <select id="guide" name="guide" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                <div class="div-between">
+                    <label for="guide">Guide:</label>
+                    <select id="guide" name="guide" class="input-areas">
                         {% for guide in guides %}
                         <option value="{{ guide.id }}">{{ guide.first_name }} {{ guide.last_name }}</option>
                         {% endfor %}
                     </select>
                 </div>
-
-                <div style="margin-bottom: 15px;">
-                    <label for="excursion_price" style="display: block; font-weight: bold; color: #555;">Price:</label>
-                    <input type="number" step="0.01" id="excursion_price" name="excursion_price" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-                </div>
             </div>
 
-            <div id="exhibition_fields" style="display: none;">
-                <h2 style="font-size: 18px; color: #555;">Exhibition Details</h2>
+            <div id="exhibition_fields">
 
-                <div style="margin-bottom: 15px;">
-                    <label for="exhibition_name" style="display: block; font-weight: bold; color: #555;">Name:</label>
-                    <input type="text" id="exhibition_name" name="exhibition_name" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                <div class="div-between">
+                    <label for="exhibition_name">Name:</label>
+                    <input type="text" id="exhibition_name" name="exhibition_name" class="input-areas">
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label for="start_date" style="display: block; font-weight: bold; color: #555;">Start Date:</label>
-                    <input type="date" id="start_date" name="start_date" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                <div class="div-between">
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" class="input-areas">
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label for="end_date" style="display: block; font-weight: bold; color: #555;">End Date:</label>
-                    <input type="date" id="end_date" name="end_date" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                <div class="div-between">
+                    <label for="end_date">End Date:</label>
+                    <input type="date" id="end_date" name="end_date" class="input-areas">
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label for="exhibits_list" style="display: block; font-weight: bold; color: #555;">Select Exhibits:</label>
-                    <select id="exhibits_list" name="exhibits_list[]" multiple style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                <div class="div-between">
+                    <label for="exhibition_price">Price:</label>
+                    <input type="number" step="0.01" id="exhibition_price" name="exhibition_price" class="input-areas">
+                </div>
+
+                <div class="div-between">
+                    <label for="exhibits_list">Select Exhibits:</label>
+                    <select id="exhibits_list" name="exhibits_list[]" multiple class="input-areas">
                         {% for exhibit in exhibits %}
                         <option value="{{ exhibit.id }}">{{ exhibit.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
-
-                <div style="margin-bottom: 15px;">
-                    <label for="exhibition_price" style="display: block; font-weight: bold; color: #555;">Price:</label>
-                    <input type="number" step="0.01" id="exhibition_price" name="exhibition_price" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-                </div>
             </div>
 
-            <div style="text-align: center; margin-top: 20px;">
-                <button type="submit" style="background-color: #007bff; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">
-                    Create
+            <div class="button-align">
+                <button type="submit" class="positive-button">
+                    Submit
                 </button>
             </div>
-        </fieldset>
 
-        {% if messages %}
-        <div style="margin-top: 20px;">
-            {% for message in messages %}
-            <div style="padding: 10px; border-radius: 4px; text-align: center;
-                        {% if message.tags == 'error' %}background-color: #f8d7da; color: #721c24;{% else %}background-color: #d4edda; color: #155724;{% endif %}">
-                {{ message }}
+            {% if messages %}
+            <div>
+                {% for message in messages %}
+                <div class="message" style="
+                        {% if message.tags == 'error' %}background-color: #f89cff; color: white;{% else %}background-color: #d4edda; color: #155724;{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-    </form>
+            {% endif %}
+        </form>
+    </div>
 
     <script>
         function toggleFields() {
@@ -162,5 +157,4 @@
     </script>
 
 </body>
-</html>
 {% endblock %}

@@ -1,0 +1,52 @@
+.exhibit-list {
+    margin-top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    clear: both;
+}
+
+.exhibit-card {
+    flex: 1 1 calc(25% - 20px); /* 4 cards per row, subtracting margins */
+    max-width: calc(30% - 20px);
+    margin: 10px; /* Margin around each card */
+    padding: 0 20px 20px;
+    background-color: #eeedff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .exhibit-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .exhibit-card h4 {
+        font-size: 22px;
+        color: #710ffa;
+        margin-bottom: 10px;
+    }
+
+    .exhibit-card img {
+        height: 150px; /* Устанавливаем фиксированную высоту */
+        border-radius: 5px;
+        display: block;
+        margin: 20px auto 0; /* Выравнивание по центру */
+    }
+
+    .exhibit-card p {
+        color: #710ffa;
+    }
+
+.message {
+    margin-top: 10px;
+    text-align: center;
+    color: #ea0ffa;
+    clear: both;
+}
+
+strong {
+    color: #ea0ffa;
+}

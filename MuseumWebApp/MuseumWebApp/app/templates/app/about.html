@@ -1,73 +1,96 @@
-<!DOCTYPE html>
-
 {% extends "app/layout.html" %}
-{% block content %}
 
-<html lang="en">
+{% block content %}
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/about.css' %}">
 </head>
 
 <body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <h2 style="text-align: center; font-size: 1.7em; color: #333;">{{ title }}</h2>
+        <div class="content-box">
+            {% if info %}
+            <section id="logo_section">
+                {% if info.logo %}
+                <div class="logo-container">
+                    <img src="{{ info.logo.url }}" alt="Company Logo" class="logo">
+                </div>
+                {% endif %}
+                <p>{{ info.description }}</p>
+            </section>
 
-    <div style="width: 90%; max-width: 1000px; margin: 0 auto; padding: 15px;">
-        {% if info %}
-        <section style="display: flex; align-items: flex-start; justify-content: center; margin-bottom: 20px; width: 100%;">
-            {% if info.logo %}
-            <div style="flex-shrink: 0; margin-right: 20px;">
-                <img src="{{ info.logo.url }}" alt="Company Logo" style="max-width: 150px; height: auto;">
-            </div>
+            {% if info.video %}
+            <section id="video_section">
+                <h3>Museum History</h3>
+                <video controls>
+                    <source src="{{ info.video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </section>
             {% endif %}
-            <p style="font-size: 1.2em; color: #555; margin: 0; width: calc(100% - 170px); text-align: left;">{{ info.description }}</p>
-        </section>
 
-        {% if info.video %}
-        <section style="text-align: center; margin-bottom: 20px; width: 100%;">
-            <h3 style="font-size: 1.5em; color: #444;">Museum Video</h3>
-            <video width="80%" height="auto" controls>
-                <source src="{{ info.video.url }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </section>
-        {% endif %}
+            {% if info.history %}
+            <section id="history_section">
+                <div class="history-content">
+                    <div>
+                        <h4>Early Years</h4>
+                        <ul>
+                            <li><strong>1920</strong>: The museum opens its doors to the public, featuring early exhibitions on local history and indigenous cultures.</li>
+                            <li><strong>1950</strong>: A major expansion includes new galleries and the introduction of interactive exhibits.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Recent Milestones</h4>
+                        <ul>
+                            <li><strong>1975</strong>: The museum hosts its first international exhibition, highlighting artifacts from ancient civilizations.</li>
+                            <li><strong>2000</strong>: A significant renovation project modernizes the museum's facilities and enhances visitor experience with state-of-the-art technology.</li>
+                            <li><strong>2020</strong>: The museum unveils a new wing dedicated to contemporary history and cultural events, celebrating 100 years of service to the public.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            {% endif %}
 
-        {% if info.history %}
-        <section style="margin-bottom: 20px; width: 100%; text-align: center;">
-            <h3 style="font-size: 1.5em; color: #444;">Museum History</h3>
-            <p style="font-size: 1.2em; color: #666; margin: 0;">{{ info.history }}</p>
-        </section>
-        {% endif %}
+            {% if info.details %}
+            <section id="details_section">
+                <h3>Museum Details</h3>
+                <div>
+                    <div class="details-card">
+                        <p>
+                            <strong>Address:</strong> 123 History Lane, Downtown City Center<br>
+                            <strong>Phone:</strong> (123) 456-7890<br>
+                            <strong>Email:</strong> info@museumofnationalhistory.org<br>
+                            <strong>Admission Fees:</strong> $15 for adults, $10 for seniors and students, free for children under 12<br>
+                            <strong>Website:</strong> <a href="http://www.museumofnationalhistory.org" target="_blank">www.museumofnationalhistory.org</a>
+                        </p>
+                    </div>
+                </div>
+            </section>
+            {% endif %}
 
-        {% if info.details %}
-        <section style="margin-bottom: 20px; width: 100%; text-align: center;">
-            <h3 style="font-size: 1.5em; color: #444;">Museum Details</h3>
-            <p style="font-size: 1.2em; color: #666; margin: 0;">{{ info.details }}</p>
-        </section>
-        {% endif %}
+            <section id="certificate_section">
+                <h3>Our Certificate</h3>
+                {% include 'app/certificate.html' %}
+            </section>
 
-        <section style="text-align: center; margin-bottom: 20px; width: 100%;">
-            <h3 style="font-size: 1.5em; color: #444;">Certificate</h3>
-            {% include 'app/certificate.html' %}
-        </section>
+            {% if user.is_superuser %}
+            <section id="edit_section">
+                <a href="edit_company_info/" class="btn btn-primary">Edit Information</a>
+            </section>
+            {% endif %}
 
-        {% if user.is_superuser %}
-        <section style="text-align: center; width: 100%;">
-            <a href="edit_company_info/" class="btn btn-primary" style="display: inline-block; padding: 10px 20px; font-size: 1em; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">Edit Information</a>
-        </section>
-        {% endif %}
-
-        {% else %}
-        <p style="text-align: center; font-size: 1.2em; color: #666;">No company information available.</p>
-        {% if user.is_superuser %}
-        <section style="text-align: center; margin-top: 20px; width: 100%;">
-            <a href="edit_company_info/" class="btn btn-primary" style="display: inline-block; padding: 10px 20px; font-size: 1em; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">Add Information</a>
-        </section>
-        {% endif %}
-        {% endif %}
+            {% else %}
+            <p>No company information available.</p>
+            {% if user.is_superuser %}
+            <section id="add_section">
+                <a href="edit_company_info/" class="btn btn-primary">Add Information</a>
+            </section>
+            {% endif %}
+            {% endif %}
+        </div>
     </div>
 </body>
-</html>
 {% endblock %}

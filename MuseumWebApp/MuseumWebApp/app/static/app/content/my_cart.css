@@ -1,0 +1,107 @@
+.styled-table {
+    width: 90%;
+    border-collapse: collapse;
+    margin: 25px auto; /* Центровка по горизонтали */
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    text-align: left;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Заголовок таблицы */
+.table-title {
+    text-align: center; /* Центрируем заголовок */
+    font-size: 24px;
+    font-weight: bold;
+    color: #710ffa;
+    margin-bottom: 15px; /* Отступ снизу */
+}
+
+    .table-title:hover {
+        text-decoration: underline;
+    }
+
+    .styled-table thead tr {
+        background-color: #ea0ffa;
+        color: #ffffff;
+        text-align: left;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #ddd;
+        vertical-align: middle; /* Вертикальное выравнивание в середине */
+        text-align: center; /* Горизонтальное выравнивание по центру */
+    }
+
+        .styled-table td:empty {
+            background-color: #f9e6ff; /* Фон для пустых ячеек */
+        }
+
+    .styled-table tbody tr {
+        background-color: #f3f3f3;
+        color: #710ffa;
+        transition: background-color 0.3s ease;
+    }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f9f9f9;
+            color: #ea0ffa;
+        }
+
+        .styled-table tbody tr:hover {
+            background-color: #eeedff; /* При наведении */
+        }
+
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #ea0ffa;
+        }
+
+.container-box p {
+    text-align: center;
+    color: #e74c3c;
+}
+
+.positive-button {
+    margin-bottom: 0;
+    padding: 7px 12px;
+    font-size: 14px;
+}
+
+.edit-button {
+    background-color: #ea0ffa;
+}
+
+    .edit-button:hover {
+        background-color: #f89cff;
+    }
+
+.buttons-div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+    .buttons-div div {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding: 5px;
+    }
+
+.empty-cart {
+    text-align: center;
+    color: #710ffa;
+}
+
+.total-price {
+    text-align: right;
+    margin-top: 20px;
+}
+
+    .total-price h3 {
+        color: #710ffa;
+    }

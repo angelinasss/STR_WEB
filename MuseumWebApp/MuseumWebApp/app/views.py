@@ -516,6 +516,7 @@ def reviews(request):
             'reviews': reviews,
             'is_employee' : is_employee,
             'year':datetime.now().year,
+            'range_stars': range(1, 6)
         }
     )
 
@@ -1758,6 +1759,15 @@ def all_exhibits(request):
 @login_required
 def nationality_by_name(request):
     name = request.user.first_name  
+
+    if request.user.is_authenticated:
+        try:
+            employee = Employee.objects.get(user=request.user)
+            is_employee = True
+        except Employee.DoesNotExist:
+            is_employee = False
+    else:
+        is_employee = False
     
     if not name:
         return JsonResponse({'error': 'Name is required'}, status=400)
@@ -1796,10 +1806,10 @@ def nationality_by_name(request):
         else:
             result = []
         
-        return render(request, 'app/nationality.html', {'name': name, 'nationalities': result, 'title' : 'Nationality By Name'})
+        return render(request, 'app/nationality.html', {'name': name, 'nationalities': result, 'title' : 'Nationality By Name', 'is_employee': is_employee})
     
     except requests.RequestException as e:
-        return render(request, 'app/nationality.html', {'error': str(e), 'title' : 'Nationality By Name'})
+        return render(request, 'app/nationality.html', {'error': str(e), 'title' : 'Nationality By Name', 'is_employee': is_employee})
     
 def statistics(request):
     context = {}
@@ -1902,6 +1912,7 @@ def excursion_detail(request, id):
         'excursion': excursion,
         'is_employee' : is_employee,
         'year' : datetime.now().year,
+        'title' : 'Excursion Information'
     })
 
 def exhibition_detail(request, id):
@@ -1922,6 +1933,7 @@ def exhibition_detail(request, id):
         'exhibition': exhibition,
         'is_employee' : is_employee,
         'year':datetime.now().year,
+        'title' : 'Exhibition Information'
     })
 
 def add_to_cart_excursion(request, id):
@@ -2098,11 +2110,22 @@ def process_payment(request, item_id):
         cart.items.remove(cart_item)
         cart_item.delete()
 
-    return render(
-    request,
-    'app/ticket_success.html',
-    {
-        'title': 'Ticket Purchase',
-        'year': datetime.now().year,
-    }
-    )
+    if isinstance(instance, Excursion):
+        return render(
+        request,
+        'app/ticket_success_excursion.html',
+        {
+            'title': 'Ticket Purchase',
+            'year': datetime.now().year,
+        }
+        )
+
+    else:
+        return render(
+        request,
+        'app/ticket_success.html',
+        {
+            'title': 'Ticket Purchase',
+            'year': datetime.now().year,
+        }
+        )

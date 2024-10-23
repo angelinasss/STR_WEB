@@ -1,83 +1,77 @@
 {% extends "app/layout.html" %}
-{% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block content %}
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'app/content/my_cart.css' %}">
     <title>{{ title }}</title>
 </head>
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+<body>
+    <div class="container-box">
 
-    <div style="max-width: 800px; margin: 0 auto; background-color: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
-        <h1 style="text-align: center; color: #333; font-size: 1.5em;">My Cart</h1>
+        <h2 class="table-title">{{ title }}</h2>
 
-        {% if cart_items %}
-        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;" itemscope itemtype="https://schema.org/ItemList">
+        <table class="styled-table" itemscope itemtype="https://schema.org/ItemList">
             <thead>
                 <tr>
-                    <th id="item-header" style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Item</th>
-                    <th id="quantity-header" style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Quantity</th>
-                    <th id="price-header" style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Price</th>
-                    <th id="total-header" style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Total</th>
-                    <th id="actions-header" style="border-bottom: 1px solid #ddd; padding: 10px; text-align: left;">Actions</th>
+                    <th id="item-header">Item</th>
+                    <th id="quantity-header">Quantity</th>
+                    <th id="price-header">Price</th>
+                    <th id="total-header">Total</th>
+                    <th id="actions-header">Actions</th>
                 </tr>
             </thead>
             <tbody>
+                {% if cart_items %}
                 {% for item in cart_items %}
                 <tr itemscope itemprop="itemListElement" itemtype="https://schema.org/Product">
-                    <td headers="item-header" style="border-bottom: 1px solid #ddd; padding: 10px;" itemprop="name">{{ item.content_object.name }}</td>
-                    <td headers="quantity-header" style="border-bottom: 1px solid #ddd; padding: 10px;" itemprop="quantity">{{ item.quantity }}</td>
-                    <td headers="price-header" style="border-bottom: 1px solid #ddd; padding: 10px;" itemprop="priceCurrency" content="USD">${{ item.content_object.price }}</td>
-                    <td headers="total-header" style="border-bottom: 1px solid #ddd; padding: 10px;" itemprop="totalPrice">${{ item.total_price }}</td>
-                    <td headers="actions-header" style="border-bottom: 1px solid #ddd; padding: 10px;">
-                        <table style="width: 100%; border-collapse: collapse;">
-                            <tr>
-                                <td style="text-align: center; padding: 5px;">
-                                    <form method="post" action="{% url 'increase_quantity' item.id %}" style="display: block;">
-                                        {% csrf_token %}
-                                        <button type="submit" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 8px 16px; cursor: pointer; font-size: 14px;">Increase</button>
-                                    </form>
-                                </td>
-                                <td style="text-align: center; padding: 5px;">
-                                    <form method="post" action="{% url 'decrease_quantity' item.id %}" style="display: block;">
-                                        {% csrf_token %}
-                                        <button type="submit" style="background-color: #ffc107; color: black; border: none; border-radius: 5px; padding: 8px 16px; cursor: pointer; font-size: 14px;">Decrease</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; padding: 5px;">
-                                    <form method="post" action="{% url 'pay_page' item.id %}" style="display: block;">
-                                        {% csrf_token %}
-                                        <button type="submit" style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 8px 16px; cursor: pointer; font-size: 14px;">Pay</button>
-                                    </form>
-                                </td>
-                                <td style="text-align: center; padding: 5px;">
-                                    <form method="post" action="{% url 'remove_from_cart' item.id %}" style="display: block;">
-                                        {% csrf_token %}
-                                        <button type="submit" style="background-color: #d9534f; color: white; border: none; border-radius: 5px; padding: 8px 16px; cursor: pointer; font-size: 14px;">Remove</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </table>
+                    <td headers="item-header" itemprop="name">{{ item.content_object.name }}</td>
+                    <td headers="quantity-header" itemprop="quantity">{{ item.quantity }}</td>
+                    <td headers="price-header" itemprop="priceCurrency" content="USD">${{ item.content_object.price }}</td>
+                    <td headers="total-header" itemprop="totalPrice">${{ item.total_price }}</td>
+                    <td headers="actions-header">
+                        <div class="buttons-div">
+                            <div>
+                                <form method="post" action="{% url 'increase_quantity' item.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="positive-button">Increase</button>
+                                </form>
+
+                                <form method="post" action="{% url 'decrease_quantity' item.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="positive-button edit-button">Decrease</button>
+                                </form>
+                            </div>
+
+                            <div>
+                                <form method="post" action="{% url 'pay_page' item.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="positive-button edit-button">Pay</button>
+                                </form>
+
+                                <form method="post" action="{% url 'remove_from_cart' item.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="positive-button">Remove</button>
+                                </form>
+                            </div>
+                        </div>
                     </td>
                 </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="5" style="text-align: center; color: #d9534f;">Your cart is empty.</td>
-                </tr>
                 {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="5" class="empty-cart">Your cart is empty.</td>
+                </tr>
+                {% endif %}
             </tbody>
         </table>
-        {% endif %}
         {% if cart_items %}
-        <div style="text-align: right; margin-top: 20px;" itemprop="totalPrice">
-            <h3 style="color: #333;">Total Cost: ${{ total_cost }}</h3>
+        <div class="total-price" itemprop="totalPrice">
+            <h3>Total Cost: ${{ total_cost }}</h3>
         </div>
         {% endif %}
     </div>
 </body>
-</html>
 
 {% endblock %}

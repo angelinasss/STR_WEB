@@ -1,0 +1,80 @@
+.container-box {
+    float: initial;
+}
+
+select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    border-color: #710ffa;
+    color: #ea0ffa;
+    margin-left: 10px;
+}
+
+option {
+    color: #ea0ffa;
+}
+
+.positive-button {
+    background-color: #ea0ffa;
+    padding: 7px 12px;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+    .positive-button:hover {
+        background-color: #f89cff;
+    }
+
+label {
+    font-weight: bold;
+    color: #710ffa;
+}
+
+.statistics-section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+    .chart-container div {
+        width: 45%;
+    }
+
+.container-box form {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.object-info {
+    float: left;
+    width: 50%;
+    margin-left: 100px;
+}
+
+    .object-info h2, .object-info p, .most-info p strong {
+        color: #ea0ffa;
+    }
+
+        .object-info h2 strong, .object-info p strong, .most-info h2 strong, .most-info p, .text-center h3 {
+            color: #710ffa;
+        }
+
+.most-info {
+    float: left;
+}
+
+.graphics {
+    clear: both;
+}
+
+.text-center {
+    text-align: center;
+}

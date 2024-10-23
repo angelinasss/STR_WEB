@@ -1,53 +1,76 @@
-<!DOCTYPE html>
 {% extends "app/layout.html" %}
 
 {% block content %}
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <script>
+        // Функция для обновления данных времени и временных зон
+        function updateTimeInfo() {
+            // Получение текущей даты и времени
+            const now = new Date();
+
+            // Получение временной зоны пользователя
+            const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            document.getElementById('userTimezone').innerText = timeZone;
+
+            // Форматирование текущей даты и времени в формате пользователя
+            const userTzDateTime = now.toLocaleString(); // Локальная дата и время
+            document.getElementById('currentDateTimeUserTz').innerText = userTzDateTime;
+
+            // Форматирование текущей даты и времени в формате UTC
+            const utcDateTime = now.toUTCString(); // Дата и время в UTC
+            document.getElementById('currentDateTimeUtc').innerText = utcDateTime;
+        }
+
+        // Обновляем информацию при загрузке страницы
+        document.addEventListener('DOMContentLoaded', updateTimeInfo);
+    </script>
+
+    <link rel="stylesheet" href="{% static 'app/content/profile.css' %}">
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-        <h2 style="text-align: center; color: #2c3e50; margin-bottom: 20px;">{{ title }}</h2>
-
-        <form method="post" enctype="multipart/form-data" style="text-align: center;">
+        <form method="post" enctype="multipart/form-data" class="profile-form">
             {% csrf_token %}
 
             {% if is_employee %}
-            <div style="margin-bottom: 20px;">
-                <label for="photo" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Profile Photo</label>
+            <div class="div-between">
+                <label for="photo" class="label-areas photo-label">Profile Photo</label>
                 {% if employee.photo %}
-                <img src="{{ employee.photo.url }}" alt="Profile Photo" style="display: block; max-width: 150px; height: auto; border-radius: 5px; margin: 0 auto; margin-bottom:10px;">
+                <img src="{{ employee.photo.url }}" alt="Profile Photo" class="profile-photo">
                 {% endif %}
-                <input type="file" id="photo" name="photo" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                <input type="file" id="photo" name="photo" class="input-areas">
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="first_name" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">First Name</label>
-                <input type="text" id="first_name" name="first_name" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" value="{{ employee.first_name }}">
+            <div class="div-between float-position">
+                <label for="first_name" class="label-areas">First Name</label>
+                <input type="text" id="first_name" name="first_name" class="input-areas" value="{{ employee.first_name }}">
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="last_name" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Last Name</label>
-                <input type="text" id="last_name" name="last_name" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" value="{{ employee.last_name }}">
+            <a href="{% url 'nationality_by_name' %}" class="positive-button">Find Out Nationality by Name</a>
+
+            <div class="div-between">
+                <label for="last_name" class="label-areas">Last Name</label>
+                <input type="text" id="last_name" name="last_name" class="input-areas" value="{{ employee.last_name }}">
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="phone" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Phone</label>
-                <input type="text" id="phone" name="phone" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" value="{{ employee.phone }}">
+            <div class="div-between">
+                <label for="phone" class="label-areas">Phone</label>
+                <input type="text" id="phone" name="phone" class="input-areas" value="{{ employee.phone }}">
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="email" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Email</label>
-                <input type="email" id="email" name="email" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" value="{{ employee.email }}">
+            <div class="div-between">
+                <label for="email" class="label-areas">Email</label>
+                <input type="email" id="email" name="email" class="input-areas" value="{{ employee.email }}">
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="position" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Position</label>
-                <select id="position" name="position" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            <div class="div-between">
+                <label for="position" class="label-areas">Position</label>
+                <select id="position" name="position" class="input-areas">
                     {% for position in positions %}
                     <option value="{{ position.id }}" {% if position.id == employee.position.id %}selected{% endif %}>
                         {{ position.name }}
@@ -56,9 +79,9 @@
                 </select>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="hall" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Hall</label>
-                <select id="hall" name="hall" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            <div class="div-between">
+                <label for="hall" class="label-areas">Hall</label>
+                <select id="hall" name="hall" class="input-areas">
                     {% for hall in halls %}
                     <option value="{{ hall.id }}" {% if hall.id == employee.hall.id %}selected{% endif %}>
                         {{ hall.name }}
@@ -69,36 +92,40 @@
             {% endif %}
 
             {% if not is_employee %}
-            <div style="margin-bottom: 20px;">
-                <label for="first_name" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">First Name</label>
-                <input type="text" id="first_name" name="first_name" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" value="{{ user.first_name }}">
+            <div class="div-between float-position">
+                <label for="first_name" class="label-areas">First Name</label>
+                <input type="text" id="first_name" name="first_name" class="input-areas" value="{{ user.first_name }}" required enabled>
             </div>
 
-            <a href="{% url 'nationality_by_name' %}" style="display: block; padding: 10px; font-size: 1em; font-weight: bold; color: #fff; background-color: #f39c12; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; margin-bottom: 20px;">Find Out Nationality by Name</a>
+            <a href="{% url 'nationality_by_name' %}" class="positive-button">Find Out Nationality by Name</a>
 
-            <div style="margin-bottom: 20px;">
-                <label for="last_name" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Last Name</label>
-                <input type="text" id="last_name" name="last_name" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" value="{{ user.last_name }}">
+            <div class="div-between">
+                <label for="last_name" class="label-areas">Last Name</label>
+                <input type="text" id="last_name" name="last_name" class="input-areas" value="{{ user.last_name }}" required enabled>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="email" style="display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px;">Email</label>
-                <input type="email" id="email" name="email" style="width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" value="{{ user.email }}">
+            <div class="div-between">
+                <label for="email" class="label-areas" >Email</label>
+                <input type="email" id="email" name="email" class="input-areas" value="{{ user.email }}" disabled>
             </div>
             {% endif %}
 
-            <div style="margin-bottom: 20px;">
-                <p><strong>Time Zone:</strong> <span id="userTimezone" style="font-weight: bold; color: #2c3e50;"></span></p>
+            <div class="div-between">
+                <p><strong>Time Zone:</strong> <span id="userTimezone"></span></p>
                 <p><strong>Current Date and Time (Your Time Zone):</strong> <span id="currentDateTimeUserTz"></span></p>
                 <p><strong>Current Date and Time (UTC):</strong> <span id="currentDateTimeUtc"></span></p>
             </div>
 
-            <button type="submit" style="display: block; width: 100%; padding: 10px; font-size: 1em; font-weight: bold; color: #fff; background-color: #3498db; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; margin-top: 10px;">Save Changes</button>
+            <div class="button-align">
+                <button type="submit" class="positive-button">
+                    Save Changes
+                </button>
+            </div>
 
             {% if messages %}
-            <div style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 5px; margin-top: 20px;">
+            <div class="success-message">
                 {% for message in messages %}
-                <p style="margin: 0;">{{ message }}</p>
+                <p>{{ message }}</p>
                 {% endfor %}
             </div>
             {% endif %}
@@ -107,5 +134,4 @@
 
 </body>
 
-</html>
 {% endblock %}

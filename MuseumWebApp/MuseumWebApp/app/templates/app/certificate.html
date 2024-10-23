@@ -1,49 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Museum Qualification Certificate</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app/content/certificate.css' %}" />
 </head>
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+<body>
+    <div class="certificate-container">
+        <h1 class="certificate-header">Certificate of Museum Qualification</h1>
+        <h2 class="certificate-subtitle">This is to Certify That</h2>
 
-    <div style="width: 80%; max-width: 700px; margin: 0 auto; padding: 20px; background-color: #ffffff; border: 2px solid #000; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-        <h1 style="text-align: center; font-size: 28px; color: #333;">Certificate of Museum Qualification</h1>
-
-        <div style="text-align: center; margin: 20px 0;">
-            <h2 style="font-size: 24px; color: #555;">This is to Certify That</h2>
-        </div>
-
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-            <tr>
-                <td style="width: 50%; padding: 10px; border: 1px solid #ddd; text-align: left;">
-                    <strong style="font-size: 18px;">Museum Name:</strong><br>
-                    <span style="font-size: 16px; color: #666;">Museum of Natural History</span>
-                </td>
-                <td style="width: 50%; padding: 10px; border: 1px solid #ddd; text-align: left;">
-                    <strong style="font-size: 18px;">Date:</strong><br>
-                    <span style="font-size: 16px; color: #666;">September 10, 2024</span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" style="padding: 10px; border: 1px solid #ddd; text-align: center;">
-                    <p style="font-size: 18px; color: #555;">has been officially recognized for achieving</p>
-                    <h3 style="font-size: 22px; color: #333;">Certified Excellence in Museum Management</h3>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" style="padding: 10px; border: 1px solid #ddd; text-align: center;">
-                    <p style="font-size: 18px; color: #555;">Presented by</p>
-                    <strong style="font-size: 20px; color: #333;">National Museum Accreditation Board</strong>
-                </td>
-            </tr>
-        </table>
-
-        <p style="text-align: center; margin-top: 30px;">
-            <strong style="font-size: 18px; color: #333;">Signature:</strong><br>
-            <span style="font-size: 16px; color: #666;">[Signature]</span>
+        <p class="certificate-body">
+            <span class="highlight">Museum of Natural History</span>
+            has been officially recognized for achieving<br>
+            <span class="highlight">Certified Excellence in Museum Management</span>
         </p>
-    </div>
 
+        <p class="certificate-body">Presented by the <strong>National Museum Accreditation Board</strong></p>
+    </div>
 </body>
 </html>

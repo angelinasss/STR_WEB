@@ -1,0 +1,44 @@
+.login-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 20px 0 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #eeedff;
+    overflow: hidden;
+}
+
+.div-between-button {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #710ffa;
+}
+
+.button-align {
+    text-align: center;
+}
+
+.message {
+    margin-top: 10px;
+    text-align: center;
+    color: #ea0ffa;
+    clear:both;
+}
+
+.positive-button {
+    float:left;
+}
+
+.change-color {
+    background-color: #ea0ffa;
+    float: right;
+}
+
+    .change-color:hover {
+        background-color: #f89cff;
+    }

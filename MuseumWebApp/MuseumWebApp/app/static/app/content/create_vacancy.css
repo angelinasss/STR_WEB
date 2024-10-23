@@ -1,0 +1,28 @@
+.vacancy-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 20px 0 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #eeedff;
+    overflow: hidden;
+}
+
+.label-areas {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #710ffa;
+}
+
+.div-between {
+    margin-bottom: 15px;
+}
+
+.div-between-button {
+    margin-bottom: 20px;
+}
+
+.button-align {
+    text-align: center;
+}

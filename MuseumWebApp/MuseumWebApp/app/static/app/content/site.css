@@ -1,342 +1,165 @@
-/*body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-.body-content {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
-.field-validation-error {
-    color: #b94a48;
-}
-
-.field-validation-valid {
-    display: none;
-}
-
-input.input-validation-error {
-    border: 1px solid #b94a48;
-}
-
-input[type="checkbox"].input-validation-error {
-    border: 0 none;
-}
-
-.validation-summary-errors {
-    color: #b94a48;
-}
-
-.validation-summary-valid {
-    display: none;
-}
-
-.navbar-brand {
-    padding-left: 0;
-    margin-left: 0;
-}
-
-.navbar-header {
-    padding-left: 0;
-    margin-left: 0;
-}
-
-.navbar-right {
-    white-space: nowrap;
-}
-
-.is-invalid {
-    border-color: red; 
-}
-
-.invalid-feedback {
-    color: red; 
-    margin-top: 10px; 
-}
-
-.sidebar-menu {
-    padding-left: 20px;
-    padding-top: 30px; 
-    max-width: 300px; 
-    margin-left: 20px; 
-}
-
-.custom-menu {
-    width: 75%; 
-}
-
-.custom-menu-item {
-    width: 100%;
-    text-align: center; 
-    margin-bottom: 10px;
-}
-
-.container-fluid.body-content {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-.employee-card {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    padding: 15px;
-    transition: box-shadow 0.3s ease;
-}
-
-    .employee-card:hover {
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .employee-card strong {
-        color: #555;
-    }
-
-.employee-details {
-    margin: 10px 0;
-}
-
-.employee-name {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-}*/
-
-/* Reset some default styles */
-/*body, h1, ul {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Roboto:wght@400;700&display=swap');
 
 body {
-    font-family: Arial, sans-serif;
+    margin: 60px 0 0 0 !important;
+    padding: 0 !important;
+    background-color: white !important;
+}
+
+h1 {
+    font-size: 28px;
+    color: #710ffa;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+    h1:hover {
+        text-decoration: underline;
+    }
+
+.container-box {
+    margin: 20px 40px;
+    padding: 20px;
+    width: 1150px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input:focus, textarea:focus {
+    border-color: #710ffa; /* Цвет границы в фокусе */
+    box-shadow: 0 0 5px rgba(113, 15, 250, 0.5); /* Дополнительный эффект тени для подсветки поля */
+    outline: none; /* Убирает стандартный контур при фокусе */
+}
+
+#header_id {
+    background-color: #26203d;
+    color: white;
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #666;
+    justify-content: space-between;
+    position: fixed; /* Фиксированное положение */
+    top: 0; /* Прилепить к верхней части страницы */
+    width: 100%; /* Ширина хедера по всей странице */
+    z-index: 1000;
+}
+
+#footer_id {
+    background-color: #26203d;
+    color: #ea0ffa;
+    text-align: center;
+    padding: 8px;
+    border-top: 2px solid #666;
+}
+
+#main_logo {
+    color: #ea0ffa;
+    text-decoration: none;
+    font-size: 28px;
+    text-shadow: 1px 1px 2px #000;
+    display: flex;
+    align-items: center;
+    font-family: "Lora", "Roboto", serif;
 }
 
 .navbar {
-    background-color: #222;*/ /* Darker shade of the background color */
-    /*color: #fff;
-    padding: 15px 0;*/ /* Reduced padding to decrease header height */
-    /*position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);*/ /* Optional: subtle shadow for better separation */
-/*}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;*/ /* Center items vertically */
-    /*justify-content: space-between;*/ /* Distribute space between items */
-/*}
-
-.navbar-header {
-    display: flex;
-    align-items: center;
-}
-
-.navbar-brand {
-    color: #fff;
-    text-decoration: none;
-    font-size: 20px;*/ /* Font size for better visibility */
-    /*margin-right: 20px;*/ /* Decrease margin to reduce space between brand and toggle */
-/*}
-
-.navbar-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    outline: none;
-}
-
-.icon-bar {
-    display: block;
-    width: 25px;*/ /* Width of icon bars */
-    /*height: 2px;*/ /* Height of icon bars */
-    /*background-color: #fff;
-    margin: 3px auto;*/ /* Reduced margin to decrease space between bars */
-/*}
-
-.navbar-collapse {
-    display: flex;
-    align-items: center;
-    justify-content: center;*/ /* Center items horizontally */
-    /*flex: 1;
-}
-
-.nav {
-    list-style: none;
-    display: flex;
+    list-style-type: none;
     margin: 0;
     padding: 0;
-    flex-wrap: nowrap;*/ /* Prevent wrapping */
-/*}
+    display: flex;
+    padding: 10px 10px;
+    font-family: Arial, sans-serif;
+}
 
-    .nav li {
-        margin: 0 8px;*/ /* Reduced spacing between menu items */
-    /*}
-
-    .nav a {
-        color: #bbb;*/ /* Gray color for the text */
-        /*text-decoration: none;
-        font-size: 14px;*/ /* Font size for navigation links */
-        /*transition: color 0.3s ease;*/ /* Smooth color transition */
-        /*padding: 4px 8px;*/ /* Adjusted padding to reduce space around links */
-        /*white-space: nowrap;*/ /* Prevent text wrapping */
-    /*}
-
-        .nav a:hover {
-            color: #fff;*/ /* White color on hover */
-            /*background-color: #222;*/ /* Ensure no background color on hover */
-        /*}*/
-
-    /* Main content container */
-    /*.container1 {
-        display: flex;
-        margin-top: 60px;*/ /* Adjust based on the header height */
-    /*}
-
-    .sidebar-menu1 {
-        width: 250px;*/ /* Adjust width as needed */
-        /*background-color: #f4f4f4;*/ /* Background color for sidebar */
-        /*padding: 15px;*/ /* Padding around sidebar content */
-    /*}
-
-    .content1 {
-        flex: 1;*/ /* Take up the remaining space */
-        /*padding: 15px;*/ /* Padding around content */
-    /*}*/
-
-/* Responsive design */
-/*@media (max-width: 768px) {
-    .navbar-toggle {
-        display: block;
+    .navbar li {
+        margin-right: 15px;
     }
 
-    .navbar-collapse {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        position: absolute;
-        top: 50px;*/ /* Adjusted to align with reduced header height */
-        /*left: 0;
-        background-color: #222;*/ /* Darker shade for the mobile menu */
-    /*}
-
-        .navbar-collapse.active {
-            display: flex;
+        .navbar li:last-child {
+            margin-right: 0;
         }
 
-    .nav {
-        flex-direction: column;
+    .navbar a {
+        text-decoration: none;
+        color: #cbd4d2;
+        padding: 10px 15px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
     }
 
-        .nav li {
-            margin: 4px 0;*/ /* Reduced spacing for mobile view */
-        /*}
+        .navbar a:hover {
+            color: #710ffa;
+        }
 
-    .container1 {
-        flex-direction: column;
-    }
+        .navbar a:active {
+            background-color: #ea0ffa;
+            color: white;
+        }
 
-    .sidebar-menu1 {
-        width: 100%;*/ /* Full width on mobile */
-    /*}
-
-    .content1 {
-        width: 100%;*/ /* Full width on mobile */
-    /*}
-}*/
-
-
-/* Container for the entire layout */
-/*.container1 {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-    box-sizing: border-box;
-    padding: 0 20px;
-}*/
-
-/* Sidebar menu */
-/*.sidebar-menu1 {
-    width: 250px;
-    background-color: #f4f4f4;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}*/
-
-/* Sidebar menu items */
-/*.menu1 {
-    display: flex;
-    flex-direction: column;
-}
-
-.menu-item1 {
-    display: block;
-    padding: 10px 15px;
-    margin-bottom: 5px;
-    text-decoration: none;
-    color: #333;
-    background-color: #e9e9e9;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-    .menu-item1:hover {
-        background-color: #d4d4d4;
-    }*/
-
-/* Content area */
-/*.content1 {
-    flex: 1;
-    padding: 20px;
-}
-
-
-html, body {
-    height: 100%;  Make sure the body takes up the full height of the browser window 
-    margin: 0;
+.sidebar-menu {
+    list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
-.page-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;  Ensures the container takes up at least the full height of the viewport 
-}
+    .sidebar-menu li {
+        margin-bottom: 15px;
+    }
 
-.container1 {
-    flex: 1;  This ensures that the main content grows to fill the available space 
-    display: flex;
-}
+    .sidebar-menu a {
+        display: block;
+        text-decoration: none;
+        padding: 10px 15px;
+        background-color: #eeedff;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-.sidebar-menu1 {
-    width: 250px;  Adjust the width of the sidebar as needed 
-}
+        .sidebar-menu a:hover {
+            background-color: #ea0ffa;
+            color: white;
+        }
 
-.content1 {
-    flex: 1;  Ensures content takes up remaining space next to the sidebar 
-    padding: 20px;
-}
+        .sidebar-menu a:visited {
+            color: blue;
+        }
 
-footer {
-    text-align: center;
-    background-color: #222;
+        .sidebar-menu a:link {
+            color: #26203d;
+        }
+
+aside {
+    flex-grow: 0; /* Не увеличивать ширину */
+    flex-shrink: 0; /* Не уменьшать ширину */
+    width: 220px; /* Фиксированная ширина */
     padding: 10px;
-    position: relative;
-    bottom: 0;
-    color: #fff;
-}*/
+    border-right: 1px solid #ddd;
+}
+
+.positive-button {
+    background-color: #710ffa;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+    .positive-button:hover {
+        background-color: #ba8cfa;
+        color: white;
+    }
+
+.input-areas {
+    color: #ea0ffa;
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

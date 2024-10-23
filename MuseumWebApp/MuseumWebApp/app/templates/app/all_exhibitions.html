@@ -1,95 +1,87 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>Exhibitions</title>
+    <link rel="stylesheet" href="{% static 'app/content/all_exhibitions.css' %}">
 </head>
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
 
-    <h1 style="text-align: center; color: #333; font-size: 24px;">Exhibitions</h1>
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <div style="max-width: 800px; margin: 0 auto; background-color: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
-        <!-- Sorting Options -->
-        <form method="GET" action="{% url 'all_exhibitions' %}" style="margin-bottom: 20px;">
-            <label for="sort_by" style="font-weight: bold; margin-right: 10px;">Sort by:</label>
-            <select id="sort_by" name="sort_by" style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                <option value="date_asc" {% if sort_by == 'date_asc' %}selected{% endif %}>Start Date (Ascending)</option>
-                <option value="date_desc" {% if sort_by == 'date_desc' %}selected{% endif %}>Start Date (Descending)</option>
-                <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
-                <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
-                <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>Price (Low to High)</option>
-                <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>Price (High to Low)</option>
-            </select>
-            <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">Sort</button>
-        </form>
+        <div class="exhibitions-form">
+            <form method="GET" action="{% url 'all_exhibitions' %}">
+                <label for="sort_by">Sort by:</label>
+                <select id="sort_by" name="sort_by">
+                    <option value="date_asc" {% if sort_by == 'date_asc' %}selected{% endif %}>Start Date (Ascending)</option>
+                    <option value="date_desc" {% if sort_by == 'date_desc' %}selected{% endif %}>Start Date (Descending)</option>
+                    <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
+                    <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
+                    <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>Price (Low to High)</option>
+                    <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>Price (High to Low)</option>
+                </select>
+                <button type="submit" class="positive-button">Sort</button>
+            </form>
+        </div>
 
-        <!-- Exhibitions List -->
-        {% if exhibitions %}
-        <div style="margin-top: 20px;">
-            {% if messages %}
-            <div style="max-width: 800px; margin: 0 auto; margin-bottom: 20px;">
-                {% for message in messages %}
-                <div style="padding: 10px; background-color: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; color: #155724;">
-                    {{ message }}
-                </div>
-                {% endfor %}
+        {% if messages %}
+        <div class="success-message">
+            {% for message in messages %}
+            <div>
+                {{ message }}
             </div>
-            {% endif %}
-            <ul style="list-style: none; padding: 0;">
-                {% for exhibition in exhibitions %}
-                <li style="border: 1px solid #ddd; padding: 15px; background-color: #f8f9fa; border-radius: 10px; margin-bottom: 20px;">
-                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #333;">
-                        {{ exhibition.name }}
-                    </div>
-                    <p style="margin: 5px 0; color: #555;"><strong>Start Date:</strong> {{ exhibition.start_date|date:"Y-m-d" }}</p>
-                    <p style="margin: 5px 0; color: #555;"><strong>End Date:</strong> {{ exhibition.end_date|date:"Y-m-d" }}</p>
-                    <p style="margin: 5px 0; color: #555;"><strong>Price:</strong> {{ exhibition.price }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
 
-                    <!-- Exhibits -->
-                    <h3 style="font-size: 1.2em; margin-bottom: 10px;">Exhibits:</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 15px;">
-                        {% for exhibit in exhibition.exhibits.all %}
-                        <div style="flex: 1 1 calc(33.333% - 10px); padding: 10px; border: 1px solid #ddd; border-radius: 8px; background-color: #fff; text-align: center;">
-                            <div>
-                                <strong>{{ exhibit.name }}</strong><br>
-                                Art Type: {{ exhibit.art_type }}<br>
-                                Date Acquired: {{ exhibit.date_acquired|date:"Y-m-d" }}
-                            </div>
 
-                            <!-- Exhibit Image -->
-                            {% if exhibit.image %}
-                            <div>
-                                <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}" style="width: 100%; height: auto; max-width: 150px; border-radius: 5px; object-fit: cover; margin-top: 10px;">
-                            </div>
-                            {% endif %}
+        {% if exhibitions %}
+        <div class="exhibition-list">
+            {% for exhibition in exhibitions %}
+            <div class="exhibition-card">
+                <h4>{{ exhibition.name }}</h4>
+                <div class="center-text">
+                    <p><strong>Start Date:</strong> {{ exhibition.start_date|date:"Y-m-d" }}</p>
+                    <p><strong>End Date:</strong> {{ exhibition.end_date|date:"Y-m-d" }}</p>
+                    <p><strong>Price:</strong> {{ exhibition.price }}</p>
+                </div>
+
+                <h3>Exhibits:</h3>
+                <div id="show_from_id">
+                    {% for exhibit in exhibition.exhibits.all %}
+                    <div id="exhibit_info">
+                        <div>
+                            <p id="exhibit_name">{{ exhibit.name }}</p>
+                            <p><strong>Art Type:</strong> {{ exhibit.art_type }}</p>
+                            <p><strong>Date Acquired:</strong> {{ exhibit.date_acquired }}</p>
                         </div>
-                        {% endfor %}
-                    </div>
 
-                    {% if user.is_authenticated %}
-                    {% if not is_employee %}
-                    <form action="{% url 'add_to_cart_exhibition' exhibition.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" style="padding: 10px 20px; margin-top: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                            Add To Cart
-                        </button>
+                        {% if exhibit.image %}
+                        <div id="exhibit_photo">
+                            <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}">
+                        </div>
                         {% endif %}
-                        {% else %}
-                        <p style="color: #d9534f; font-size: 1em;">Please log in to purchase a ticket.</p>
-                        {% endif %}
-                    </form>
-                </li>
-                {% endfor %}
-            </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% if user.is_authenticated %}
+                {% if not is_employee %}
+                <div class="buttons-top">
+                    <a href="{% url 'add_to_cart_exhibition' exhibition.id %}" class="positive-button">Add To Cart</a>
+                </div>
+                {% endif %}
+                {% else %}
+                <p class="message">Please log in to purchase a ticket.</p>
+                {% endif %}
+            </div>
+            {% endfor %}
         </div>
         {% else %}
-        <p style="text-align: center; color: #d9534f; font-size: 18px; margin-top: 20px;">No exhibitions found.</p>
+        <p class="message">No exhibitions found.</p>
         {% endif %}
-    </div>
-
+    </div>   
 </body>
-</html>
 {% endblock %}

@@ -1,0 +1,730 @@
+.banner {
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+    .banner div.collage {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+        .banner div.collage a[href^="https"], .banner div.banners-part2 a[href^="https"] {
+            flex: 1;
+            max-width: 300px;
+            text-decoration: none;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+            .banner div.collage a div, .banner div.banners-part2 a div {
+                border-radius: 10px;
+                overflow: hidden;
+                border: 2px solid transparent;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+                .banner div.collage a div img[src$=".jpg"], .banner div.banners-part2 a div img[src$=".jpg"] {
+                    width: 100%;
+                    height: auto;
+                    object-fit: cover;
+                    display: block;
+                }
+
+    .banner div.logo {
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .banner div.banners-part2 {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+.logo-container {
+    margin-bottom: 10px;
+}
+
+.company-logo {
+    max-width: 150px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-title {
+    font-size: 2.5em;
+    margin: 10px 0;
+    color: #710ffa;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+}
+
+.welcome-description {
+    font-size: 1.1em;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #555;
+    line-height: 1.5;
+}
+
+.exhibition-button {
+    margin-top: 20px;
+}
+
+.exhibition-link {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    background-color: #ea0ffa;
+    font-size: 1em;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.museum-section {
+    padding: 30px;
+    background-color: #f0f0f0;
+    border-top: 1px solid #ccc;
+}
+
+.museum-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.stanzas-column {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.stanza {
+    font-size: 1.2em;
+    font-style: italic;
+    color: #710ffa;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.indented-stanza {
+    margin-left: 150px;
+}
+
+.quote-column {
+    flex: 1;
+    padding-left: 20px;
+    border-left: 2px solid #ea0ffa;
+}
+
+.quote {
+    font-size: 1.1em;
+    font-style: italic;
+    color: #ea0ffa;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* Кавычки для русского языка */
+blockquote[lang="ru"] p::before {
+    content: "\00AB"; /* HTML-энтити для « */
+}
+
+blockquote[lang="ru"] p::after {
+    content: "\00BB"; /* HTML-энтити для » */
+}
+
+/* Кавычки для французского языка */
+blockquote[lang="fr"] p::before {
+    content: "\201C"; /* HTML-энтити для “ */
+}
+
+blockquote[lang="fr"] p::after {
+    content: "\201D"; /* HTML-энтити для ” */
+}
+
+.quote-author {
+    font-size: 1em;
+    display: block;
+    margin-top: 10px;
+    text-align: right;
+}
+
+.audio-section {
+    margin-top: 20px;
+}
+
+.audio-player {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.exhibitions-section {
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.exhibitions-title {
+    text-align: center;
+    color: #710ffa;
+    font-size: 2em;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.05em;
+}
+
+.highlight {
+    background-color: #ea0ffa;
+    color: white;
+    border-radius: 25px;
+}
+
+.exhibitions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.exhibitions-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.exhibitions-card-title {
+    text-align: center;
+    color: #710ffa;
+    font-size: 1.5em;
+}
+
+    .exhibitions-card-title:hover {
+        text-decoration:dotted;
+    }
+
+.excursion-item,
+.exhibition-item {
+    font-size: 1.2em;
+    color: #555;
+}
+
+    .excursion-item a:hover,
+    .exhibition-item a:hover {
+        text-decoration: underline;
+    }
+
+.item-link {
+    color: #ea0ffa;
+    text-decoration: none;
+}
+
+.no-excursions,
+.no-exhibitions {
+    text-align: center;
+    color: #d9534f;
+    font-size: 1.2em;
+}
+
+.latest-article-section {
+    padding: 15px;
+    position: relative;
+}
+
+.latest-article-title {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.article-card {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #eeedff;
+    position: relative;
+}
+
+.article-title {
+    text-align: center;
+    color: #710ffa;
+}
+
+.article-image-container {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.article-image {
+    max-width: 80%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.published-date {
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 30px;
+}
+
+.read-more-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.btn-read {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #710ffa;
+    color: #fff;
+}
+
+.no-articles-message {
+    text-align: center;
+}
+
+.partners-section {
+    padding: 20px;
+}
+
+.partners-title {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.partners-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    justify-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.partner-logo-container {
+    background-color: #eeedff;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.partner-logo-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s;
+}
+
+.partner-logo {
+    max-width: 80%;
+    height: auto;
+}
+
+.partner-name-container {
+    text-align: center;
+    max-width: 450px;
+}
+
+.partner-name {
+    font-size: 1.2em;
+    font-kerning: normal;
+    color: #555;
+}
+
+.partner-name-link {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+    .partner-name-link:hover,
+    .partner-name-link:focus {
+        color: #ea0ffa;
+    }
+
+    .partner-name-link:focus {
+        color: #710ffa;
+    }
+
+/* Responsive styles for a responsive grid layout */
+@media (max-width: 768px) {
+    .partners-grid {
+        grid-template-columns: repeat(2, 1fr); /* Two columns on smaller screens */
+    }
+}
+
+a:hover > div {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-color: #710ffa;
+}
+
+#go_to_exhibition a:hover {
+    background-color: #f89cff;
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+#card_article {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #eeedff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    #card_article:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+.btn-read:hover {
+    background-color: #ba8cfa;
+}
+
+/* Preloader styles */
+.preloader {
+    margin-left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Adjust height as needed */
+    width: 100%; /* Full width */
+    z-index: 9999; /* Ensure it appears above other content */
+}
+
+/* Center the circles for rotation around a shared point */
+.circle {
+    border-radius: 50%; /* Make it round */
+    position: absolute; /* Ensure it rotates around a central point */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Circle sizes */
+.circle1 {
+    width: 60px;
+    height: 60px;
+}
+
+.circle2 {
+    width: 40px;
+    height: 40px;
+}
+
+.circle3 {
+    width: 20px;
+    height: 20px;
+}
+
+/* Arc styles */
+.arc {
+    position: absolute; /* Position absolutely for arcs */
+    border-radius: 50%; /* This makes the entire element round and smooth */
+    border: 6px solid transparent; /* Transparent border to maintain size */
+    border-top: 6px solid; /* Top border for the arc effect */
+}
+
+/* Arc colors */
+.arc1 {
+    width: 60px;
+    height: 60px;
+    border-top-color: #cbcade;
+}
+
+.arc2 {
+    width: 40px;
+    height: 40px;
+    border-top-color: #cbcade;
+}
+
+.arc3 {
+    width: 20px;
+    height: 20px;
+    border-top-color: #cbcade;
+}
+
+/* Purple arc colors */
+.purple .arc1, .purple .arc2, .purple .arc3 {
+    border-top-color: #710ffa; /* Цвет для фиолетовых кругов */
+}
+
+/* Animation for rotating arcs and circles */
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Apply slower rotation for the first set of circles and arcs */
+.circle, .arc {
+    animation: rotate 6s linear infinite;
+}
+
+/* Faster rotation for purple circles and arcs */
+.purple {
+    animation: rotate 3s linear infinite;
+    animation-delay: -1.5s; /* Create a chasing effect */
+}
+
+
+/* Основные стили галереи */
+.gallery {
+    position: relative;
+    height: 100vh;
+    background-color: white; /* Исправление цвета на корректный формат */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 2000px; /* Перспектива для 3D эффекта */
+    overflow: hidden;
+}
+
+.walls {
+    position: relative;
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: space-between; /* Распределяем стены равномерно */
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+/* Левая стена */
+.left-wall {
+    position: absolute;
+    left: 0;
+    width: 30%;
+    height: 98%;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.8), rgba(17, 17, 17, 0));
+    transform: rotateY(45deg) translateZ(-150px); /* Поворот и перемещение вглубь */
+    transform-origin: right center; /* Точка поворота */
+    box-shadow: -20px 0 40px rgba(0, 0, 0, 0.7);
+    z-index: 2; /* Повышаем z-index для стен */
+    overflow: hidden;
+}
+
+/* Правая стена */
+.right-wall {
+    position: absolute;
+    right: 0;
+    width: 30%;
+    height: 98%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(17, 17, 17, 0));
+    transform: rotateY(-45deg) translateZ(-150px); /* Поворот и перемещение вглубь */
+    transform-origin: left center; /* Точка поворота */
+    box-shadow: 20px 0 40px rgba(0, 0, 0, 0.7);
+    z-index: 2; /* Повышаем z-index для стен */
+    overflow: hidden;
+}
+
+/* Центральная стена */
+.center-wall {
+    position: absolute;
+    width: 58%; /* Уменьшаем ширину центральной стены */
+    height: 100%;
+    background-color: #111;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9); /* Внутренняя тень */
+    transform: translateZ(-150px) translateX(0); /* Добавляем немного перемещения вперёд */
+    left: 21%; /* Подправляем позицию для точного примыкания */
+    z-index: 2; /* Повышаем z-index для стен */
+    overflow: hidden;
+}
+
+/* Пол */
+.floor {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 10%; /* Увеличиваем высоту, чтобы пол занимал большую часть нижней области */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(17, 17, 17, 0)); /* Градиент для пола */
+    transform: rotateX(0deg) translateZ(150px); /* Увеличиваем угол наклона и поднимаем пол ближе к стенам */
+    transform-origin: center bottom; /* Ось вращения снизу */
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.7); /* Добавляем тень для глубины */
+    z-index: 1;
+}
+
+.pictures-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center; /* Центрируем картины по горизонтали */
+    align-items: center; /* Центрируем картины по вертикали */
+    z-index: 1; /* Убедитесь, что контейнер выше пола */
+}
+
+/* Стили для картин */
+.picture {
+    width: 150px;
+    height: 200px;
+    background-size: cover;
+    border: 2px solid #fff;
+    animation: changePicture 10s infinite;
+}
+
+/* Левая картина под углом */
+#picture1 {
+    background-image: url('/static/images/owl.jpg');
+    animation-delay: 0s;
+    margin-right: 20px; /* Отступ между картиной и центральной стеной */
+    transform: rotateY(25deg);
+}
+
+/* Центральная картина без наклона */
+#picture2 {
+    background-image: url('/static/images/eye.jpg');
+    animation-delay: 3s;
+    margin: 0 20px; /* Отступы слева и справа */
+    transform: rotateY(0deg);
+}
+
+/* Правая картина под углом */
+#picture3 {
+    background-image: url('/static/images/sea.jpg');
+    animation-delay: 6s;
+    margin-left: 20px; /* Отступ между картиной и центральной стеной */
+    transform: rotateY(-25deg);
+}
+
+/* Анимация для смены картин */
+@keyframes changePicture {
+    0%, 33% {
+        opacity: 1;
+    }
+
+    34%, 100% {
+        opacity: 0;
+    }
+}
+
+/* Левая картина под углом */
+#picture4 {
+    background-image: url('/static/images/boat.jpg');
+    animation-delay: 3.7s;
+    margin: 47% 20%;
+    transform: rotateY(25deg);
+}
+
+/* Правая картина под углом */
+#picture5 {
+    background-image: url('/static/images/sun.jpg');
+    animation-delay: 4.5s;
+    margin: 47% 20%;
+    transform: rotateY(-25deg);
+}
+
+/* Добавляем ножки к сфере */
+.sphere-legs {
+    position: absolute;
+    bottom: 60px; /* Устанавливаем чуть выше пола */
+    display: flex;
+    justify-content: space-between; /* Распределяем ножки равномерно */
+    width: 100px; /* Ширина между ножками */
+    z-index: 8;
+    overflow: hidden;
+}
+
+/* Ножка */
+.leg {
+    width: 10px; /* Ширина ножки */
+    height: 60px; /* Высота ножки */
+    background: rgba(234, 15, 250, 0.9); /* Цвет ножки, соответствует цвету сферы */
+    box-shadow: 0 0 30px rgba(234, 15, 250, 0.9); /* Тень для ножки */
+    border-radius: 5px; /* Скругление углов */
+    z-index: 8;
+    overflow: hidden;
+}
+
+/* Вращающаяся полупрозрачная сфера */
+.center-sphere {
+    position: absolute;
+    bottom: 100px; /* Опускаем сферу ниже */
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(234, 15, 250, 1), rgba(113, 15, 250, 1)); /* Убираем прозрачность в градиенте */
+    border-radius: 50%;
+    box-shadow: 0 0 40px rgba(234, 15, 250, 0.9), 0 0 20px rgba(113, 15, 250, 0.9); /* Увеличенное внешнее свечение */
+    opacity: 1; /* Убираем прозрачность */
+    animation: rotateSphere 10s linear infinite; /* Вращение */
+    z-index: 10; /* Слой выше, чтобы она была поверх других элементов */
+    transform: translateZ(40px); /* Поднимаем сферу, чтобы она выглядела объемной */
+}
+
+/* Анимация вращения сферы */
+@keyframes rotateSphere {
+    0% {
+        transform: rotate(0deg) translateZ(40px); /* Объемное вращение */
+        box-shadow: 0 0 40px rgba(234, 15, 250, 0.9), 0 0 20px rgba(113, 15, 250, 0.9); /* Исходная тень */
+    }
+
+    50% {
+        transform: rotate(180deg) translateZ(40px); /* Половина вращения */
+        box-shadow: 0 0 60px rgba(234, 15, 250, 0.9), 0 0 30px rgba(113, 15, 250, 0.9); /* Увеличение тени */
+    }
+
+    100% {
+        transform: rotate(360deg) translateZ(40px); /* Завершение вращения */
+        box-shadow: 0 0 40px rgba(234, 15, 250, 0.9), 0 0 20px rgba(113, 15, 250, 0.9); /* Исходная тень */
+    }
+}
+
+/* Стили для названия компании */
+.company-name {
+    position: absolute;
+    top: 20px; /* Расположение текста сверху центральной стены */
+    left: 50%; /* Центрируем по горизонтали */
+    transform: translateX(-50%); /* Центрируем по оси X */
+    font-size: 36px; /* Размер шрифта */
+    font-weight: bold; /* Жирный шрифт */
+    color: transparent; /* Делаем текст прозрачным для анимации */
+    background: linear-gradient(90deg, #710ffa, #ea0ffa); /* Градиент фона */
+    -webkit-background-clip: text; /* Применяем градиент к тексту */
+    background-clip: text; /* Применяем градиент к тексту */
+    opacity: 0; /* Скрываем текст изначально */
+    animation: fadeIn 3s forwards; /* Анимация появления */
+    animation-delay: 5s; /* Задержка перед началом анимации */
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+    0% {
+        opacity: 0; /* Полностью прозрачный */
+        transform: translateX(-50%) translateY(-20px); /* Движение вниз */
+    }
+
+    100% {
+        opacity: 1; /* Полностью видимый */
+        transform: translateX(-50%) translateY(0); /* Возвращение на место */
+    }
+}

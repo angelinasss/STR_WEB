@@ -1,0 +1,81 @@
+.container {
+    padding: 0 20px 20px;
+    width: 1230px;
+    display: grid;
+    place-items: center;
+}
+
+.employee-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Распределяет карточки равномерно */
+    gap: 20px; /* Пробелы между карточками */
+    padding: 20px;
+    background-color: #eeedff;
+    border-radius: 5px;
+}
+
+.employee-card {
+    flex: 1 1 30%; /* Ширина карточки будет 30%, но она может уменьшаться при необходимости */
+    max-width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавный переход */
+}
+
+    .employee-card:hover {
+        transform: scale(1.05); /* Увеличение карточки */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Увеличенная тень */
+    }
+
+.employee-photo {
+    max-height: 220px;
+    width: auto;
+    margin: 0 auto;
+    display: block;
+    border-radius: 10px;
+    transition: transform 0.3s ease; /* Добавляем плавность для фото */
+}
+
+.employee-card:hover .employee-photo {
+    transform: scale(1.1); /* Увеличение фото при наведении */
+}
+
+.delete-button {
+    background-color: #ea0ffa;
+    color: white;
+    padding: 8px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Плавный переход цвета фона */
+}
+
+    .delete-button:hover {
+        background-color: #f89cff;
+    }
+
+.positive-button {
+    background-color: #ea0ffa;
+}
+
+    .positive-button:hover {
+        background-color: #f89cff;
+    }
+
+.employee-card h2 {
+    color: #710ffa;
+}
+
+strong {
+    color: #ea0ffa;
+}
+
+.employee-card p {
+    color: #710ffa;
+}

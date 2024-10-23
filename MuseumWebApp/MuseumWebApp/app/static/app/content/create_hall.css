@@ -1,0 +1,31 @@
+.hall-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 20px 0 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #eeedff;
+    overflow: hidden;
+}
+
+.div-between {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #710ffa;
+}
+
+.button-align {
+    text-align: center;
+}
+
+.message {
+    padding: 10px 0;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+}

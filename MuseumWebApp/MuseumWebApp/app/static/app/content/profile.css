@@ -1,0 +1,98 @@
+.profile-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 20px 0 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #eeedff;
+    overflow: hidden;
+}
+
+.label-areas {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #710ffa;
+}
+
+.div-between {
+    margin-bottom: 20px;
+    clear: both;
+}
+
+.button-align {
+    text-align: center;
+}
+
+.profile-photo {
+    display: block;
+    max-width: 150px;
+    height: auto;
+    border-radius: 5px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.photo-label {
+    text-align:center;
+}
+
+a.positive-button {
+    background-color: #ea0ffa;
+}
+
+    a.positive-button:hover {
+        background-color: #f89cff;
+    }
+
+.profile-form > a {
+    float: right;
+}
+
+.float-position {
+    float: left;
+}
+
+strong {
+    color: #710ffa;
+}
+
+span {
+    color: #ea0ffa;
+}
+
+#userTimezone {
+    font-weight: bold;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 0 10px;
+    border-radius: 5px;
+    margin: 5px 0 10px;
+}
+
+    .success-message > p {
+        text-align: center;
+    }
+
+#photo {
+    margin-top:10px;
+}
+
+.input-areas:required {
+    border-color: #ea0ffa; /* Более яркий цвет границы для обязательных полей */
+}
+
+.input-areas:enabled {
+    background-color: #fff5f8;
+}
+
+.input-areas:disabled {
+    background-color: #e0e0e0; /* Серый фон для заблокированных полей */
+    color: #666; /* Светлый цвет текста */
+    border: 1px dashed #ccc; /* Пунктирная граница */
+    cursor: not-allowed;
+}

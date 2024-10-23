@@ -1,68 +1,71 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
+{% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/edit_company_info.css' %}">
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
-    <h1 style="text-align: center; color: #333;">{{ title }}</h1>
-    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div style="margin-bottom: 20px;">
-                <label for="description" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Description</label>
-                <textarea id="description" name="description" rows="5" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>{{ info.description|default_if_none:'' }}</textarea>
-            </div>
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-            <div style="margin-bottom: 20px;">
-                <label for="logo" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Company Logo</label>
-                <div style="text-align: center; margin-bottom: 10px;">
+        <form method="POST" class="company-info-form" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="div-between image-position">
+                <label for="logo">Company Logo</label>
+                <div>
                     {% if info.logo %}
-                    <img id="image-preview" src="{{ info.logo.url }}" alt="Company Logo" style="max-width: 200px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                    <img id="image-preview" src="{{ info.logo.url }}" alt="Company Logo">
                     {% else %}
-                    <img id="image-preview" src="" alt="No image" style="max-width: 200px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                    <img id="image-preview" src="" alt="No image">
                     {% endif %}
                 </div>
-                <input type="file" id="image" name="image" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" onchange="previewImage()">
+                <input type="file" id="image" name="image" class="input-areas" onchange="previewImage()">
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="video" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Company Video</label>
-                <div style="text-align: center; margin-bottom: 10px;">
+            <div class="div-between">
+                <label for="video" class="video-text">Company Video</label>
+                <div class="video-position">
                     {% if info.video %}
-                    <video id="video-preview" width="100%" height="auto" controls>
+                    <video id="video-preview" controls>
                         <source src="{{ info.video.url }}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                     {% else %}
-                    <video id="video-preview" width="100%" height="auto" controls>
+                    <video id="video-preview" controls>
                         <source src="" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                     {% endif %}
                 </div>
-                <input type="file" id="video-file" name="video" accept="video/*" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" onchange="previewVideo()">
+                <input type="file" id="video-file" name="video" accept="video/*" class="input-areas" onchange="previewVideo()">
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="history" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">History</label>
-                <textarea id="history" name="history" rows="5" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">{{ info.history|default_if_none:'' }}</textarea>
+            <div class="div-between">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="5" class="input-areas" required>{{ info.description|default_if_none:'' }}</textarea>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="details" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Company Details</label>
-                <textarea id="details" name="details" rows="5" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">{{ info.details|default_if_none:'' }}</textarea>
+            <div class="div-between">
+                <label for="history">History</label>
+                <textarea id="history" name="history" rows="5" class="input-areas">{{ info.history|default_if_none:'' }}</textarea>
             </div>
 
-            <div style="text-align: center;">
-                <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Save</button>
+            <div class="div-between">
+                <label for="details">Company Details</label>
+                <textarea id="details" name="details" rows="5" class="input-areas">{{ info.details|default_if_none:'' }}</textarea>
+            </div>
+
+            <div class="button-align">
+                <button type="submit" class="positive-button">
+                    Save changes
+                </button>
             </div>
         </form>
+
     </div>
 
     <script>
@@ -100,6 +103,5 @@
         }
     </script>
 </body>
-</html>
 
 {% endblock %}

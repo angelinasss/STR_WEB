@@ -1,0 +1,161 @@
+.logo-container {
+    flex-shrink: 0;
+    margin-right: 20px;
+    transition: transform 0.3s; /* Adding transition for logo */
+}
+
+.logo {
+    max-width: 150px;
+    height: auto;
+    border-radius: 50%; /* Making logo circular */
+}
+
+.logo-container:hover {
+    transform: scale(1.1); /* Scale effect on hover */
+    cursor: pointer;
+}
+
+#details_section h3, #certificate_section h3, #video_section h3 {
+    font-size: 1.5em;
+    color: #ea0ffa;
+}
+
+    h3:hover {
+        text-decoration: underline; /* Заменяем на underline */
+        text-decoration-color: #710ffa; /* Указываем цвет */
+        text-decoration-style: dashed; /* Указываем стиль */
+        text-decoration-thickness: 2px; /* Указываем толщину */
+    }
+
+.history-content div h4 {
+    font-size: 1.3em;
+    color: #ea0ffa;
+    margin-bottom: 10px;
+}
+
+strong {
+    color: #710ffa;
+}
+
+.content-box {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+.container-box {
+    background-color: #eeedff;
+}
+
+#logo_section {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+    #logo_section p {
+        font-size: 1.2em;
+        color: #26203d;
+        margin: 0;
+        width: calc(100% - 170px);
+        text-align: left;
+    }
+
+#video_section {
+    text-align: center;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+    #video_section video {
+        border-radius: 8px;
+        width: 100%;
+        height: auto;
+    }
+
+#certificate_section {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#details_section, #history_section {
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+    #details_section div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+#edit_section, #add_section {
+    text-align: center;
+    width: 100%;
+}
+
+    #edit_section a, #add_section a {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 1em;
+        color: #fff;
+        background-color: #ea0ffa;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+.history-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+    .history-content div {
+        flex: 1;
+        padding-right: 15px;
+        text-align: left;
+    }
+
+        .history-content div ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 1.2em;
+            color: #666;
+            margin: 0;
+            padding-left: 20px; /* Indent for the list */
+        }
+
+        .history-content div li {
+            margin-bottom: 5px; /* Spacing between list items */
+        }
+
+.details-card {
+    width: 90%;
+    max-width: 600px;
+    background-color: #f5f5ff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    .details-card p {
+        font-size: 1.2em;
+        color: #333;
+        margin: 0;
+        text-align: left;
+    }
+
+        .details-card p a {
+            color: #710ffa;
+            text-decoration: none;
+        }
+
+.content-box p {
+    text-align: center;
+    font-size: 1.2em;
+    color: #666;
+}

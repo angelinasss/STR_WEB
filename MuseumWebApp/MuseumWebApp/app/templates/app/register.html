@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-
 {% extends "app/layout.html" %}
-{% block content %}
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% block content %}
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/register.css' %}">
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const isEmployeeCheckbox = document.getElementById('is_employee');
@@ -24,58 +21,49 @@
     </script>
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <div style="max-width: 600px; margin: 0 auto 80px auto; padding: 40px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-        <h2 style="text-align: center; color: #2c3e50; margin-bottom: 20px;">{{ title }}</h2>
-
-        <form method="post" action="">
+        <form method="post" class="register-form">
             {% csrf_token %}
+
             <h4>Create a local account.</h4>
             <hr />
 
-            <!-- Regular registration fields -->
-
-            <div style="margin-bottom: 20px;">
-                <label for="username" style="display: block; font-weight: bold; color: #2c3e50;">Username</label>
-                <input type="text" id="username" name="username" required
-                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px;">
+            <div class="between-button">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="first_name" style="display: block; font-weight: bold; color: #2c3e50;">First Name</label>
-                <input type="text" id="first_name" name="first_name" required
-                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px;">
+            <div class="between-button">
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" name="first_name" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="last_name" style="display: block; font-weight: bold; color: #2c3e50;">Last Name</label>
-                <input type="text" id="last_name" name="last_name" required
-                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px;">
+            <div class="between-button">
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="email" style="display: block; font-weight: bold; color: #2c3e50;">Email</label>
-                <input type="email" id="email" name="email" required
-                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px;">
+            <div class="between-button">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="age" style="display: block; font-weight: bold; color: #2c3e50;">Age</label>
-                <input type="number" id="age" name="age" min="18" max="120" required
-                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px;">
+            <div class="between-button">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" min="18" max="120" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="is_employee" style="display: block; font-weight: bold; color: #2c3e50;">Are you an employee?</label>
-                <input type="checkbox" id="is_employee" name="is_employee" value="1"
-                       style="margin-right: 10px;">
+            <div class="between-button">
+                <label for="is_employee">Are you an employee?</label>
+                <input type="checkbox" id="is_employee" name="is_employee" value="1">
             </div>
 
-            <!-- Employee fields, initially hidden -->
             <div id="employee-fields" hidden>
-                <div style="margin-bottom: 20px;">
-                    <label for="position_display" style="display: block; font-weight: bold; color: #2c3e50;">Position</label>
+                <div class="between-button">
+                    <label for="position_display">Position</label>
                     <select name="position" id="position">
                         {% for position in positions %}
                         <option value="{{ position.id }}" {% if position.id == form_data.position_id|default:'' %}selected{% endif %}>
@@ -85,8 +73,8 @@
                     </select>
                 </div>
 
-                <div style="margin-bottom: 20px;">
-                    <label for="hall_display" style="display: block; font-weight: bold; color: #2c3e50;">Hall</label>
+                <div class="between-button">
+                    <label for="hall_display">Hall</label>
                     <select name="hall" id="hall">
                         {% for hall in halls %}
                         <option value="{{ hall.id }}" {% if hall.id == form_data.hall_id|default:'' %}selected{% endif %}>
@@ -96,38 +84,33 @@
                     </select>
                 </div>
 
-                <div style="margin-bottom: 20px;">
-                    <label for="phone_display" style="display: block; font-weight: bold; color: #2c3e50;">Phone</label>
-                    <input type="text" id="phone" name="phone" value="{{ form_data.phone|default:'' }}" placeholder="+375 (29) XXX-XX-XX">
+                <div class="between-button">
+                    <label for="phone_display">Phone</label>
+                    <input type="text" id="phone" name="phone" class="input-areas" value="{{ form_data.phone|default:'' }}" placeholder="+375 (29) XXX-XX-XX">
                 </div>
             </div>
 
-            <!-- Password fields -->
-            <div style="margin-bottom: 20px;">
-                <label for="password" style="display: block; font-weight: bold; color: #2c3e50;">Password</label>
-                <input type="password" id="password" name="password" required
-                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px;">
+            <div class="between-button">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="password_confirm" style="display: block; font-weight: bold; color: #2c3e50;">Confirm Password</label>
-                <input type="password" id="password_confirm" name="password_confirm" required
-                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px;">
+            <div class="between-button">
+                <label for="password_confirm">Confirm Password</label>
+                <input type="password" id="password_confirm" name="password_confirm" class="input-areas" required>
             </div>
 
-            <div style="text-align: center; margin-bottom: 20px;">
-                <input type="submit" value="Register"
-                       style="background-color: #3498db; color: #fff; padding: 10px 20px; border-radius: 5px; border: none; font-size: 16px; cursor: pointer;">
+            <div class="button-align">
+                <button type="submit" class="positive-button">
+                    Create an account
+                </button>
             </div>
 
             {% if error %}
-            <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 10px; text-align: center; border-radius: 5px;">
-                {{ error }}
-            </div>
+            <p class="message">{{ error }}</p>
             {% endif %}
         </form>
     </div>
 
 </body>
-</html>
 {% endblock %}

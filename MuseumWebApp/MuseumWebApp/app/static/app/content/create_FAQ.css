@@ -1,0 +1,22 @@
+.main-faq {
+    margin-bottom: 15px;
+}
+
+.add-faq-form {
+    overflow: hidden;
+}
+
+.input-areas {
+    width: 95%;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #710ffa;
+}
+
+input[type="text"] {
+    background-color: lightyellow; /* Все текстовые поля будут с светло-желтым фоном */
+}

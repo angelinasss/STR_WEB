@@ -1,51 +1,49 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'app/content/exhibits_by_date.css' %}">
     <title>Exhibits Added After {{ selected_date|date:'Y-m-d' }}</title>
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+<body>
+    <div class="container-box">
+        <h1>Exhibits Added After {{ selected_date|date:'Y-m-d' }}</h1>
 
-    <h1 style="text-align: center; color: #333;">Exhibits Added After {{ selected_date|date:'Y-m-d' }}</h1>
-
-    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
-        <form method="POST" style="margin-bottom: 20px;">
-            {% csrf_token %}
-            <div style="margin-bottom: 20px;">
-                <label for="date" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Select Date:</label>
-                <input type="date" id="date" name="date" value="{{ selected_date|date:'Y-m-d' }}" required
-                       style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-            </div>
-
-            <div style="text-align: center;">
-                <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Search</button>
-            </div>
-        </form>
-
-        {% if halls_with_counts %}
-        <h2 style="margin-top: 20px; color: #333;">Results:</h2>
-        <ul style="list-style: none; padding: 0;">
-            {% for hall in halls_with_counts %}
-            <li style="background-color: #fff; margin-bottom: 10px; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
-                <div style="font-size: 1.2em; font-weight: bold; color: #333; margin-bottom: 5px;">
-                    Hall: {{ hall.name }}
+        <div class="exhibits-form">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="div-between">
+                    <label for="date">Select Date:</label>
+                    <input type="date" id="date" name="date" value="{{ selected_date|date:'Y-m-d' }}" class="input-areas" required>
                 </div>
-                <div style="color: #555;">
-                    Number of Exhibits: {{ hall.exhibit_count }}
+
+                <div class="button-position">
+                    <button type="submit" class="positive-button">Search</button>
                 </div>
-            </li>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <p style="margin-top: 20px; text-align: center; color: #d9534f;">No exhibits found for the specified date.</p>
-        {% endif %}
+            </form>
+
+            {% if halls_with_counts %}
+            <div class="exhibits-container">
+
+                {% for hall in halls_with_counts %}
+
+                <div class="exhibit-card">
+                    <h4>
+                        Hall: {{ hall.name }}
+                    </h4>
+                    <p>Number of Exhibits: <strong>{{ hall.exhibit_count }}</strong></p>
+                </div>
+                {% endfor %}
+
+                {% else %}
+                <p class="message">No exhibits found for the specified date.</p>
+                {% endif %}
+                </div>
+            </div>
     </div>
-
 </body>
-</html>
 
 {% endblock %}

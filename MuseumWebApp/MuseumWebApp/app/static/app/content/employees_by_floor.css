@@ -1,0 +1,116 @@
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #710ffa;
+}
+
+.employees-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 20px 0 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #eeedff;
+    overflow: hidden;
+}
+
+.div-between {
+    margin-bottom: 15px;
+}
+
+select {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    border-color: #ea0ffa;
+    color: #ea0ffa;
+}
+
+option {
+    color: #ea0ffa;
+}
+
+.positive-button {
+    background-color: #ea0ffa;
+    padding: 7px 12px;
+    font-size: 14px;
+}
+
+    .positive-button:hover {
+        background-color: #f89cff;
+    }
+
+.employee-container {
+    justify-content: center; /* Выравниваем по центру */
+    padding: 20px;
+    background-color: #eeedff;
+    border-radius: 5px;
+    align-items: center; /* Центрируем по вертикали, если потребуется */
+}
+
+.employee-card {
+    padding: 10px 20px 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    clear: both;
+    float: left;
+    margin: 0 auto 20px; /* Центрируем карточку */
+    width: 93%;
+}
+
+    .employee-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .employee-card div h4 {
+        font-size: 22px;
+        color: #710ffa;
+        margin-bottom: 10px;
+    }
+
+        .employee-card div h4:hover {
+            text-decoration: underline;
+        }
+
+    .employee-card div img {
+        height: 150px; /* Устанавливаем фиксированную высоту */
+        max-width: 200px;
+        border-radius: 5px;
+        display: block;
+        margin: 20px auto 0; /* Выравнивание по центру */
+    }
+
+strong {
+    color: #ea0ffa;
+}
+
+.employee-container p {
+    color: #710ffa;
+}
+
+.message {
+    margin-top: 10px;
+    text-align: center;
+    color: #ea0ffa;
+    clear: both;
+}
+
+form div.div-between, .employee-card div {
+    float: left;
+}
+
+.button-position {
+    text-align: center;
+    float: right;
+}
+
+.left-position {
+    margin-left: 20px;
+}

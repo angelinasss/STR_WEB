@@ -1,49 +1,55 @@
-<!DOCTYPE html>
-
 {% extends "app/layout.html" %}
-{% block content %}
 
-<html lang="en">
+{% block content %}
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/create_article.css' %}">
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
-    <h1 style="text-align: center; color: #333;">News Editing</h1>
-    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
-        <form method="POST" enctype="multipart/form-data">
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
+
+        <form method="POST" class="article-form" enctype="multipart/form-data">
             {% csrf_token %}
-            <div style="margin-bottom: 20px;">
-                <label for="title" style="display: block; font-weight: bold; color: #555; margin-bottom:10px;">Title</label>
-                <input type="text" id="title" name="title" value="{{ article.title }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
-            </div>
-            <div style="margin-bottom: 20px;">
-                <label for="image" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Image</label>
-                <div style="text-align: center; margin-bottom: 10px;">
+            <div class="div-between image-position">
+                <label for="image">Image</label>
+                <div>
                     {% if article.image %}
-                    <img id="image-preview" src="{{ article.image.url }}" alt="{{ article.title }}" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                    <img id="image-preview" src="{{ article.image.url }}" alt="{{ article.title }}">
                     {% else %}
-                    <img id="image-preview" src="" alt="No image" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                    <img id="image-preview" src="" alt="No image">
                     {% endif %}
                 </div>
-                <input type="file" id="image" name="image" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                <div class="div-between">
+                    <p>Created at (Your Time Zone): {{ published_at_user_tz }} ({{ user_timezone }})</p>
+                    <p>Created at (UTC): {{ published_at_utc }} (UTC)</p>
+                </div>
+                <input type="file" id="image" name="image" class="input-areas">
             </div>
-            <div style="margin-bottom: 20px;">
-                <label for="short_description" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Short Description</label>
-                <input type="text" id="short_description" name="short_description" value="{{ article.short_description }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+
+            <div class="div-between">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" value="{{ article.title }}" class="input-areas" required>
             </div>
-            <div style="margin-bottom: 20px;">
-                <label for="content" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Content</label>
-                <textarea id="content" name="content" rows="5" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>{{ article.content }}</textarea>
+
+            <div class="div-between">
+                <label for="short_description">Short Description</label>
+                <input type="text" id="short_description" name="short_description" value="{{ article.short_description }}" class="input-areas" required>
             </div>
-            <div style="text-align: center;">
-                <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Submit</button>
+
+            <div class="div-between">
+                <label for="content">Content</label>
+                <textarea id="content" name="content" rows="5" class="input-areas" required>{{ article.content }}</textarea>
+            </div>
+
+            <div class="button-align">
+                <button type="submit" class="positive-button">
+                    Save changes
+                </button>
             </div>
         </form>
-        <p style="text-align: center; color: #666; font-size: 14px; margin-top: 20px;">Created at (Your Time Zone): {{ published_at_user_tz }} ({{ user_timezone }})</p>
-        <p style="text-align: center; color: #666; font-size: 14px;">Created at (UTC): {{ published_at_utc }} (UTC)</p>
     </div>
 </body>
-</html>
 {% endblock %}

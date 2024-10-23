@@ -1,49 +1,48 @@
-<!DOCTYPE html>
 {% extends "app/layout.html" %}
 
 {% block content %}
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/promocodes.css' %}">
 </head>
 
 <body>
-    <div style="max-width: 900px; margin: 0 auto; font-family: Arial, sans-serif;">
-        <h1 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">{{ title }}</h1>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
         {% if user.is_superuser %}
-        <p style="text-align: center; margin-bottom: 20px;">
-            <a href="create_promo_code/" style="padding: 10px 15px; background-color: #3498db; color: white; text-decoration: none; border-radius: 5px; display: inline-block;">Create New Promo Code</a>
+        <p>
+            <a href="create_promo_code/" class="positive-button">Create New Promo Code</a>
         </p>
         {% endif %}
 
-        <h2 style="color: #2c3e50;">Active Promo Codes</h2>
-        <ul style="list-style-type: none; padding: 0;">
+        <h2><span class="active-text">Active</span> Promo Codes</h2>
+        <ul>
             {% for promo_code in active_promo_codes %}
-            <li style="margin-bottom: 20px; padding: 15px; background-color: #fff; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                <h4 style="margin: 0; color: #2c3e50;">{{ promo_code.code }} - {{ promo_code.discount }}%</h4>
-                <h5 style="margin: 10px 0; color: #555;">Expiration Date: {{ promo_code.expiration_date }}</h5>
+            <li>
+                <h4>{{ promo_code.code }} - {{ promo_code.discount }}%</h4>
+                <h5>Expiration Date: {{ promo_code.expiration_date }}</h5>
                 {% if user.is_superuser %}
-                <p style="margin-top: 20px;">
-                    <a href="edit_promo_code/{{ promo_code.id }}" style="padding: 5px 10px; background-color: #f39c12; color: white; text-decoration: none; border-radius: 5px; margin-right: 10px;">Edit</a>
-                    <a href="delete_promo_code/{{ promo_code.id }}" style="padding: 5px 10px; background-color: #e74c3c; color: white; text-decoration: none; border-radius: 5px;" onclick="return confirm('Are you sure you want to delete this promo code?');">Delete</a>
+                <p>
+                    <a href="edit_promo_code/{{ promo_code.id }}" class="edit-button">Edit</a>
+                    <a href="delete_promo_code/{{ promo_code.id }}" class="delete-button" onclick="return confirm('Are you sure you want to delete this promo code?');">Delete</a>
                 </p>
                 {% endif %}
             </li>
             {% endfor %}
         </ul>
 
-        <h2 style="color: #2c3e50;">Expired Promo Codes</h2>
-        <ul style="list-style-type: none; padding: 0;">
+        <h2><span class="expired-text">Expired</span> Promo Codes</h2>
+        <ul>
             {% for promo_code in expired_promo_codes %}
-            <li style="margin-bottom: 20px; padding: 15px; background-color: #fff; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                <h4 style="margin: 0; color: #2c3e50;">{{ promo_code.code }} - {{ promo_code.discount }}%</h4>
-                <h5 style="margin: 10px 0; color: #555;">Expiration Date: {{ promo_code.expiration_date }}</h5>
+            <li>
+                <h4>{{ promo_code.code }} - {{ promo_code.discount }}%</h4>
+                <h5>Expiration Date: {{ promo_code.expiration_date }}</h5>
                 {% if user.is_superuser %}
-                <p style="margin-top: 20px;">
-                    <a href="edit_promo_code/{{ promo_code.id }}" style="padding: 5px 10px; background-color: #f39c12; color: white; text-decoration: none; border-radius: 5px; margin-right: 10px;">Edit</a>
-                    <a href="delete_promo_code/{{ promo_code.id }}" style="padding: 5px 10px; background-color: #e74c3c; color: white; text-decoration: none; border-radius: 5px;" onclick="return confirm('Are you sure you want to delete this promo code?');">Delete</a>
+                <p>
+                    <a href="edit_promo_code/{{ promo_code.id }}" class="edit-button">Edit</a>
+                    <a href="delete_promo_code/{{ promo_code.id }}" class="delete-button" onclick="return confirm('Are you sure you want to delete this promo code?');">Delete</a>
                 </p>
                 {% endif %}
             </li>
@@ -51,5 +50,4 @@
         </ul>
     </div>
 </body>
-</html>
 {% endblock %}

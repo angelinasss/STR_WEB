@@ -1,47 +1,46 @@
-<!DOCTYPE html>
-
 {% extends "app/layout.html" %}
-{% block content %}
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% block content %}
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/create_vacancy.css' %}">
 </head>
 
 <body>
-    <h1 style="text-align: center; font-family: Arial, sans-serif; margin-top: 20px;">{{ title }}</h1>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <form method="POST" style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-        {% csrf_token %}
+        <form method="POST" class="vacancy-form">
+            {% csrf_token %}
 
-        <div style="margin-bottom: 15px;">
-            <label for="title" style="display: block; font-weight: bold; margin-bottom: 5px;">Vacancy Title</label>
-            <input type="text" id="title" name="title" required style="width: 90%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-        </div>
+            <div class="div-between">
+                <label for="title" class="label-areas">Vacancy Title</label>
+                <input type="text" class="input-areas" id="title" name="title" required>
+            </div>
 
-        <div style="margin-bottom: 15px;">
-            <label for="description" style="display: block; font-weight: bold; margin-bottom: 5px;">Description</label>
-            <textarea id="description" name="description" rows="5" required style="width: 90%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"></textarea>
-        </div>
+            <div class="div-between">
+                <label for="description" class="label-areas">Description</label>
+                <textarea id="description" class="input-areas" name="description" rows="5" required></textarea>
+            </div>
 
-        <div style="margin-bottom: 15px;">
-            <label for="requirements" style="display: block; font-weight: bold; margin-bottom: 5px;">Requirements</label>
-            <textarea id="requirements" name="requirements" rows="3" required style="width: 90%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"></textarea>
-        </div>
+            <div class="div-between">
+                <label for="requirements" class="label-areas">Requirements</label>
+                <textarea id="requirements" class="input-areas" name="requirements" rows="3" required></textarea>
+            </div>
 
-        <div style="margin-bottom: 20px;">
-            <label for="salary" style="display: block; font-weight: bold; margin-bottom: 5px;">Salary</label>
-            <input type="text" id="salary" name="salary" required style="width: 90%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-        </div>
+            <div class="div-between-button">
+                <label for="salary" class="label-areas">Salary</label>
+                <input type="text" class="input-areas" id="salary" name="salary" required>
+            </div>
 
-        <div style="text-align: center;">
-            <button type="submit" style="background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-                Submit
-            </button>
-        </div>
-    </form>
+            <div class="button-align">
+                <button type="submit" class="positive-button">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
 </body>
 
-</html>
 {% endblock %}

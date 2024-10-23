@@ -1,75 +1,70 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>Excursions</title>
+    <link rel="stylesheet" href="{% static 'app/content/all_excursions.css' %}">
 </head>
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
 
-    <h1 style="text-align: center; color: #333; font-size: 24px;">Excursions</h1>
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <div style="max-width: 800px; margin: 0 auto; background-color: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
-        <form method="GET" action="{% url 'all_excursions' %}" style="margin-bottom: 20px;">
-            <label for="sort_by" style="font-weight: bold; margin-right: 10px;">Sort by:</label>
-            <select id="sort_by" name="sort_by" style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                <option value="date_asc" {% if sort_by == 'date_asc' %}selected{% endif %}>Date (Ascending)</option>
-                <option value="date_desc" {% if sort_by == 'date_desc' %}selected{% endif %}>Date (Descending)</option>
-                <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
-                <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
-                <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>Price (Low to High)</option>
-                <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>Price (High to Low)</option>
-            </select>
-            <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                Sort
-            </button>
-        </form>
+        <div class="excursions-form">
+            <form method="GET" action="{% url 'all_excursions' %}">
+                <label for="sort_by">Sort by:</label>
+                <select id="sort_by" name="sort_by">
+                    <option value="date_asc" {% if sort_by == 'date_asc' %}selected{% endif %}>Date (Ascending)</option>
+                    <option value="date_desc" {% if sort_by == 'date_desc' %}selected{% endif %}>Date (Descending)</option>
+                    <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
+                    <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
+                    <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>Price (Low to High)</option>
+                    <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>Price (High to Low)</option>
+                </select>
+                <button type="submit" class="positive-button">Sort</button>
+            </form>
+        </div>
+
+
         {% if messages %}
-        <div style="max-width: 800px; margin: 0 auto; margin-bottom: 20px;">
+        <div class="success-message">
             {% for message in messages %}
-            <div style="padding: 10px; background-color: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; color: #155724;">
+            <div>
                 {{ message }}
             </div>
             {% endfor %}
         </div>
         {% endif %}
+
+
         {% if excursions %}
-        <div style="margin-top: 20px;">
-            {% for excursion in excursions %}
-            <form action="{% url 'add_to_cart_excursion' excursion.id %}" method="POST" style="margin-bottom: 20px;">
-                {% csrf_token %}
-                <div style="border: 1px solid #ddd; padding: 15px; background-color: #f8f9fa; border-radius: 10px;">
-                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #333;">
-                        {{ excursion.name }} (Code: {{ excursion.code }})
-                    </div>
-                    <div style="margin-bottom: 10px;">
-                        <p style="margin: 5px 0; color: #555;"><strong>Date:</strong> {{ excursion.date|date:"Y-m-d" }}</p>
-                        <p style="margin: 5px 0; color: #555;"><strong>Season:</strong> {{ excursion.get_season_display }}</p>
-                        <p style="margin: 5px 0; color: #555;"><strong>Group Size:</strong> {{ excursion.group_size }}</p>
-                        <p style="margin: 5px 0; color: #555;"><strong>Guide:</strong> {{ excursion.guide }}</p>
-                        <p style="margin: 5px 0; color: #555;"><strong>Price:</strong> {{ excursion.price }}</p>
-                    </div>
+            <div class="excursion-list">
+                {% for excursion in excursions %}
+                <div class="excursion-card">
+                    <h4>{{ excursion.name }} (Code: {{ excursion.code }})</h4>
+                    <p><strong>Date:</strong> {{ excursion.date|date:"Y-m-d" }}</p>
+                    <p><strong>Season:</strong> {{ excursion.get_season_display }}</p>
+                    <p><strong>Group Size:</strong> {{ excursion.group_size }}</p>
+                    <p><strong>Guide:</strong> {{ excursion.guide }}</p>
+                    <p><strong>Price:</strong> {{ excursion.price }}</p>
 
                     {% if user.is_authenticated %}
                     {% if not is_employee and not user.is_superuser %}
-                    <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                        Add To Cart
-                    </button>
+                    <div class="buttons-top">
+                        <a href="{% url 'add_to_cart_excursion' excursion.id %}" class="positive-button">Add To Cart</a>
+                    </div>
                     {% endif %}
                     {% else %}
-                    <p style="color: #d9534f; font-size: 1em;">Please log in to purchase a ticket.</p>
+                    <p class="message">Please log in to purchase a ticket.</p>
                     {% endif %}
                 </div>
-            </form>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
         {% else %}
-        <p style="text-align: center; color: #d9534f; font-size: 18px; margin-top: 20px;">No excursions found.</p>
+        <p class="message">No excursions found.</p>
         {% endif %}
-    </div>
 
+    </div>
 </body>
-</html>
 {% endblock %}

@@ -1,43 +1,36 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<html lang="en">
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/my_exhibits.css' %}">
 </head>
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
 
-    <h1 style="text-align: center; color: #333;">{{ title }}</h1>
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <div style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
-        {% if exhibits %}
-        <ul style="list-style: none; padding: 0; margin: 0;">
+            {% if exhibits %}
+        <div class="exhibit-list">
             {% for exhibit in exhibits|dictsort:"hall.name" %}
-            {% ifchanged exhibit.hall %}
-            <li style="margin-top: 30px; font-size: 1.5em; font-weight: bold; color: #333;">
-                Hall: {{ exhibit.hall.name }}
-            </li>
-            {% endifchanged %}
-            <li style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f8f9fa; display: flex; align-items: center;">
+            <div class="exhibit-card">
                 {% if exhibit.image %}
-                <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}" style="max-width: 150px; border-radius: 5px; object-fit: cover; margin-right: 20px;">
+                <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}">
                 {% else %}
-                <img src="/static/images/default_exhibit.jpg" alt="{{ exhibit.name }}" style="max-width: 150px; border-radius: 5px; object-fit: cover; margin-right: 20px;">
+                <img src="/static/images/default_exhibit.jpg" alt="{{ exhibit.name }}">
                 {% endif %}
-                <div style="flex-grow: 1;">
-                    <h2 style="margin: 0; font-size: 20px; color: #333;">{{ exhibit.name }}</h2>
-                    <p style="margin: 5px 0; color: #555;"><strong>Art Type:</strong> {{ exhibit.art_type }}</p>
-                    <p style="margin: 5px 0; color: #555;"><strong>Date Acquired:</strong> {{ exhibit.date_acquired|date:"Y-m-d" }}</p>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <p style="margin-top: 20px; font-size: 1.2em; color: #d9534f;">No exhibits found.</p>
-        {% endif %}
-    </div>
 
+                <h4>{{ exhibit.name }}</h4>
+                <p><strong>Art Type:</strong> {{ exhibit.art_type }}</p>
+                <p><strong>Date Acquired:</strong> {{ exhibit.date_acquired|date:"Y-m-d" }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="message">No exhibits found.</p>
+        {% endif %}
+
+    </div>
 </body>
-</html>
 {% endblock %}

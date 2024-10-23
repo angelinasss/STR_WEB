@@ -1,34 +1,20 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+
 <head>
-    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'app/content/exhibition_success.css' %}">
     <title>Purchase Successful</title>
 </head>
-<body style="font-family: Arial, sans-serif; background-color: #f0f0f0; margin: 0; padding: 0;">
-    <table width="100%" height="100%" align="center" style="background-color: #f0f0f0; padding: 20px;">
-        <tr>
-            <td align="center">
-                <table width="500" border="0" cellpadding="20" cellspacing="0" bgcolor="#ffffff" align="center" style="border-radius: 10px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);">
-                    <tr>
-                        <td align="center">
-                            <h1 style="color: #4CAF50; font-size: 28px; margin-bottom: 20px;">Purchase Successful</h1>
-                            <p style="color: #333; font-size: 16px; margin-bottom: 30px;">Your ticket has been successfully purchased!</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center">
-                            <a href="{% url 'all_excursions' %}" style="background-color: #4CAF50; color: #ffffff; text-decoration: none; padding: 12px 24px; font-weight: bold; border-radius: 5px; display: inline-block;">
-                                View More Excursions
-                            </a>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+
+<body>
+    <div class="container-box">
+        <div class="success-box">
+            <h1>Purchase Successful</h1>
+            <p>Your ticket has been successfully purchased!</p>
+            <a href="{% url 'all_excursions' %}">View More Excursions</a>
+        </div>
+    </div>
 </body>
-</html>
 {% endblock %}

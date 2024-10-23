@@ -1,72 +1,71 @@
-<!DOCTYPE html>
 {% extends "app/layout.html" %}
-{% block content %}
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% block content %}
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/privacy_policy.css' %}">
 </head>
 
 <body>
-    <h1 style="text-align: center;">{{ title }}</h1>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
 
-    <div style="max-width: 800px; margin: 0 auto;">
-        <h2>Introduction</h2>
-        <p>Welcome to the Museum's website. We are committed to protecting the privacy of our visitors and users. This Privacy Policy outlines how we collect, use, and protect your personal information.</p>
+        <div class="use-of-info-section">
+            <h2>Introduction</h2>
+            <p>Welcome to the Museum's website. We are committed to protecting the privacy of our visitors and users. This Privacy Policy outlines how we collect, use, and protect your personal information.</p>
 
-        <hr>
+            <hr>
 
-        <h2>Information We Collect</h2>
-        <p>We may collect personal data such as your name, email address, and phone number when you visit our website, purchase tickets, subscribe to newsletters, or fill out forms. Additionally, we collect non-personal data such as your browser type and IP address for analytical purposes.</p>
+            <h2>Information We Collect</h2>
+            <p>We may collect personal data such as your name, email address, and phone number when you visit our website, purchase tickets, subscribe to newsletters, or fill out forms. Additionally, we collect non-personal data such as your browser type and IP address for analytical purposes.</p>
 
-        <hr>
+            <hr>
 
-        <h2>Use of Information</h2>
-        <p>Your personal information is used to:</p>
-        <ul>
-            <li>Process ticket purchases</li>
-            <li>Provide customer service</li>
-            <li>Send promotional material (if opted-in)</li>
-            <li>Improve our services</li>
-        </ul>
-        <p>We will not share or sell your information to third parties without your consent, except as required by law.</p>
+            <h2>Use of Information</h2>
+            <p>Your personal information is used to:</p>
+            <ul>
+                <li>Process ticket purchases</li>
+                <li>Provide customer service</li>
+                <li>Send promotional material (if opted-in)</li>
+                <li>Improve our services</li>
+            </ul>
+            <p>We will not share or sell your information to third parties without your consent, except as required by law.</p>
 
-        <hr>
+            <hr>
 
-        <h2>Cookies and Tracking</h2>
-        <p>Our website uses cookies to enhance user experience. Cookies allow us to remember your preferences, analyze traffic, and improve our site. You can disable cookies in your browser settings, but some features of the website may not function properly.</p>
+            <h2>Cookies and Tracking</h2>
+            <p>Our website uses cookies to enhance user experience. Cookies allow us to remember your preferences, analyze traffic, and improve our site. You can disable cookies in your browser settings, but some features of the website may not function properly.</p>
 
-        <hr>
+            <hr>
 
-        <h2>Data Security</h2>
-        <p>We take reasonable measures to protect your data from unauthorized access, alteration, or disclosure. However, no internet transmission is completely secure, and we cannot guarantee absolute data security.</p>
+            <h2>Data Security</h2>
+            <p>We take reasonable measures to protect your data from unauthorized access, alteration, or disclosure. However, no internet transmission is completely secure, and we cannot guarantee absolute data security.</p>
 
-        <hr>
+            <hr>
 
-        <h2>Your Rights</h2>
-        <p>You have the right to:</p>
-        <ul>
-            <li>Request access to your personal data</li>
-            <li>Correct any inaccuracies</li>
-            <li>Request the deletion of your data</li>
-        </ul>
-        <p>To exercise these rights, please contact us at the provided email address.</p>
+            <h2>Your Rights</h2>
+            <p>You have the right to:</p>
+            <ul>
+                <li>Request access to your personal data</li>
+                <li>Correct any inaccuracies</li>
+                <li>Request the deletion of your data</li>
+            </ul>
+            <p>To exercise these rights, please contact us at the provided email address.</p>
 
-        <hr>
+            <hr>
 
-        <h2>Changes to this Policy</h2>
-        <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date.</p>
+            <h2>Changes to this Policy</h2>
+            <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date.</p>
 
-        <hr>
+            <hr>
 
-        <h2>Contact Us</h2>
-        <p>If you have any questions about our Privacy Policy, please contact us:</p>
-        <p>Email: privacy@museum.com</p>
-        <p>Phone: +8 (044) 456-7890</p>
-        <p>Address: 87 Independence Street, Minsk, Belarus</p>
+            <h2>Contact Us</h2>
+            <p>If you have any questions about our Privacy Policy, please contact us:</p>
+            <p>Email: privacy@museum.com</p>
+            <p>Phone: +8 (044) 456-7890</p>
+            <p>Address: 87 Independence Street, Minsk, Belarus</p>
+        </div>
     </div>
-
 </body>
-</html>
 {% endblock %}

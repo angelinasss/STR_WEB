@@ -2,177 +2,272 @@
 
 {% block content %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="author" content="Angelina Kanavalchik" />
-    <meta name="description" content="Home Page For Museum Web Application" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="keywords" content="Museum, Excursions, Exhibitions" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/index.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <audio controls autoplay style="width: 100%;">
-        <source src="{% static 'audio/Muzei_vystavochnyi_zal.mp3' %}" type="audio/mpeg">
-    </audio>
+    <section class="banner">
+        <div class="collage">
+            <!-- Left Top Banner -->
+            <a href="https://americanhistory.si.edu/">
+                <div>
+                    <img src="{{ info.banners.all.0.image.url }}" alt="Banner">
+                </div>
+            </a>
 
-    <header style="text-align: center; padding: 20px;">
-        <div style="margin-bottom: 20px;">
-            <img src="{{ info.logo.url }}" alt="Company Logo" style="max-width: 200px; height: auto;">
+            <!-- Right Top Banner -->
+            <a href="https://americanhistory.si.edu/">
+                <div>
+                    <img src="{{ info.banners.all.1.image.url }}" alt="Banner">
+                </div>
+            </a>
         </div>
-        <h1>Welcome to Our <dfn title="is a not-for-profit, permanent institution in the service of society that researches, collects, conserves, interprets and exhibits tangible and intangible heritage. Open to the public, accessible and inclusive, museums foster diversity and sustainability. They operate and communicate ethically, professionally and with the participation of communities, offering varied experiences for education, enjoyment, reflection and knowledge sharing.">Museum</dfn> <abbr title="Lorem Ipsum">LI</abbr></h1>
-        <a href="#exhibitions_section">Go To Exhibitions</a>
-    </header>
 
-    <section style="padding: 30px; background-color: #f0f0f0; border-top: 1px solid #ccc;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <!-- Centered Logo Section -->
+        <div class="logo">
+            <div class="logo-container">
+                <img src="{{ info.logo.url }}" alt="Company Logo" class="company-logo">
+            </div>
+            <h1 class="welcome-title">
+                Welcome to Our <dfn title="is a not-for-profit, permanent institution in the service of society that researches, collects, conserves, interprets and exhibits tangible and intangible heritage. Open to the public, accessible and inclusive, museums foster diversity and sustainability. They operate and communicate ethically, professionally and with the participation of communities, offering varied experiences for education, enjoyment, reflection and knowledge sharing.">Museum</dfn>
+                <abbr title="Lorem Ipsum">LI</abbr>
+            </h1>
+            <p class="welcome-description">
+                Discover a space where history, culture, and art come together. Our museum offers diverse exhibitions that inspire reflection and knowledge sharing.
+            </p>
+            <div id="go_to_exhibition" class="exhibition-button">
+                <a href="#exhibitions_section" class="exhibition-link">
+                    Go To Exhibitions
+                </a>
+            </div>
+        </div>
 
-            <div style="flex: 1; padding-right: 20px;">
-                <blockquote>
+        <div class="banners-part2">
+            <!-- Left Bottom Banner -->
+            <a href="https://americanhistory.si.edu/">
+                <div>
+                    <img src="{{ info.banners.all.2.image.url }}" alt="Banner">
+                </div>
+            </a>
+
+            <!-- Right Bottom Banner -->
+            <a href="https://americanhistory.si.si.edu/">
+                <div>
+                    <img src="{{ info.banners.all.3.image.url }}" alt="Banner">
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="museum-section">
+        <div class="museum-content">
+            <!-- Left Column (Stanzas) -->
+            <div class="stanzas-column">
+                <!-- First stanza -->
+                <blockquote class="stanza">
                     И музей одежды, <br>
                     Что носили прежде, <br>
                     Есть ещё и боевой <br>
                     Весь пропитанный войной. <br><br>
                 </blockquote>
 
-                <pre style="font-size: 1.2em; color: #333; font-style: italic; margin-bottom: 10px;">
-                    Есть музей технический, 
-                    Есть биологический, 
-                    Есть музей игрушек 
-                    И лесных зверюшек. 
-                </pre>
+                <!-- Second stanza slightly indented -->
+                <blockquote class="stanza indented-stanza">
+                    Есть музей технический, <br>
+                    Есть биологический, <br>
+                    Есть музей игрушек <br>
+                    И лесных зверюшек.
+                </blockquote>
             </div>
 
-            <div style="flex: 1; padding-left: 20px; border-left: 1px solid #ccc;">
-                <q style="font-size: 1.1em; color: #555;">
-                    <cite>Читайте, ходите в музеи, слушайте оперу… Только, ради Бога, не изучайте жизнь по фильмам, телевизору и Интернету.</cite>
-                </q>
-                <p style="font-size: 0.9em; color: #555; text-align: right;">
-                </p>
+            <!-- Right Column (Quote) -->
+            <div class="quote-column">
+                <!-- First quote in Russian -->
+                <blockquote class="quote" lang="ru">
+                    <p>Читайте, ходите в музеи, слушайте оперу… Только, ради Бога, не изучайте жизнь по фильмам, телевизору и Интернету.</p>
+                    <br>
+                    <cite class="quote-author">— Кристоф Вальц</cite>
+                </blockquote>
+
+                <!-- Second quote in French -->
+                <blockquote class="quote" lang="fr">
+                    <p>Les musées sont une source inépuisable d'apprentissage, bien plus authentique que les écrans.</p>
+                    <br>
+                    <cite class="quote-author">— Inconnu</cite>
+                </blockquote>
             </div>
+        </div>
+
+        <!-- Audio Section -->
+        <div class="audio-section">
+            <audio controls class="audio-player">
+                <source src="{% static 'audio/Muzei_vystavochnyi_zal.mp3' %}" type="audio/mpeg">
+            </audio>
         </div>
     </section>
 
-    <section style="padding: 20px; background-color: #f8f9fa;">
-        <h2 style="text-align: center; font-size: 2em;">Our Banners</h2>
-        <div style="text-align: center; margin: 30px 0;">
-            {% for banner in info.banners.all %}
-            <a href="https://developer.mozilla.org/ru/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure" style="max-width: 200px; height: auto; margin: 20px;">
-                <img src="{{ banner.image.url }}" alt="Banner">
-            </a>
-            {% endfor %}
+    <div class="gallery">
+        <div class="walls">
+            <div class="left-wall">
+                <div id="picture4" class="picture"></div>
+            </div>
+            <div class="center-wall">
+                <div class="company-name">Lorem Ispum</div>
+            </div>
+            <div class="right-wall">
+                <div id="picture5" class="picture"></div>
+            </div>
+            <div class="pictures-container">
+                <div id="picture1" class="picture left-picture"></div>
+                <div id="picture2" class="picture center-picture"></div>
+                <div id="picture3" class="picture right-picture"></div>
+            </div>
         </div>
-    </section>
+        <div class="sphere-container">
+            <div class="sphere"></div>
+        </div>
+        <div class="floor"></div>
+        <div class="center-sphere"></div>
+        <div class="sphere-legs">
+            <div class="leg"></div>
+            <div class="leg"></div>
+        </div>
+    </div>
 
-    <section id="image-section" style="width:100%">
+    </div>
+
+    <!--<section id="image-section" style="width:100%">
         <picture>
-          <source media="(max-width: 700px)"
+            <source media="(max-width: 700px)"
                     sizes="(max-width: 500px) 50vw, 10vw"
                     srcset="{% static 'images/small/low-ressm.jpg' %} 138w,
                             {% static 'images/small/low-ressm.jpg' %} 138w"
                     title="Низкое разрешение изображения для экранов до 700px">
 
-          <source media="(max-width: 1400px)"
+            <source media="(max-width: 1400px)"
                     sizes="(max-width: 1000px) 100vw, 50vw"
                     srcset="{% static 'images/large/low-reslr.jpg' %} 416w,
                             {% static 'images/large/low-reslr.jpg' %} 416w"
                     title="Изображение для экранов до 1400px">
 
-         <img src="{% static 'images/large/low-res.jpg' %}"
+            <img src="{% static 'images/large/low-res.jpg' %}"
                  alt="adaptive picture"
                  title="Основное изображение для остальных экранов">
         </picture>
-    </section>
+    </section>-->
 
-            <section style="padding: 15px;">
-                <h1 style="text-align: center; color: #333; font-size: 1.5em;"><mark>Our Excursions</mark></h1>
-                <div style="max-width: 800px; margin: 0 auto; background-color: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px; text-align: center;">
-                    {% if excursions %}
-                    <div>
-                        {% for excursion in excursions %}
-                        <p style="font-size: 1.2em; color: #555;">
-                            <a href="{% url 'excursion_detail' excursion.id %}" style="color: #007bff; text-decoration: none;">{{ excursion.name }}</a>
-                        </p>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    <p style="text-align: center; color: #d9534f; font-size: 1.2em;">No excursions found.</p>
-                    {% endif %}
-                </div>
-            </section>
-
-            <section id="exhibitions_section" style="padding: 15px;">
-                <h1 style="text-align: center; color: #333; font-size: 1.5em;"><mark>Our Exhibitions</mark></h1>
-                <div style="max-width: 800px; margin: 0 auto; background-color: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 8px; text-align: center;">
-                    {% if exhibitions %}
-                    <ul style="list-style: none; padding: 0;">
-                        {% for exhibition in exhibitions %}
-                        <p style="font-size: 1.2em; color: #555;">
-                            <a href="{% url 'exhibition_detail' exhibition.id %}" style="color: #007bff; text-decoration: none;">{{ exhibition.name }}</a>
-                        </p>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <p style="text-align: center; color: #d9534f; font-size: 1.2em;">No exhibitions found.</p>
-                    {% endif %}
-                </div>
-            </section>
-
-            <section style="padding: 15px;">
-                <h1 style="text-align: center; font-size: 1.5em;">Latest Article</h1>
-                {% if article %}
-                <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f8f9fa;">
-                    <h2 style="text-align: center;">{{ article.title }}</h2>
-                    {% if article.image %}
-                    <div style="text-align: center; margin-bottom: 15px;">
-                        <img src="{{ article.image.url }}" alt="{{ article.title }}" style="max-width: 80%; height: auto; border-radius: 10px;">
-                    </div>
-                    {% endif %}
-                    <p>{{ article.short_description }}</p>
-                    <p style="text-align: center; color: #555;">Published on: {{ article.published_at|date:"d/m/Y" }}</p>
-                    <div style="text-align: center;">
-                        <a href="article_all/{{ article.id }}" style="color: #007bff; text-decoration: none; font-weight: bold; border: 1px solid #007bff; padding: 10px 15px; border-radius: 5px;">Read More</a>
-                        <a href="article_all/{{ article.id }}" style="color: #007bff; text-decoration: none; font-weight: bold; border: 1px solid #007bff; padding: 10px 15px; border-radius: 5px;" download="readmore.html">Download Read More Page</a>
-                    </div>
-                </div>
-                {% else %}
-                <p style="text-align: center;">No articles available.</p>
-                {% endif %}
-            </section>
-            <figure>
-                <figcaption>Listing 1. Using the code element</figcaption>
-                <code>
-                    exhibition = Exhibition.objects.get(id=id)
-
-                    if request.user.is_authenticated:
-                    try:
-                    employee = Employee.objects.get(user=request.user)
-                    is_employee = True
-                    except Employee.DoesNotExist:
-                    employee = None
-                    is_employee = False
-                </code>
-            </figure>
-            <section style="padding: 15px;">
-                <h2 style="text-align: center; font-size: 1.5em;">Our Partners</h2>
-                <div style="text-align: center;">
-                    {% for partner in partners %}
-                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                        {% if partner.logo %}
-                        <div style="margin-right: 20px;">
-                            <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" style="max-width: 150px; height: auto;">
-                        </div>
-                        {% endif %}
-                        <div style="max-width: 450px;">
-                            <p style="font-size: 1.2em; color: #555;">
-                                <a href="{{ partner.website }}" target="_blank" style="color: #007bff; text-decoration: none;">{{ partner.name }}</a>
-                            </p>
-                        </div>
-                    </div>
+    <section class="exhibitions-section">
+        <h1 class="exhibitions-title">
+            <mark class="highlight" id="exhibitions_section">Our Excursions & Exhibitions</mark>
+        </h1>
+        <div class="exhibitions-grid">
+            <!-- Excursions Section -->
+            <div class="exhibitions-card">
+                <h2 class="exhibitions-card-title">Excursions</h2>
+                {% if excursions %}
+                <div>
+                    {% for excursion in excursions %}
+                    <p class="excursion-item">
+                        <a class="item-link" href="{% url 'excursion_detail' excursion.id %}">{{ excursion.name }}</a>
+                    </p>
                     {% endfor %}
                 </div>
-            </section>
+                {% else %}
+                <p class="no-excursions">No excursions found.</p>
+                {% endif %}
+            </div>
+
+            <!-- Exhibitions Section -->
+            <div class="exhibitions-card">
+                <h2 class="exhibitions-card-title">Exhibitions</h2>
+                {% if exhibitions %}
+                <ul class="exhibitions-list">
+                    {% for exhibition in exhibitions %}
+                    <p class="exhibition-item">
+                        <a class="item-link" href="{% url 'exhibition_detail' exhibition.id %}">{{ exhibition.name }}</a>
+                    </p>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="no-exhibitions">No exhibitions found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section class="latest-article-section">
+        <h1 class="latest-article-title">Latest Article</h1>
+        {% if article %}
+        <div id="card_article" class="article-card">
+            <h2 class="article-title">{{ article.title }}</h2>
+
+            {% if article.image %}
+            <div class="article-image-container">
+                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="article-image">
+            </div>
+            {% endif %}
+
+            <p>{{ article.short_description }}</p>
+            <p class="published-date">Published on: {{ article.published_at|date:"d/m/Y" }}</p>
+
+            <!-- Positioned Read More Button -->
+            <div class="read-more-container">
+                <a class="btn-read" href="article_all/{{ article.id }}">
+                    Read More
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <p class="no-articles-message">No articles available.</p>
+        {% endif %}
+    </section>
+
+    <div class="preloader" id="preloader">
+        <div class="circle circle1">
+            <div class="circle circle2">
+                <div class="circle circle3">
+                    <div class="arc arc1"></div>
+                    <div class="arc arc2"></div>
+                    <div class="arc arc3"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Add purple circles here -->
+        <div class="circle circle1 purple">
+            <div class="circle circle2 purple">
+                <div class="circle circle3 purple">
+                    <div class="arc arc1"></div>
+                    <div class="arc arc2"></div>
+                    <div class="arc arc3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="partners-section">
+        <h1 class="partners-title">Our Partners</h1>
+        <div class="partners-grid">
+            {% for partner in partners %}
+            <div class="partner-logo-container">
+                {% if partner.logo %}
+                <a href="{{ partner.website }}" target="_blank" class="partner-logo-link">
+                    <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="partner-logo">
+                </a>
+                {% endif %}
+            </div>
+            <div class="partner-name-container">
+                <p class="partner-name">
+                    <a href="{{ partner.website }}" target="_blank" class="partner-name-link">
+                        {{ partner.name }}
+                    </a>
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
 </body>
-</html>
 {% endblock %}

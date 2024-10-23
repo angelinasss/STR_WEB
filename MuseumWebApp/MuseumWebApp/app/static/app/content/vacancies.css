@@ -1,0 +1,73 @@
+.job-list {
+    overflow: visible; /* Указывает, что содержимое контейнера не будет обрезаться */
+}
+
+    .job-list::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+.job-card {
+    float: left; /* Make job cards float next to each other */
+    width: auto; /* Adjust width according to your layout */
+    margin: 10px 10px 30px 10px; /* Margin around each card */
+    padding: 0 20px 20px; /* Padding inside the card */
+    background-color: #eeedff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавный переход */
+}
+
+    .job-card:hover {
+        transform: scale(1.05); /* Увеличение карточки */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Увеличенная тень */
+    }
+
+    /* Заголовок вакансии */
+    .job-card h4 {
+        font-size: 22px;
+        color: #ea0ffa;
+        margin-bottom: 10px;
+    }
+
+        .job-card h4:hover {
+            text-decoration: underline;
+        }
+
+strong {
+    color: #710ffa;
+}
+
+.job-actions a {
+    text-decoration: none;
+    background-color: #710ffa;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+    .job-actions a:hover {
+        background-color: #ba8cfa;
+    }
+
+    .job-actions a.delete {
+        background-color: #ea0ffa;
+    }
+
+        .job-actions a.delete:hover {
+            background-color: #f89cff;
+        }
+
+/* Разделитель между вакансиями */
+.job-divider {
+    clear: both; /* Очищает обтекание, чтобы следующий элемент начинался с новой строки */
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}

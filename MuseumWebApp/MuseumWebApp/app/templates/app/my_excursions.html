@@ -1,46 +1,31 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'app/content/my_excursions.css' %}">
     <title>Excursions by {{ guide.first_name }} {{ guide.last_name }}</title>
 </head>
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+<body>
+    <div class="container-box">
+        <h1>Excursions by {{ guide.first_name }} {{ guide.last_name }}</h1>
 
-    <h1 style="text-align: center; color: #333; margin-bottom: 20px;">
-        Excursions by {{ guide.first_name }} {{ guide.last_name }}
-    </h1>
-
-    <div style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
         {% if excursions %}
-        <ul style="list-style: none; padding: 0;">
+        <div class="excursion-list">
             {% for excursion in excursions %}
-            <li style="background-color: #eef; margin-bottom: 10px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                <div style="font-size: 1.2em; font-weight: bold; color: #333; margin-bottom: 5px;">
-                    {{ excursion.name }} ({{ excursion.code }})
-                </div>
-                <div style="color: #555; margin-bottom: 5px;">
-                    <strong>Date:</strong> {{ excursion.date|date:"Y-m-d" }}
-                </div>
-                <div style="color: #555; margin-bottom: 5px;">
-                    <strong>Season:</strong> {{ excursion.get_season_display }}
-                </div>
-                <div style="color: #555; margin-bottom: 5px;">
-                    <strong>Group Size:</strong> {{ excursion.group_size }}
-                </div>
-                <div style="color: #555; margin-bottom: 5px;">
-                    <strong>Price:</strong> {{ excursion.price }}
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
+            <div class="excursion-card">
+                <h4>{{ excursion.name }} (Code: {{ excursion.code }})</h4>
+                <p><strong>Date:</strong> {{ excursion.date|date:"Y-m-d" }}</p>
+                <p><strong>Season:</strong> {{ excursion.get_season_display }}</p>
+                <p><strong>Group Size:</strong> {{ excursion.group_size }}</p>
+                <p><strong>Price:</strong> {{ excursion.price }}</p>
+            </div>
+        {% endfor %}
+        </div>
         {% else %}
-        <p style="text-align: center; color: #d9534f; font-size: 1.2em;">No excursions found for this guide or you are not a guide.</p>
+        <p class="message">No excursions found for this guide or you are not a guide.</p>
         {% endif %}
     </div>
-
 </body>
-</html>
 {% endblock %}

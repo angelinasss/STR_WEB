@@ -1,60 +1,58 @@
-<!DOCTYPE html>
-
 {% extends "app/layout.html" %}
-{% block content %}
 
-<html lang="en">
+{% block content %}
+{% load static %}
+
 <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'app/content/create_hall.css' %}">
 </head>
 
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
-    <h1 style="text-align: center; color: #333;">{{ title }}</h1>
-    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px;">
-        <form method="POST">
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
+
+        <form method="POST" class="hall-form">
             {% csrf_token %}
 
-            <div style="margin-bottom: 20px;">
-                <label for="number" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Number</label>
-                <input type="number" id="number" name="number" value="{{ hall.number }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            <div class="div-between">
+                <label for="number">Number</label>
+                <input type="number" id="number" name="number" value="{{ hall.number }}" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="name" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Name</label>
-                <input type="text" id="name" name="name" value="{{ hall.name }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            <div class="div-between">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" value="{{ hall.name }}" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="floor" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Floor</label>
-                <input type="number" id="floor" name="floor" value="{{ hall.floor }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            <div class="div-between">
+                <label for="floor">Floor</label>
+                <input type="number" id="floor" name="floor" value="{{ hall.floor }}" class="input-areas" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="area" style="display: block; font-weight: bold; color: #555; margin-bottom: 10px;">Area</label>
-                <input type="text" id="area" name="area" value="{{ hall.area }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+            <div class="div-between">
+                <label for="area">Area (sq. m)</label>
+                <input type="text" id="area" name="area" value="{{ hall.area }}" class="input-areas" required>
             </div>
 
-            <div style="text-align: center;">
-                <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Save changes</button>
+            <div class="button-align">
+                <button type="submit" class="positive-button">
+                    Save changes
+                </button>
             </div>
+
+            {% if messages %}
+            <div>
+                {% for message in messages %}
+                <div class="message" style="
+                        {% if message.tags == 'error' %}background-color: #f89cff; color: white;{% else %}background-color: #d4edda; color: #155724;{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
         </form>
-
-        {% if messages %}
-        <div style="margin-top: 20px;">
-            {% for message in messages %}
-            <div style="padding: 10px; border: 1px solid;
-                            {% if message.tags == 'error' %}border-color: red;{% else %}border-color: green;{% endif %}
-                            text-align: center; margin-bottom: 10px; border-radius: 4px;">
-                {{ message }}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
     </div>
 </body>
-
-</html>
 
 {% endblock %}

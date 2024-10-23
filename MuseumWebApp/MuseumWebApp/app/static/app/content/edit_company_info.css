@@ -1,0 +1,48 @@
+.company-info-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 20px 0 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #eeedff;
+    overflow: hidden;
+}
+
+.div-between {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #710ffa;
+}
+
+.button-align {
+    text-align: center;
+}
+
+#image-preview {
+    max-width: 100%; /* Ограничиваем размер изображения */
+    height: 200px;
+    margin: 10px 0 0;
+    border-radius: 4px;
+}
+
+.image-position {
+    display: flex;
+    flex-direction: column; /* Размещаем элементы вертикально */
+    align-items: center; /* Выравниваем элементы по центру по горизонтали */
+}
+
+video {
+    border-radius: 8px;
+    margin: 10px 0;
+    width: 80%;
+    height: auto;
+}
+
+.video-position, .video-text {
+    text-align: center;
+}

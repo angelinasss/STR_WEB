@@ -1,0 +1,56 @@
+strong {
+    color: #ea0ffa;
+}
+
+.container-box p {
+    font-family: 'Lora', serif;
+    width: 70%;
+    margin: 0 auto;
+}
+
+#text_content {
+    column-count: 2; /* ƒелим текст на 2 колонки */
+    column-gap: 30px; /* ”станавливаем рассто€ние между колонками */
+    text-align: justify;
+}
+
+    #text_content::first-letter {
+        color: red; /* ÷вет первой буквы */
+        font-size: 2em; /* ”величиваем размер первой буквы */
+        font-weight: bold; /* ƒелает первую букву жирной */
+    }
+
+    #text_content::selection {
+        background-color: #ea0ffa; /* ÷вет фона выделенного текста */
+        color: white; /* ÷вет текста при выделении */
+    }
+
+.container-box img {
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+    max-width: 100%;
+    height: 400px;
+    transition: transform 0.3s ease; /* Smooth transition for the scaling */
+}
+
+    .container-box img:hover {
+        transform: scale(1.05); /* Slight zoom on hover */
+    }
+
+#time_published {
+    font-size: 0.9em;
+    color: #777;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+    #time_published p {
+        color: #710ffa
+    }
+
+.div-between {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}

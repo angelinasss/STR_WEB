@@ -1,0 +1,136 @@
+.add-review-button {
+    padding: 10px 20px;
+    background-color: #ea0ffa;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+    .add-review-button:hover {
+        background-color: #f89cff;
+    }
+
+/* Review form styling */
+.review-form {
+    display: none;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #eeedff;
+}
+
+/* Form fields */
+.form-group label {
+    font-weight: bold;
+    color: #710ffa;
+}
+
+/* Form actions */
+.form-actions .save-button,
+.form-actions .cancel-button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease;
+    color: #ea0ffa;
+}
+
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: #ea0ffa;
+        outline: none;
+    }
+
+.form-group textarea {
+    width: 98%;
+}
+
+.save-button {
+    background-color: #710ffa;
+    color: white;
+}
+
+    .save-button:hover {
+        background-color: #ba8cfa;
+    }
+
+.cancel-button {
+    background-color: #ea0ffa;
+    color: white;
+}
+
+    .cancel-button:hover {
+        background-color: #f89cff;
+    }
+
+/* Review items */
+.reviews-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.review-item {
+    margin-bottom: 20px;
+    padding: 10px 20px 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #eeedff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .review-item:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+/* Rating stars */
+.rating-stars .star {
+    font-size: 1.5em;
+    color: #ea0ffa;
+}
+
+    .rating-stars .star.filled {
+        color: #ea0ffa;
+    }
+
+.positive-button {
+    padding: 7px 12px;
+}
+
+.delete {
+    background-color: #ea0ffa;
+}
+
+    .delete:hover {
+        background-color: #f89cff;
+    }
+
+/* Review date */
+.review-date {
+    color: #95a5a6;
+    margin-bottom: 30px;
+}
+
+h3 {
+    color: #710ffa;
+}
+
+.div-between {
+    margin-top: 20px;
+}

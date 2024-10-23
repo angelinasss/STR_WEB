@@ -1,0 +1,30 @@
+.promocode-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 20px 0 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #eeedff;
+    overflow: hidden;
+}
+
+.label-areas {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #710ffa;
+}
+
+.div-between-button {
+    margin-bottom: 20px;
+}
+
+.button-align {
+    text-align: center;
+}
+
+#discount:out-of-range {
+    border-color: #ff4500; /* Ярко-оранжевая граница для ошибок */
+    background-color: #ffe4e1; /* Легкий розовый фон */
+    color: #b22222; /* Тёмно-красный текст */
+}

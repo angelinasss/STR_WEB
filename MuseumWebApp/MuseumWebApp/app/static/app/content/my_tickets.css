@@ -1,0 +1,98 @@
+.excursion-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    clear: both;
+}
+
+.excursion-card {
+    flex: 1 1 calc(25% - 20px); /* 4 cards per row, subtracting margins */
+    max-width: calc(30% - 20px);
+    margin: 10px; /* Margin around each card */
+    padding: 0 20px 20px;
+    background-color: #eeedff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .excursion-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .excursion-card h4 {
+        font-size: 22px;
+        color: #710ffa;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+        .excursion-card h4:hover {
+            text-decoration: underline;
+        }
+
+    .excursion-card p {
+        color: #710ffa;
+    }
+
+.message {
+    margin-top: 10px;
+    text-align: center;
+    color: #ea0ffa;
+    clear: both;
+}
+
+strong {
+    color: #ea0ffa;
+}
+
+p.message {
+    color: #ea0ffa;
+}
+
+h3 {
+    font-size: 1.4em;
+    margin-bottom: 8px;
+    color: #ea0ffa;
+}
+
+    h3:hover {
+        text-decoration: underline;
+    }
+
+.excursion-card div {
+    margin-top: 8px;
+}
+
+    .excursion-card div ul.custom-marker {
+        list-style: none; /* Убираем стандартные маркеры */
+        padding-left: 0; /* Убираем отступ слева */
+    }
+
+        .excursion-card div ul.custom-marker li {
+            position: relative; /* Устанавливаем относительное позиционирование для li */
+            padding-left: 25px; /* Создаем пространство для символа */
+        }
+
+            .excursion-card div ul.custom-marker li::before {
+                content: "\2714"; /* Код Юникода для символа*/
+                position: absolute; /* Устанавливаем абсолютное позиционирование */
+                left: 0; /* Выравниваем по левому краю */
+                color: #710ffa; /* Цвет маркера */
+                font-size: 1.2em; /* Размер маркера */
+            }
+
+        .excursion-card div ul.custom-marker li:first-child {
+            color: aqua;
+        }
+
+        .excursion-card div ul.custom-marker li:last-child {
+            color: red;
+        }
+
+        .excursion-card div ul.custom-marker li:nth-child(2){
+            color: saddlebrown;
+            font-weight: bold;
+        }
