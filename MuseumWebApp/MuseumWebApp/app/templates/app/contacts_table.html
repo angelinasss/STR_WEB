@@ -1,0 +1,168 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'app/content/contacts_table.css' %}">
+</head>
+
+<body>
+    <div class="preloader" id="preloader">
+        <div class="circle circle1">
+            <div class="circle circle2">
+                <div class="circle circle3">
+                    <div class="arc arc1"></div>
+                    <div class="arc arc2"></div>
+                    <div class="arc arc3"></div>
+                </div>
+            </div>
+        </div>
+        <div class="circle circle1 purple">
+            <div class="circle circle2 purple">
+                <div class="circle circle3 purple">
+                    <div class="arc arc1"></div>
+                    <div class="arc arc2"></div>
+                    <div class="arc arc3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Employees Table</h1>
+
+        <button type="button" id="addEmployeeButton" class="positive-button">Add Employee</button>
+
+        <div id="addEmployeeForm" class="add-employee-form" style="display: none;">
+            <form method="POST" id="employeeForm" action="{% url 'add_employee' %}">
+                {% csrf_token %}
+
+                <h1>Add A New Employee</h1>
+
+                <div class="div-between">
+                    <label for="employeeName">Full Name:</label>
+                    <input type="text" id="employeeName" name="full_name" class="input-areas" required>
+                </div>
+
+                <div class="div-between">
+                    <label for="employeePhoto">Photo URL:</label>
+                    <input type="text" id="employeePhoto" name="photo" class="input-areas" required>
+                </div>
+
+                <div class="div-between">
+                    <label for="employeePhone">Phone:</label>
+                    <input type="text" id="employeePhone" name="phone" class="input-areas" required>
+                </div>
+
+                <div class="div-between">
+                    <label for="employeeEmail">Email:</label>
+                    <input type="email" id="employeeEmail" name="email" class="input-areas" required>
+                </div>
+
+                <div class="div-between">
+                    <label for="employeePosition">Position:</label>
+                    <select id="employeePosition" name="position" class="input-areas" required>
+                        {% for position in positions %}
+                        <option value="{{ position.id }}">
+                            {{ position.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="div-between">
+                    <label for="employeeHall">Hall:</label>
+                    <select id="employeeHall" name="hall" class="input-areas" required>
+                        {% for hall in halls %}
+                        <option value="{{ hall.id }}">
+                            {{ hall.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="button-align">
+                    <button type="submit" id="submitEmployeeForm" class="positive-button" disabled>
+                        Add Employee
+                    </button>
+                </div>
+                <p id="formValidationMessage" style="color:red; display:none;"></p>
+            </form>
+        </div>
+
+        <!-- Таблица сотрудников -->
+        <div class="table-container">
+            <!-- Фильтрация -->
+            <div class="filter-container">
+                <input type="text" id="filterInput" placeholder="Enter text to filter" class="filter-input">
+                <button type="button" id="filterButton" class="positive-button">Search</button>
+            </div>
+
+            <table class="employee-table" id="employeeTable">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Photo</th>
+                        <th>
+                            <span class="sortable-header" data-column="full_name">
+                                Full Name <span class="sort-arrow" data-column="full_name">&#x21c5;</span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="sortable-header" data-column="phone">
+                                Phone <span class="sort-arrow" data-column="phone">&#x21c5;</span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="sortable-header" data-column="email">
+                                Email <span class="sort-arrow" data-column="email">&#x21c5;</span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="sortable-header" data-column="position">
+                                Position <span class="sort-arrow" data-column="position">&#x21c5;</span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="sortable-header" data-column="hall">
+                                Hall <span class="sort-arrow" data-column="hall">&#x21c5;</span>
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTableBody">
+                    <!-- Данные будут загружаться через AJAX -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Детали сотрудника -->
+        <div id="detailsContainer" class="details-container">
+            <h3>Employee Details</h3>
+            <p><strong>Full Name:</strong> <span id="detailsFullName"></span></p>
+            <p><strong>Phone:</strong> <span id="detailsPhone"></span></p>
+            <p><strong>Email:</strong> <span id="detailsEmail"></span></p>
+            <p><strong>Position:</strong> <span id="detailsPosition"></span></p>
+            <p><strong>Hall:</strong> <span id="detailsHall"></span></p>
+        </div>
+
+        <!-- Управление пагинацией -->
+        <div id="paginationControls" class="pagination-controls">
+            <button type="button" id="prevButton" class="pagination-button">Previous</button>
+            <span id="pageInfo" class="page-info"></span>
+            <button type="button" id="nextButton" class="pagination-button">Next</button>
+        </div>
+
+        <div class="bonus-container">
+            <button type="button" id="bonusButton" class="positive-button">Award Bonus</button>
+            <p id="bonusMessage" style="margin-top: 10px; color: green; font-weight: bold; display: none;"></p>
+        </div>
+    </div>
+    <script src="{% static 'app/scripts/my_scripts/sort_pagination_filter_contacts_table.js' %}"></script>
+    <script src="{% static 'app/scripts/my_scripts/contact_info.js' %}"></script>
+    <script src="{% static 'app/scripts/my_scripts/employee_validation.js' %}"></script>
+
+
+</body>
+{% endblock %}

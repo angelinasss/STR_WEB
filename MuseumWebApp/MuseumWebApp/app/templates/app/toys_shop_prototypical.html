@@ -1,0 +1,29 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'app/content/toys_shop.css' %}">
+</head>
+<body>
+    <div class="container-box">
+        <h1 class="toys-page-title">{{ title }}</h1>
+        <form class="toys-form" onsubmit="addToy(); return false;">
+            <label>Name: <input type="text" id="name" required></label><br>
+            <label>Price: <input type="number" id="price" required></label><br>
+            <label>Age range: <input type="text" id="ageRange" required></label><br>
+            <label>Category: <input type="text" id="category" required></label><br>
+            <button type="submit">Add A Toy</button>
+        </form>
+
+        <h2 class="toys-section-title">List Of Toys</h2>
+        <ul class="toys-list" id="toyList"></ul>
+
+        <h2 class="toys-section-title">Results</h2>
+        <button class="toys-action-button" onclick="displayExpensiveToys()">Show the most expensive toys</button>
+        <div class="toys-result" id="result"></div>
+    </div>
+    <script src="{% static 'app/scripts/my_scripts/toys_shop_prototypical.js' %}"></script>
+</body>
+{% endblock %}

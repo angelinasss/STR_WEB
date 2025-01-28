@@ -22,6 +22,7 @@ from statistics import mode, median
 import calendar
 from django.db.models.functions import Cast
 from django.contrib.contenttypes.models import ContentType
+from django.core.paginator import Paginator
 
 def home(request):
     latest_article = Article.objects.order_by('-published_at').first()
@@ -49,6 +50,8 @@ def home(request):
             employee = None
             is_employee = False
         
+        is_admin = request.user.is_staff or request.user.is_superuser
+
         # Выполняем запрос к API только для авторизованных пользователей
         api_key = 'a1fcf314c6d72c6c6abfcd3396aab59b'
         city = request.GET.get('city', 'Minsk')  
@@ -65,6 +68,7 @@ def home(request):
             description = 'Error retrieving weather data'
     else:
         is_employee = False
+        is_admin = False
         temperature = 'Login required to see weather data'
         description = ''
     
@@ -77,6 +81,7 @@ def home(request):
         'calendar': month_calendar,
         'is_employee': is_employee,
         'info' : company_info,
+        'is_admin': is_admin,
         'excursions' : excursions,
         'exhibitions' : exhibitions,  
         'partners' : partners,
@@ -111,6 +116,206 @@ def contact(request):
             'year':datetime.now().year,
         }
     )
+
+def toys_shop_prototypical(request):
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/toys_shop_prototypical.html',
+        {
+            'title':'Toys Shop (Prototypical Inheritance)',
+            'is_employee' : is_employee,
+            'year':datetime.now().year,
+        }
+    )
+
+def graphics(request):
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/graphics.html',
+        {
+            'title':'Graphics',
+            'is_employee' : is_employee,
+            'year':datetime.now().year,
+        }
+    )
+
+def toys_shop_class(request):
+    
+    if request.user.is_authenticated:
+        try:
+           employee = Employee.objects.get(user=request.user)
+           is_employee = True
+        except Employee.DoesNotExist:
+           employee = None
+           is_employee = False
+    else:
+        is_employee = False
+
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/toys_shop_class.html',
+        {
+            'title':'Toys Shop (Class / Extends)',
+            'is_employee' : is_employee,
+            'year':datetime.now().year,
+        }
+    )
+
+def add_employee(request):
+    if request.method == 'POST':
+        full_name = request.POST.get('full_name')
+        name_parts = full_name.split(' ', 1)
+        first_name = name_parts[0] if len(name_parts) > 0 else ''
+        last_name = name_parts[1] if len(name_parts) > 1 else ''
+        username = full_name
+        phone = request.POST.get('phone')
+        position_id = request.POST.get('position')
+        hall_id = request.POST.get('hall')
+        email = request.POST.get('email')
+        password = username
+        photo = request.POST.get('photo')
+        
+        positions = Position.objects.all()
+        halls = Hall.objects.all()
+        
+        user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name, last_name=last_name)
+        
+        position = Position.objects.get(id=position_id) if position_id else None
+        hall = Hall.objects.get(id=hall_id) if hall_id else None
+
+
+        try:
+            Employee.objects.create(
+            user=user,
+            first_name=first_name,
+            last_name=last_name,
+            phone=phone,
+            email=email,
+            position=position,
+            hall=hall,
+            photo=photo
+            )
+            return JsonResponse({'success': True, 'message': 'Employee added successfully'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'errors': str(e)}, status=500)
+
+
+def contacts_table(request):
+    # employees = Employee.objects.all()
+    
+    # if request.user.is_authenticated:
+    #     try:
+    #        employee = Employee.objects.get(user=request.user)
+    #        is_employee = True
+    #     except Employee.DoesNotExist:
+    #        employee = None
+    #        is_employee = False
+    # else:
+    #     is_employee = False
+
+    halls = Hall.objects.all()
+    positions = Position.objects.all()
+
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/contacts_table.html',
+        {
+            'title':'Employees',
+            'halls':halls,
+            'positions':positions,
+            'year':datetime.now().year,
+        }
+    )
+
+def employee_list_api(request):
+    employees = Employee.objects.all()
+
+    # Filtering
+    filter_text = request.GET.get('filter', '')
+    if filter_text:
+        employees = employees.filter(
+            Q(first_name__icontains=filter_text) |  # Поиск по имени
+            Q(last_name__icontains=filter_text) |   # Поиск по фамилии
+            Q(phone__icontains=filter_text) |       # Поиск по телефону
+            Q(email__icontains=filter_text) |       # Поиск по email
+            Q(position__name__icontains=filter_text) |  # Поиск по позиции
+            Q(hall__name__icontains=filter_text)    # Поиск по холлу
+        )
+
+   # Sorting
+    sort_column = request.GET.get('sort_column', '')
+    sort_order = request.GET.get('sort_order', 'asc')  # Default to ascending order
+
+    if sort_column:
+        sortable_columns = {
+            'full_name': 'last_name',  # Assuming sorting by last name
+            'phone': 'phone',
+            'email': 'email',
+            'position': 'position__name',
+            'hall': 'hall__name',
+        }
+        if sort_column in sortable_columns:
+            sort_field = sortable_columns[sort_column]
+            if sort_order == 'desc':
+                sort_field = f"-{sort_field}"
+            employees = employees.order_by(sort_field)
+
+
+    # Pagination
+    page = request.GET.get('page', 1)
+    rows_per_page = int(request.GET.get('rows_per_page', 10))
+    paginator = Paginator(employees, rows_per_page)
+
+    try:
+        employees_page = paginator.page(page)
+    except Exception:
+        return JsonResponse({'error': 'Invalid page number'}, status=400)
+
+    # Serialize data
+    data = [
+        {
+            'id': emp.id,
+            'photo': emp.photo.url if emp.photo else None,
+            'full_name': f"{emp.last_name} {emp.first_name}",
+            'phone': emp.phone,
+            'email': emp.email,
+            'position': str(emp.position),
+            'hall': str(emp.hall) if emp.hall else 'N/A',
+        }
+        for emp in employees_page
+    ]
+
+    return JsonResponse({
+        'data': data,
+        'total_pages': paginator.num_pages,
+        'current_page': page,
+    })
 
 def employee_list(request):
     sort_order = request.GET.get('sort', None)
@@ -872,6 +1077,10 @@ def hall_info(request):
     elif sort_by == 'floor_desc':
         halls = halls.order_by('-floor')
 
+    paginator = Paginator(halls, 3)  # Максимум 3 элемента на страницу
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+
     # Проверяем, авторизован ли пользователь
     if request.user.is_authenticated:
         try:
@@ -885,7 +1094,7 @@ def hall_info(request):
     # Возвращаем ответ с отсортированными залами
     return render(request, 'app/hall_info.html', {
         'title': 'Museum Halls',
-        'halls': halls,
+        'page_obj': page_obj,
         'is_employee': is_employee,
         'sort_by': sort_by,  # Передаем выбранную сортировку в шаблон
         'year': datetime.now().year,
@@ -1556,6 +1765,10 @@ def all_excursions(request):
     elif sort_by == 'price_desc':
         excursions = excursions.order_by('-price')
 
+    paginator = Paginator(excursions, 3)  # Максимум 3 элемента на страницу
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+
     if request.user.is_authenticated:
         try:
             employee = Employee.objects.get(user=request.user)
@@ -1571,7 +1784,7 @@ def all_excursions(request):
         {
             'title': 'Excursions',
             'is_employee': is_employee,
-            'excursions': excursions,
+            'page_obj': page_obj,
             'sort_by' : sort_by,
             'year': datetime.now().year,
         }
@@ -1603,6 +1816,10 @@ def all_exhibitions(request):
     elif sort_by == 'price_desc':
         exhibitions = exhibitions.order_by('-price')
 
+    paginator = Paginator(exhibitions, 3)  # Максимум 3 элемента на страницу
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+
     if request.user.is_authenticated:
         try:
             employee = Employee.objects.get(user=request.user)
@@ -1618,7 +1835,7 @@ def all_exhibitions(request):
         {
             'title': 'Exhibitions',
             'is_employee': is_employee,
-            'exhibitions': exhibitions,
+            'page_obj': page_obj,
             'sort_by' : sort_by,
             'year': datetime.now().year,
         }
@@ -1734,6 +1951,10 @@ def all_exhibits(request):
     elif sort_by == 'hall_desc':
         exhibits = exhibits.order_by('-hall')
 
+    paginator = Paginator(exhibits, 3)  # Максимум 3 элемента на страницу
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+
     # Проверка авторизации пользователя
     if request.user.is_authenticated:
         try:
@@ -1749,7 +1970,7 @@ def all_exhibits(request):
         'app/all_exhibits.html',
         {
             'title': 'Exhibits',
-            'exhibits': exhibits,
+            'page_obj': page_obj,
             'is_employee': is_employee,
             'sort_by': sort_by,  # Передаем выбранное значение сортировки в шаблон
             'year': datetime.now().year,

@@ -27,6 +27,31 @@
         <div class="div-between">
             <a href="{% url 'news' %}" class="positive-button">Back to News</a>
         </div>
+
+        <div class="settings">
+            <label class="toggle-label">
+                <input type="checkbox" id="toggleSettings"> Enable Settings
+            </label>
+
+            <div id="customizationOptions" class="customization-options" style="display: none;">
+                <div class="setting-option">
+                    <label for="fontSize">Font Size:</label>
+                    <input type="range" id="fontSize" min="12" max="24" value="16">
+                </div>
+
+                <div class="setting-option">
+                    <label for="textColor">Font Color:</label>
+                    <input type="color" id="textColor" value="#000000">
+                </div>
+
+                <div class="setting-option">
+                    <label for="bgColor">Background Color:</label>
+                    <input type="color" id="bgColor" value="#ffffff">
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script src="{% static 'app/scripts/my_scripts/font_settings.js' %}"></script>
 </body>
 {% endblock %}

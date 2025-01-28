@@ -37,9 +37,9 @@
         {% endif %}
 
 
-        {% if exhibitions %}
+        {% if page_obj %}
         <div class="exhibition-list">
-            {% for exhibition in exhibitions %}
+            {% for exhibition in page_obj %}
             <div class="exhibition-card">
                 <h4>{{ exhibition.name }}</h4>
                 <div class="center-text">
@@ -78,6 +78,30 @@
                 {% endif %}
             </div>
             {% endfor %}
+        </div>
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}&sort_by={{ sort_by }}">Previous</a>
+                {% endif %}
+
+                {% for page_num in page_obj.paginator.page_range %}
+                {% if page_num == page_obj.number %}
+                <span class="current">{{ page_num }}</span>
+                {% elif page_num >= page_obj.number|add:'-2' and page_num <= page_obj.number|add:'2' %}
+                <a href="?page={{ page_num }}&sort_by={{ sort_by }}">{{ page_num }}</a>
+                {% elif page_num == 1 or page_num == page_obj.paginator.num_pages %}
+                <a href="?page={{ page_num }}&sort_by={{ sort_by }}">{{ page_num }}</a>
+                {% elif page_num == page_obj.number|add:'-3' or page_num == page_obj.number|add:'3' %}
+                <span>...</span>
+                {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&sort_by={{ sort_by }}">Next</a>
+                {% endif %}
+            </span>
         </div>
         {% else %}
         <p class="message">No exhibitions found.</p>

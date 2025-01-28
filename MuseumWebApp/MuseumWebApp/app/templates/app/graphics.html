@@ -1,0 +1,137 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'app/content/statistics.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="container-box">
+        <h1>{{ title }}</h1>
+        <canvas id="chart" width="800" height="400"></canvas>
+        <button id="saveButton" class="positive-button">Save Plot</button>
+    </div>
+    <script>
+        // Function to compute the series expansion for arccos(x)
+        function arccosSeries(x, terms) {
+            let result = Math.PI / 2;
+            for (let n = 0; n < terms; n++) {
+                const coefficient = (factorial(2 * n) / (factorial(n) ** 2 * 4 ** n * (2 * n + 1)));
+                result -= coefficient * Math.pow(x, 2 * n + 1);
+            }
+            return result;
+        }
+
+        // Function to compute factorial
+        function factorial(n) {
+            if (n <= 1) return 1;
+            return n * factorial(n - 1);
+        }
+
+        // Function to calculate the arccos value using Math
+        function mathFunctions(x) {
+            return {
+                arccos: Math.acos(x),
+            };
+        }
+
+        // Data for the X axis (from -1 to 1)
+        let xValues = [];
+        for (let i = -1; i <= 1; i += 0.01) {
+            xValues.push(i);
+        }
+
+        // Animation settings
+        let terms = 1;  // Start with 1 term
+        let maxTerms = 20; // Maximum number of terms in the series
+        let animationDelay = 200; // Delay between each series term increase
+
+        // Data for the plots
+        let arccosSeriesData = [];
+        let arccosMathData = [];
+
+        // Compute values for all points
+        xValues.forEach(x => {
+            let mathResults = mathFunctions(x);
+            arccosMathData.push(mathResults.arccos);
+            arccosSeriesData.push(arccosSeries(x, terms));
+        });
+
+        // Create chart
+        let ctx = document.getElementById('chart').getContext('2d');
+        let chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: xValues,
+                datasets: [
+                    {
+                        label: 'arccos(x) Series',
+                        borderColor: 'blue',
+                        borderWidth: 2,
+                        fill: false,
+                        data: arccosSeriesData,
+                        lineTension: 0.4
+                    },
+                    {
+                        label: 'arccos(x) Math',
+                        borderColor: 'darkblue',
+                        borderWidth: 2,
+                        fill: false,
+                        data: arccosMathData,
+                        lineTension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'x'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'F(x)'
+                        }
+                    }
+                },
+                animation: {
+                    duration: 5000, // Overall duration for the animation
+                    easing: 'easeOutQuart',
+                    onComplete: function () {
+                        if (terms < maxTerms) {
+                            terms++;
+                            setTimeout(updateChart, animationDelay); // Delay the next term addition
+                        }
+                    }
+                }
+            }
+        });
+
+        // Update chart with new data
+        function updateChart() {
+            arccosSeriesData = [];
+            xValues.forEach(x => {
+                arccosSeriesData.push(arccosSeries(x, terms));
+            });
+            chart.update();
+        }
+
+        // Save the chart as an image
+        document.getElementById('saveButton').addEventListener('click', function () {
+            // Get the chart image in Base64 format
+            const image = chart.toBase64Image();
+            const link = document.createElement('a');
+            link.href = image;
+            link.download = 'chart.png';
+            link.click(); // Automatically downloads the file
+        });
+    </script>
+</body>
+{% endblock %}

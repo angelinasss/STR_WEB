@@ -11,6 +11,15 @@
     <div class="container-box">
         <h1>{{ title }}</h1>
 
+
+        <div class="section_animation">
+            <div class="statue-container">
+                <img src="/static/images/statue1.png" alt="Statue 1" class="statue" data-position="left">
+                <img src="/static/images/statue2.png" alt="Statue 2" class="statue center" data-position="center">
+                <img src="/static/images/statue3.png" alt="Statue 3" class="statue" data-position="right">
+            </div>
+        </div>
+
         <div class="content-box">
             {% if info %}
             <section id="logo_section">
@@ -92,5 +101,24 @@
             {% endif %}
         </div>
     </div>
+
+    <script src="{% static 'app/scripts/my_scripts/animation_speach.js' %}"></script>
+    <script>
+        function speakText(text) {
+            const speech = new SpeechSynthesisUtterance(text);
+            speech.lang = 'en-US';
+            window.speechSynthesis.speak(speech);
+        }
+
+        const museumTitle = document.getElementById('museum-title');
+        if (museumTitle) {
+            speakText(museumTitle.textContent);
+        }
+
+        const description = "{{ info.description }}";
+        if (description) {
+            speakText(description);
+        }
+    </script>
 </body>
 {% endblock %}

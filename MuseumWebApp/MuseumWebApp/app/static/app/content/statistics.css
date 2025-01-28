@@ -78,3 +78,21 @@ label {
 .text-center {
     text-align: center;
 }
+
+.graphics_btn {
+    padding: 10px 25px;
+    background: linear-gradient(90deg, #710ffa, #ea0ffa);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+    .graphics_btn:hover {
+        background: linear-gradient(90deg, #ea0ffa, #710ffa);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(113, 15, 250, 0.5);
+    }

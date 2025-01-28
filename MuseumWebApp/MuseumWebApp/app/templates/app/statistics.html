@@ -11,6 +11,11 @@
     <div class="container-box">
         <h1>{{ title }}</h1>
 
+        <form method="GET" action="{% url 'graphics' %}">
+            <button class="graphics_btn" type="submit">
+                Go to Other Graphics
+            </button>
+        </form>
 
         <form method="GET" action="{% url 'statistics' %}">
             <label for="sale_type">Select Sales Type:</label>

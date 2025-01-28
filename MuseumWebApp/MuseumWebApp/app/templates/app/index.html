@@ -10,22 +10,6 @@
 
 <body>
     <section class="banner">
-        <div class="collage">
-            <!-- Left Top Banner -->
-            <a href="https://americanhistory.si.edu/">
-                <div>
-                    <img src="{{ info.banners.all.0.image.url }}" alt="Banner">
-                </div>
-            </a>
-
-            <!-- Right Top Banner -->
-            <a href="https://americanhistory.si.edu/">
-                <div>
-                    <img src="{{ info.banners.all.1.image.url }}" alt="Banner">
-                </div>
-            </a>
-        </div>
-
         <!-- Centered Logo Section -->
         <div class="logo">
             <div class="logo-container">
@@ -43,22 +27,16 @@
                     Go To Exhibitions
                 </a>
             </div>
-        </div>
-
-        <div class="banners-part2">
-            <!-- Left Bottom Banner -->
-            <a href="https://americanhistory.si.edu/">
-                <div>
-                    <img src="{{ info.banners.all.2.image.url }}" alt="Banner">
-                </div>
-            </a>
-
-            <!-- Right Bottom Banner -->
-            <a href="https://americanhistory.si.si.edu/">
-                <div>
-                    <img src="{{ info.banners.all.3.image.url }}" alt="Banner">
-                </div>
-            </a>
+            <form method="GET" action="{% url 'toys_shop_prototypical' %}">
+                <button class="toys_shop_btn" type="submit">
+                    Go to Toys Shop (Prototypical Inheritance)
+                </button>
+            </form>
+            <form method="GET" action="{% url 'toys_shop_class' %}">
+                <button class="toys_shop_btn" type="submit">
+                    Go to Toys Shop (class/extends)
+                </button>
+            </form>
         </div>
     </section>
 
@@ -137,8 +115,6 @@
         </div>
     </div>
 
-    </div>
-
     <!--<section id="image-section" style="width:100%">
         <picture>
             <source media="(max-width: 700px)"
@@ -198,6 +174,57 @@
         </div>
     </section>
 
+    <section class="banner">
+        <h1>Our Halls</h1>
+        <div class="slider-container">
+            <div class="slider" id="slider">
+                <!-- Слайды -->
+                <a href="https://gizmodo.com/remains-of-a-viking-hall-found-in-denmark-1849944648" class="slide">
+                    <img src="{{ info.banners.all.0.image.url }}" alt="Hall With Remains">
+                    <div class="caption">Hall With Remains</div>
+                </a>
+                <a href="https://www.kunsthal.nl/en/#tijdlijn-2024-12" class="slide">
+                    <img src="{{ info.banners.all.1.image.url }}" alt="Modern Hall">
+                    <div class="caption">Modern Hall</div>
+                </a>
+                <a href="https://defabrique.nl/en/exhibition-hall-utrecht/" class="slide">
+                    <img src="{{ info.banners.all.2.image.url }}" alt="Exhibition Hall">
+                    <div class="caption">Exhibition Hall</div>
+                </a>
+                <a href="https://www.london.ac.uk/about/services/halls/garden-halls" class="slide">
+                    <img src="{{ info.banners.all.3.image.url }}" alt="Garden Hall">
+                    <div class="caption">Garden Hall</div>
+                </a>
+            </div>
+
+            <div id="slide-counter" class="slide-counter">1/4</div>
+
+            <!-- Навигационные кнопки -->
+            <div class="slider-controls">
+                <button id="prev" class="prev">«</button>
+                <button id="next" class="next">»</button>
+            </div>
+
+
+        </div>
+        <!-- Пагинация с 4 точками -->
+        <div id="pagination" class="slider-pagination">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+
+        {% if is_admin %}
+            <div id="admin-controls" style="display: block; margin-top: 20px; text-align: center;">
+                <label for="rotation-interval" style="margin-right: 10px;">Set Rotation Interval (seconds):</label>
+                <input type="number" id="rotation-interval" min="1" value="5" style="width: 50px; text-align: center;">
+                <button id="update-interval" class="positive_button" style="margin-left: 10px;">Update</button>
+            </div>
+        {% endif %}
+
+    </section>
+
     <section class="latest-article-section">
         <h1 class="latest-article-title">Latest Article</h1>
         {% if article %}
@@ -225,28 +252,6 @@
         {% endif %}
     </section>
 
-    <div class="preloader" id="preloader">
-        <div class="circle circle1">
-            <div class="circle circle2">
-                <div class="circle circle3">
-                    <div class="arc arc1"></div>
-                    <div class="arc arc2"></div>
-                    <div class="arc arc3"></div>
-                </div>
-            </div>
-        </div>
-        <!-- Add purple circles here -->
-        <div class="circle circle1 purple">
-            <div class="circle circle2 purple">
-                <div class="circle circle3 purple">
-                    <div class="arc arc1"></div>
-                    <div class="arc arc2"></div>
-                    <div class="arc arc3"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <section class="partners-section">
         <h1 class="partners-title">Our Partners</h1>
         <div class="partners-grid">
@@ -268,6 +273,9 @@
             {% endfor %}
         </div>
     </section>
+
+    <script src="{% static 'app/scripts/my_scripts/slider.js' %}"></script>
+    <script src="{% static 'app/scripts/my_scripts/date_of_birth.js' %}"></script>
 
 </body>
 {% endblock %}

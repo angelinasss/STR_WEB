@@ -54,3 +54,65 @@ strong {
     margin-top: 40px;
     margin-bottom: 10px;
 }
+
+.settings {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.toggle-label {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.customization-options {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.setting-option {
+    margin-bottom: 15px;
+}
+
+    .setting-option label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .setting-option input[type="range"] {
+        width: 100%;
+    }
+
+    .setting-option input[type="color"] {
+        width: 50px;
+        height: 30px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .setting-option input[type="range"] {
+        height: 8px;
+        border-radius: 5px;
+        background-color: #e0e0e0;
+        outline: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .setting-option input[type="range"]:hover {
+            background-color: #d1c4e9;
+        }
+
+        .setting-option input[type="range"]:active {
+            background-color: #b39ddb;
+        }
+
+.settings input[type="checkbox"]:checked + .customization-options {
+    display: block;
+}

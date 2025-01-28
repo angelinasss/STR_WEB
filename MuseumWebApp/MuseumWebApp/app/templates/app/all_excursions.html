@@ -38,29 +38,53 @@
         {% endif %}
 
 
-        {% if excursions %}
-            <div class="excursion-list">
-                {% for excursion in excursions %}
-                <div class="excursion-card">
-                    <h4>{{ excursion.name }} (Code: {{ excursion.code }})</h4>
-                    <p><strong>Date:</strong> {{ excursion.date|date:"Y-m-d" }}</p>
-                    <p><strong>Season:</strong> {{ excursion.get_season_display }}</p>
-                    <p><strong>Group Size:</strong> {{ excursion.group_size }}</p>
-                    <p><strong>Guide:</strong> {{ excursion.guide }}</p>
-                    <p><strong>Price:</strong> {{ excursion.price }}</p>
+        {% if page_obj %}
+        <div class="excursion-list">
+            {% for excursion in page_obj %}
+            <div class="excursion-card">
+                <h4>{{ excursion.name }} (Code: {{ excursion.code }})</h4>
+                <p><strong>Date:</strong> {{ excursion.date|date:"Y-m-d" }}</p>
+                <p><strong>Season:</strong> {{ excursion.get_season_display }}</p>
+                <p><strong>Group Size:</strong> {{ excursion.group_size }}</p>
+                <p><strong>Guide:</strong> {{ excursion.guide }}</p>
+                <p><strong>Price:</strong> {{ excursion.price }}</p>
 
-                    {% if user.is_authenticated %}
-                    {% if not is_employee and not user.is_superuser %}
-                    <div class="buttons-top">
-                        <a href="{% url 'add_to_cart_excursion' excursion.id %}" class="positive-button">Add To Cart</a>
-                    </div>
-                    {% endif %}
-                    {% else %}
-                    <p class="message">Please log in to purchase a ticket.</p>
-                    {% endif %}
+                {% if user.is_authenticated %}
+                {% if not is_employee and not user.is_superuser %}
+                <div class="buttons-top">
+                    <a href="{% url 'add_to_cart_excursion' excursion.id %}" class="positive-button">Add To Cart</a>
                 </div>
-                {% endfor %}
+                {% endif %}
+                {% else %}
+                <p class="message">Please log in to purchase a ticket.</p>
+                {% endif %}
             </div>
+            {% endfor %}
+        </div>
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}&sort_by={{ sort_by }}">Previous</a>
+                {% endif %}
+
+                {% for page_num in page_obj.paginator.page_range %}
+                {% if page_num == page_obj.number %}
+                <span class="current">{{ page_num }}</span>
+                {% elif page_num >= page_obj.number|add:'-2' and page_num <= page_obj.number|add:'2' %}
+                <a href="?page={{ page_num }}&sort_by={{ sort_by }}">{{ page_num }}</a>
+                {% elif page_num == 1 or page_num == page_obj.paginator.num_pages %}
+                <a href="?page={{ page_num }}&sort_by={{ sort_by }}">{{ page_num }}</a>
+                {% elif page_num == page_obj.number|add:'-3' or page_num == page_obj.number|add:'3' %}
+                <span>...</span>
+                {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&sort_by={{ sort_by }}">Next</a>
+                {% endif %}
+            </span>
+        </div>
         {% else %}
         <p class="message">No excursions found.</p>
         {% endif %}

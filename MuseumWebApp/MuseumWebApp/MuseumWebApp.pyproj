@@ -4,7 +4,7 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <Name>MuseumWebApp</Name>
     <RootNamespace>MuseumWebApp</RootNamespace>
-    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+    <InterpreterId>Global|VisualStudio|Scripts</InterpreterId>
     <TestFramework>Pytest</TestFramework>
   </PropertyGroup>
   <PropertyGroup>
@@ -55,6 +55,7 @@
     <Folder Include="app\static\app\content\" />
     <Folder Include="app\static\app\fonts\" />
     <Folder Include="app\static\app\scripts\" />
+    <Folder Include="app\static\app\scripts\my_scripts\" />
     <Folder Include="app\static\images\" />
     <Folder Include="app\templates\" />
     <Folder Include="app\templates\app\" />
@@ -68,6 +69,7 @@
     <Content Include="app\static\app\content\article_detail.css" />
     <Content Include="app\static\app\content\certificate.css" />
     <Content Include="app\static\app\content\contact.css" />
+    <Content Include="app\static\app\content\contacts_table.css" />
     <Content Include="app\static\app\content\create_article.css" />
     <Content Include="app\static\app\content\create_excursion.css" />
     <Content Include="app\static\app\content\create_exhibit.css" />
@@ -102,13 +104,25 @@
     <Content Include="app\static\app\content\register.css" />
     <Content Include="app\static\app\content\reviews.css" />
     <Content Include="app\static\app\content\statistics.css" />
+    <Content Include="app\static\app\content\toys_shop.css" />
     <Content Include="app\static\app\content\vacancies.css" />
+    <Content Include="app\static\app\scripts\my_scripts\animation_speach.js" />
+    <Content Include="app\static\app\scripts\my_scripts\contact_info.js" />
+    <Content Include="app\static\app\scripts\my_scripts\countdown.js" />
+    <Content Include="app\static\app\scripts\my_scripts\date_of_birth.js" />
+    <Content Include="app\static\app\scripts\my_scripts\employee_validation.js" />
+    <Content Include="app\static\app\scripts\my_scripts\font_settings.js" />
+    <Content Include="app\static\app\scripts\my_scripts\slider.js" />
+    <Content Include="app\static\app\scripts\my_scripts\sort_pagination_filter_contacts_table.js" />
+    <Content Include="app\static\app\scripts\my_scripts\toys_shop_class.js" />
+    <Content Include="app\static\app\scripts\my_scripts\toys_shop_prototypical.js" />
     <Content Include="app\templates\app\all_excursions.html" />
     <Content Include="app\templates\app\all_exhibitions.html" />
     <Content Include="app\templates\app\all_exhibits.html" />
     <Content Include="app\templates\app\article_all.html" />
     <Content Include="app\templates\app\article_detail.html" />
     <Content Include="app\templates\app\certificate.html" />
+    <Content Include="app\templates\app\contacts_table.html" />
     <Content Include="app\templates\app\create_article.html" />
     <Content Include="app\templates\app\create_excursion.html" />
     <Content Include="app\templates\app\create_exhibit.html" />
@@ -132,6 +146,7 @@
     <Content Include="app\templates\app\exhibits_by_arrival_date.html" />
     <Content Include="app\templates\app\excursions_by_season.html" />
     <Content Include="app\templates\app\faq.html" />
+    <Content Include="app\templates\app\graphics.html" />
     <Content Include="app\templates\app\hall_detail.html" />
     <Content Include="app\templates\app\hall_info.html" />
     <Content Include="app\templates\app\my_cart.html" />
@@ -150,6 +165,8 @@
     <Content Include="app\templates\app\statistics.html" />
     <Content Include="app\templates\app\ticket_success.html" />
     <Content Include="app\templates\app\ticket_success_excursion.html" />
+    <Content Include="app\templates\app\toys_shop_class.html" />
+    <Content Include="app\templates\app\toys_shop_prototypical.html" />
     <Content Include="app\templates\app\vacancies.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
@@ -195,6 +212,15 @@
       <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
       <Architecture>X64</Architecture>
     </Interpreter>
+    <Interpreter Include="env2\">
+      <Id>env2</Id>
+      <Version>3.9</Version>
+      <Description>env2 (Python 3.9 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
     <Interpreter Include="env\">
       <Id>env</Id>
       <Version>3.9</Version>
@@ -204,6 +230,9 @@
       <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
       <Architecture>X64</Architecture>
     </Interpreter>
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|VisualStudio|Scripts" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />
   <!-- Specify pre- and post-build commands in the BeforeBuild and 

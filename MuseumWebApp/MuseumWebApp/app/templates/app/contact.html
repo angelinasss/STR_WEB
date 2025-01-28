@@ -17,6 +17,12 @@
             </button>
         </form>
 
+        <form method="GET" action="{% url 'contacts_table' %}">
+            <button class="positive-button" type="submit">
+                Go to Contacts Table
+            </button>
+        </form>
+
         <div class="employee-container">
             {% for employee in employees %}
             <div class="employee-card">

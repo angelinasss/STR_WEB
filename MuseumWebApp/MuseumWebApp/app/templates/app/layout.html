@@ -21,7 +21,7 @@
                 <img src="{% static 'images/favicon.png' %}" alt="Museum Icon" style="width: 32px; height: 32px; margin-right: 10px;">
                 Lorem
             </a>
-
+            <div id="countdown" style="font-size: 18px; margin-left: 20px; color: #710ffa;"></div> <!-- Отсчет -->
             <div style="display: flex; align-items: center;">
                 <ul class="navbar">
                     <li><a href="{% url 'home' %}">Home</a></li>
@@ -72,7 +72,7 @@
                 <li><a href="{% url 'hall_info' %}">Halls</a></li>
                 <li><a href="{% url 'all_exhibits' %}">Exhibits</a></li>
                 {% endif %}
-                </ul>
+            </ul>
         </aside>
 
         <section>
@@ -83,5 +83,7 @@
     <footer id="footer_id">
         <p>&copy; {{ year }} - Museum Web App</p>
     </footer>
+
+    <script src="{% static 'app/scripts/my_scripts/countdown.js' %}"></script>
 </body>
 </html>

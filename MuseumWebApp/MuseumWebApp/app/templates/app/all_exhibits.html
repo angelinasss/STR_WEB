@@ -26,24 +26,47 @@
             </form>
         </div>
 
-        {% if exhibits %}
-            <div class="exhibit-list">
-                {% for exhibit in exhibits %}
-                <div class="exhibit-card">
-                    {% if exhibit.image %}
-                    <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}">
-                    {% else %}
-                    <img src="/static/images/default_exhibit.jpg" alt="{{ exhibit.name }}">
-                    {% endif %}
+        {% if page_obj %}
+        <div class="exhibit-list">
+            {% for exhibit in page_obj %}
+            <div class="exhibit-card">
+                {% if exhibit.image %}
+                <img src="{{ exhibit.image.url }}" alt="{{ exhibit.name }}">
+                {% else %}
+                <img src="/static/images/default_exhibit.jpg" alt="{{ exhibit.name }}">
+                {% endif %}
 
-                    <h4>{{ exhibit.name }}</h4>
-                    <p><strong>Art Type:</strong> {{ exhibit.art_type }}</p>
-                    <p><strong>Hall:</strong> {{ exhibit.hall }}</p>
-                    <p><strong>Date Acquired:</strong> {{ exhibit.date_acquired }}</p>
-                    <p><strong>Caretaker:</strong> {{ exhibit.caretaker }}</p>
-                </div>
-                {% endfor %}
+                <h4>{{ exhibit.name }}</h4>
+                <p><strong>Art Type:</strong> {{ exhibit.art_type }}</p>
+                <p><strong>Hall:</strong> {{ exhibit.hall }}</p>
+                <p><strong>Date Acquired:</strong> {{ exhibit.date_acquired }}</p>
+                <p><strong>Caretaker:</strong> {{ exhibit.caretaker }}</p>
             </div>
+            {% endfor %}
+        </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}&sort_by={{ sort_by }}">Previous</a>
+                {% endif %}
+
+                {% for page_num in page_obj.paginator.page_range %}
+                {% if page_num == page_obj.number %}
+                <span class="current">{{ page_num }}</span>
+                {% elif page_num >= page_obj.number|add:'-2' and page_num <= page_obj.number|add:'2' %}
+                <a href="?page={{ page_num }}&sort_by={{ sort_by }}">{{ page_num }}</a>
+                {% elif page_num == 1 or page_num == page_obj.paginator.num_pages %}
+                <a href="?page={{ page_num }}&sort_by={{ sort_by }}">{{ page_num }}</a>
+                {% elif page_num == page_obj.number|add:'-3' or page_num == page_obj.number|add:'3' %}
+                <span>...</span>
+                {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&sort_by={{ sort_by }}">Next</a>
+                {% endif %}
+            </span>
+        </div>
         {% else %}
         <p class="message">No exhibits found.</p>
         {% endif %}
